@@ -31,9 +31,15 @@ program
   .description('Install MADACE to your project (interactive)')
   .option('-d, --dest <path>', 'Destination project directory')
   .option('-m, --modules <modules...>', 'Modules to install (core, mam, mab, cis)')
-  .action(async (_options) => {
-    console.log(chalk.yellow('⚠ Installation command is in development for v1.0-alpha'));
-    console.log(chalk.blue('Current status: Core framework implemented, installer pending'));
+  .action(async (options) => {
+    try {
+      const { default: Installer } = await import('./installer.js');
+      const installer = new Installer();
+      await installer.run(options);
+    } catch (error) {
+      console.error(chalk.red(`Installation error: ${error.message}`));
+      process.exit(1);
+    }
   });
 
 // Status command
@@ -86,8 +92,80 @@ program
   .description('List available modules, agents, or workflows')
   .argument('[type]', 'Type to list: modules, agents, workflows', 'modules')
   .action(async (type) => {
-    console.log(chalk.yellow(`⚠ List command is in development for v1.0-alpha`));
-    console.log(chalk.blue(`Requested: list ${type}`));
+    try {
+      const { default: configManager } = await import('../core/config-manager.js');
+      const { default: manifestManager } = await import('../core/manifest-manager.js');
+      const Table = (await import('cli-table3')).default;
+
+      // Find MADACE installation
+      const madaceRoot = await configManager.findMadaceRoot();
+      if (!madaceRoot) {
+        console.log(chalk.red('✗ MADACE installation not found'));
+        console.log(chalk.yellow('Run "madace install" to install MADACE'));
+        process.exit(1);
+      }
+
+      manifestManager.initialize(madaceRoot);
+
+      if (type === 'modules') {
+        // List installed modules
+        const stats = await manifestManager.getStats();
+        console.log(chalk.cyan.bold('\n📦 Installed Modules:\n'));
+        stats.modules.forEach((module) => {
+          const agentCount = stats.agentsByModule[module] || 0;
+          const workflowCount = stats.workflowsByModule[module] || 0;
+          console.log(`  ${chalk.green('•')} ${chalk.bold(module)} - ${agentCount} agents, ${workflowCount} workflows`);
+        });
+        console.log('');
+      } else if (type === 'agents') {
+        // List installed agents
+        const agents = await manifestManager.readAgentManifest();
+        if (agents.length === 0) {
+          console.log(chalk.yellow('\n⚠ No agents installed\n'));
+          return;
+        }
+
+        console.log(chalk.cyan.bold('\n🤖 Installed Agents:\n'));
+        const table = new Table({
+          head: [chalk.bold('Name'), chalk.bold('Module'), chalk.bold('Type')],
+          colWidths: [30, 15, 15],
+        });
+
+        agents.forEach((agent) => {
+          table.push([agent.name, agent.module, agent.type || 'standard']);
+        });
+
+        console.log(table.toString());
+        console.log('');
+      } else if (type === 'workflows') {
+        // List installed workflows
+        const workflows = await manifestManager.readWorkflowManifest();
+        if (workflows.length === 0) {
+          console.log(chalk.yellow('\n⚠ No workflows installed\n'));
+          return;
+        }
+
+        console.log(chalk.cyan.bold('\n⚡ Installed Workflows:\n'));
+        const table = new Table({
+          head: [chalk.bold('Name'), chalk.bold('Module')],
+          colWidths: [40, 20],
+        });
+
+        workflows.forEach((workflow) => {
+          table.push([workflow.name, workflow.module]);
+        });
+
+        console.log(table.toString());
+        console.log('');
+      } else {
+        console.log(chalk.red(`Unknown list type: ${type}`));
+        console.log(chalk.yellow('Valid types: modules, agents, workflows'));
+        process.exit(1);
+      }
+    } catch (error) {
+      console.error(chalk.red(`Error: ${error.message}`));
+      process.exit(1);
+    }
   });
 
 // Uninstall command
