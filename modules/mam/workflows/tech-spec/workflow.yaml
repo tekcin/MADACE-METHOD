@@ -1,0 +1,415 @@
+workflow:
+  name: Generate Technical Specification
+  description: Create detailed technical specification document
+  version: 1.0.0
+  module: mam
+  type: planning
+
+  prerequisites:
+    - PRD or GDD completed
+    - Architecture decisions made
+
+  steps:
+    - name: Welcome
+      type: guide
+      content: |
+        # Technical Specification Generation
+
+        This workflow creates a comprehensive technical specification for your project.
+
+        **Recommended for:** Level 2-4 projects
+        **Estimated Time:** 30-60 minutes
+        **Output:** tech-spec.md
+
+        Let's document your technical architecture!
+
+    - name: System Overview
+      type: elicit
+      prompts:
+        - key: purpose
+          question: What is the technical purpose of this system?
+          multiline: true
+          required: true
+        - key: scope
+          question: What is in scope technically? What is out of scope?
+          multiline: true
+          required: true
+        - key: key_requirements
+          question: List the key technical requirements
+          multiline: true
+          required: true
+
+    - name: Architecture Design
+      type: elicit
+      prompts:
+        - key: high_level_architecture
+          question: Describe the high-level architecture (monolith, microservices, serverless, etc.)
+          multiline: true
+          required: true
+        - key: system_components
+          question: List the major system components
+          multiline: true
+          required: true
+        - key: architecture_diagram
+          question: Paste ASCII diagram or describe the architecture visually (use tools like Mermaid)
+          multiline: true
+          required: false
+        - key: design_patterns
+          question: What design patterns will you use? (MVC, MVVM, event-driven, etc.)
+          multiline: true
+          required: false
+
+    - name: Technology Stack
+      type: elicit
+      prompts:
+        - key: frontend_stack
+          question: Frontend technologies (React, Vue, Angular, etc.)
+          multiline: true
+          required: false
+        - key: backend_stack
+          question: Backend technologies (Node.js, Python, Go, Java, etc.)
+          multiline: true
+          required: true
+        - key: database_stack
+          question: Database technologies (PostgreSQL, MongoDB, Redis, etc.)
+          multiline: true
+          required: false
+        - key: infrastructure_stack
+          question: Infrastructure (AWS, Azure, GCP, Docker, Kubernetes, etc.)
+          multiline: true
+          required: false
+        - key: devops_cicd
+          question: DevOps and CI/CD tools (GitHub Actions, Jenkins, CircleCI, etc.)
+          multiline: true
+          required: false
+        - key: third_party_services
+          question: Third-party services and APIs (Stripe, SendGrid, Auth0, etc.)
+          multiline: true
+          required: false
+
+    - name: Data Model
+      type: elicit
+      prompts:
+        - key: database_schema
+          question: Describe the database schema (tables, collections, key entities)
+          multiline: true
+          required: true
+        - key: entity_relationships
+          question: Describe entity relationships (one-to-many, many-to-many, etc.)
+          multiline: true
+          required: false
+        - key: data_flow
+          question: Describe how data flows through the system
+          multiline: true
+          required: true
+        - key: data_storage_strategy
+          question: What is your data storage strategy? (sharding, replication, backups)
+          multiline: true
+          required: false
+
+    - name: API Design
+      type: elicit
+      prompts:
+        - key: api_architecture
+          question: What API architecture will you use? (REST, GraphQL, gRPC, WebSocket, etc.)
+          multiline: true
+          required: true
+        - key: api_endpoints
+          question: List key API endpoints or operations
+          multiline: true
+          required: true
+        - key: auth_strategy
+          question: How will API authentication work? (JWT, OAuth, API keys, etc.)
+          multiline: true
+          required: true
+        - key: rate_limiting
+          question: What is your rate limiting strategy?
+          multiline: true
+          required: false
+        - key: api_versioning
+          question: How will you version the API?
+          multiline: true
+          required: false
+
+    - name: Security
+      type: elicit
+      prompts:
+        - key: security_requirements
+          question: What are the security requirements?
+          multiline: true
+          required: true
+        - key: authentication
+          question: Describe the authentication mechanism
+          multiline: true
+          required: true
+        - key: authorization
+          question: Describe the authorization/permissions system
+          multiline: true
+          required: true
+        - key: data_encryption
+          question: How will data be encrypted? (at rest, in transit)
+          multiline: true
+          required: true
+        - key: vulnerability_mitigation
+          question: How will you mitigate common vulnerabilities? (SQL injection, XSS, CSRF, etc.)
+          multiline: true
+          required: true
+        - key: compliance
+          question: Any compliance requirements? (GDPR, HIPAA, SOC2, PCI-DSS, etc.)
+          multiline: true
+          required: false
+
+    - name: Performance and Scalability
+      type: elicit
+      prompts:
+        - key: performance_requirements
+          question: What are the performance requirements? (response time, throughput, etc.)
+          multiline: true
+          required: true
+        - key: load_expectations
+          question: What are the expected load levels? (concurrent users, requests/sec, etc.)
+          multiline: true
+          required: true
+        - key: scaling_strategy
+          question: How will the system scale? (horizontal, vertical, auto-scaling)
+          multiline: true
+          required: true
+        - key: caching_strategy
+          question: What is your caching strategy? (Redis, CDN, browser cache, etc.)
+          multiline: true
+          required: false
+        - key: database_optimization
+          question: How will you optimize database performance? (indexes, query optimization, etc.)
+          multiline: true
+          required: false
+
+    - name: Error Handling and Logging
+      type: elicit
+      prompts:
+        - key: error_handling
+          question: How will errors be handled? (global handlers, error boundaries, retry logic)
+          multiline: true
+          required: true
+        - key: logging_strategy
+          question: What is your logging strategy? (structured logs, log levels, log aggregation)
+          multiline: true
+          required: true
+        - key: monitoring_alerting
+          question: What monitoring and alerting will you use? (Datadog, Sentry, New Relic, etc.)
+          multiline: true
+          required: false
+        - key: debugging
+          question: How will you debug issues in production?
+          multiline: true
+          required: false
+
+    - name: Testing Strategy
+      type: elicit
+      prompts:
+        - key: unit_testing
+          question: Unit testing approach and tools (Jest, pytest, JUnit, etc.)
+          multiline: true
+          required: true
+        - key: integration_testing
+          question: Integration testing approach
+          multiline: true
+          required: false
+        - key: e2e_testing
+          question: End-to-end testing tools (Cypress, Playwright, Selenium, etc.)
+          multiline: true
+          required: false
+        - key: performance_testing
+          question: Performance testing tools (k6, JMeter, Locust, etc.)
+          multiline: true
+          required: false
+        - key: security_testing
+          question: Security testing approach (SAST, DAST, penetration testing)
+          multiline: true
+          required: false
+        - key: test_coverage
+          question: What are your test coverage goals?
+          multiline: true
+          required: false
+
+    - name: Deployment
+      type: elicit
+      prompts:
+        - key: deployment_architecture
+          question: Describe the deployment architecture
+          multiline: true
+          required: true
+        - key: environments
+          question: What environments will you have? (dev, staging, production, etc.)
+          multiline: true
+          required: true
+        - key: cicd_pipeline
+          question: Describe the CI/CD pipeline
+          multiline: true
+          required: true
+        - key: rollback_strategy
+          question: What is your rollback strategy?
+          multiline: true
+          required: true
+        - key: deployment_strategy
+          question: Will you use blue-green, canary, or rolling deployments?
+          multiline: true
+          required: false
+
+    - name: Observability and Development
+      type: elicit
+      prompts:
+        - key: metrics
+          question: What metrics will you track?
+          multiline: true
+          required: false
+        - key: tracing
+          question: Will you use distributed tracing? (Jaeger, Zipkin, etc.)
+          multiline: true
+          required: false
+        - key: version_control
+          question: What version control system? (Git, GitHub, GitLab, etc.)
+          multiline: true
+          required: true
+        - key: branching_strategy
+          question: What branching strategy? (Git Flow, GitHub Flow, trunk-based, etc.)
+          multiline: true
+          required: true
+        - key: code_review
+          question: Describe the code review process
+          multiline: true
+          required: false
+
+    - name: Dependencies and Migration
+      type: elicit
+      prompts:
+        - key: external_dependencies
+          question: List external dependencies (libraries, services, APIs)
+          multiline: true
+          required: true
+        - key: internal_dependencies
+          question: List internal dependencies (other services, modules, etc.)
+          multiline: true
+          required: false
+        - key: migration_plan
+          question: If migrating from existing system, describe the migration plan
+          multiline: true
+          required: false
+        - key: backwards_compatibility
+          question: How will you handle backwards compatibility?
+          multiline: true
+          required: false
+
+    - name: Risks and Open Questions
+      type: elicit
+      prompts:
+        - key: technical_risks
+          question: What are the technical risks?
+          multiline: true
+          required: false
+        - key: architectural_risks
+          question: What are the architectural risks?
+          multiline: true
+          required: false
+        - key: mitigation_strategies
+          question: How will you mitigate these risks?
+          multiline: true
+          required: false
+        - key: open_questions
+          question: What questions remain unanswered?
+          multiline: true
+          required: false
+
+    - name: Generate Tech Spec Document
+      type: template
+      template_path: templates/tech-spec.md
+      output_path: "{output_folder}/tech-spec.md"
+      variables:
+        - project_name
+        - user_name
+        - date
+        - madace_version
+        - status
+        - executive_summary
+        - purpose
+        - scope
+        - key_requirements
+        - high_level_architecture
+        - system_components
+        - architecture_diagram
+        - design_patterns
+        - frontend_stack
+        - backend_stack
+        - database_stack
+        - infrastructure_stack
+        - devops_cicd
+        - third_party_services
+        - database_schema
+        - entity_relationships
+        - data_flow
+        - data_storage_strategy
+        - api_architecture
+        - api_endpoints
+        - auth_strategy
+        - rate_limiting
+        - api_versioning
+        - security_requirements
+        - authentication
+        - authorization
+        - data_encryption
+        - vulnerability_mitigation
+        - compliance
+        - performance_requirements
+        - load_expectations
+        - scaling_strategy
+        - caching_strategy
+        - database_optimization
+        - error_handling
+        - logging_strategy
+        - monitoring_alerting
+        - debugging
+        - unit_testing
+        - integration_testing
+        - e2e_testing
+        - performance_testing
+        - security_testing
+        - test_coverage
+        - deployment_architecture
+        - environments
+        - cicd_pipeline
+        - rollback_strategy
+        - deployment_strategy
+        - metrics
+        - tracing
+        - version_control
+        - branching_strategy
+        - code_review
+        - external_dependencies
+        - internal_dependencies
+        - migration_plan
+        - backwards_compatibility
+        - technical_risks
+        - architectural_risks
+        - mitigation_strategies
+        - open_questions
+
+    - name: Next Steps
+      type: guide
+      content: |
+        # Tech Spec Generated Successfully!
+
+        Your Technical Specification has been created at:
+        `{output_folder}/tech-spec.md`
+
+        ## Recommended Next Steps:
+
+        1. **Review with Team**: Share with engineering team for feedback
+        2. **Break Down to Epics**: Use the "Epic Breakdown" workflow
+        3. **Create Architecture Diagrams**: Use tools like Mermaid, draw.io, or Lucidchart
+        4. **Set Up Development Environment**: Begin infrastructure setup
+        5. **Start Implementation**: Use MADACE workflows to guide development
+
+        Ready to build?
+
+  outputs:
+    - path: "{output_folder}/tech-spec.md"
+      description: Technical Specification Document

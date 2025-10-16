@@ -1,0 +1,142 @@
+workflow:
+  name: Detect Project Type
+  description: Identify project category (web, mobile, game, backend, library, etc.)
+  version: 1.0.0
+  module: mam
+  type: planning
+
+  steps:
+    - name: Welcome
+      type: guide
+      content: |
+        # Project Type Detection
+
+        This workflow helps identify your project type to recommend:
+        - Appropriate templates (PRD vs GDD)
+        - Technology stack suggestions
+        - Best practices and patterns
+        - Relevant workflows
+
+        Let's identify your project type.
+
+    - name: Primary Category
+      type: elicit
+      prompts:
+        - key: project_category
+          question: What is the primary category of your project?
+          options:
+            - Web Application (frontend + backend)
+            - Frontend Only (SPA, static site)
+            - Backend/API (REST, GraphQL, microservices)
+            - Mobile App (iOS, Android, React Native)
+            - Desktop Application (Electron, native)
+            - Game (2D, 3D, browser, mobile)
+            - Library/Package (npm, pip, gem, etc.)
+            - CLI Tool (command-line interface)
+            - DevOps/Infrastructure (CI/CD, deployment)
+            - Data Science/ML (analytics, models, pipelines)
+            - Other
+          required: true
+
+    - name: Technical Stack
+      type: elicit
+      prompts:
+        - key: primary_language
+          question: What is your primary programming language?
+          options:
+            - JavaScript/TypeScript
+            - Python
+            - Java/Kotlin
+            - C#/.NET
+            - Go
+            - Rust
+            - Ruby
+            - PHP
+            - Swift
+            - C/C++
+            - Other
+          required: true
+        - key: framework
+          question: What framework or runtime are you using? (if any)
+          required: false
+
+    - name: Platform and Deployment
+      type: elicit
+      prompts:
+        - key: deployment_target
+          question: Where will this be deployed/run?
+          options:
+            - Cloud (AWS, Azure, GCP)
+            - Self-hosted server
+            - Edge/CDN (Vercel, Netlify, Cloudflare)
+            - Desktop (user's machine)
+            - Mobile devices (iOS/Android)
+            - Browser only (client-side)
+            - Package registry (npm, PyPI, etc.)
+            - Not applicable
+          required: true
+        - key: is_greenfield
+          question: Is this a new project (greenfield) or existing codebase (brownfield)?
+          options:
+            - Greenfield (new project from scratch)
+            - Brownfield (modifying existing codebase)
+            - Hybrid (new feature in existing project)
+          required: true
+
+    - name: Project Characteristics
+      type: elicit
+      prompts:
+        - key: has_database
+          question: Does this project use a database?
+          options:
+            - "Yes - SQL (PostgreSQL, MySQL, etc.)"
+            - "Yes - NoSQL (MongoDB, DynamoDB, etc.)"
+            - "Yes - Multiple databases"
+            - "No database"
+          required: true
+        - key: has_auth
+          question: Does this project need user authentication?
+          options:
+            - "Yes - OAuth/SSO"
+            - "Yes - Email/password"
+            - "Yes - API keys/tokens"
+            - "No authentication needed"
+          required: true
+        - key: real_time_features
+          question: Does this project have real-time features?
+          options:
+            - "Yes - WebSockets/real-time updates"
+            - "Yes - Live collaboration"
+            - "No real-time features"
+          required: false
+
+    - name: Generate Project Type Report
+      type: template
+      template_path: templates/project-type-report.md
+      output_path: "{output_folder}/project-type-report.md"
+      variables:
+        - project_name
+        - project_category
+        - primary_language
+        - framework
+        - deployment_target
+        - is_greenfield
+        - has_database
+        - has_auth
+        - real_time_features
+
+    - name: Recommend Next Steps
+      type: guide
+      content: |
+        # Project Type Identified
+
+        Your project type report has been generated at `{output_folder}/project-type-report.md`.
+
+        Based on your project type, I recommend:
+        {{recommended_template}}
+
+        Ready to proceed with planning?
+
+  outputs:
+    - path: "{output_folder}/project-type-report.md"
+      description: Project type analysis and recommendations

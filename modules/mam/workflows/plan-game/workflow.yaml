@@ -1,0 +1,387 @@
+workflow:
+  name: Plan Game Project (GDD Generation)
+  description: Generate comprehensive Game Design Document for game projects
+  version: 1.0.0
+  module: mam
+  type: planning
+
+  prerequisites:
+    - Project type detected as "Game"
+    - Scale assessment completed
+
+  steps:
+    - name: Welcome
+      type: guide
+      content: |
+        # Game Design Document (GDD) Generation
+
+        This workflow will guide you through creating a comprehensive GDD for your game project.
+
+        **Recommended for:** All game projects (Level 1-4)
+        **Estimated Time:** 30-60 minutes
+        **Output:** GDD.md in your project docs folder
+
+        Let's design your game!
+
+    - name: Game Overview
+      type: elicit
+      prompts:
+        - key: game_title
+          question: What is your game title?
+          required: true
+        - key: high_concept
+          question: Describe your game in one sentence (the "elevator pitch")
+          required: true
+        - key: genre
+          question: What genre(s) is your game?
+          options:
+            - Action
+            - Adventure
+            - RPG
+            - Strategy
+            - Puzzle
+            - Simulation
+            - Sports
+            - Racing
+            - Fighting
+            - Platform
+            - Horror
+            - Casual
+            - Hybrid (specify in description)
+          required: true
+        - key: platforms
+          question: What platforms will you target?
+          multiline: true
+          required: true
+        - key: target_audience
+          question: Who is your target audience? (age, demographics, gaming experience)
+          multiline: true
+          required: true
+        - key: unique_selling_points
+          question: What makes your game unique? (list 3-5 USPs)
+          multiline: true
+          required: true
+
+    - name: Story and Setting
+      type: elicit
+      prompts:
+        - key: story_synopsis
+          question: Provide a story synopsis (2-4 paragraphs)
+          multiline: true
+          required: true
+        - key: setting
+          question: Describe the game world/setting
+          multiline: true
+          required: true
+        - key: characters
+          question: Describe main characters (protagonist, antagonist, supporting)
+          multiline: true
+          required: true
+        - key: narrative_structure
+          question: How is the narrative structured? (linear, branching, open-world, etc.)
+          multiline: true
+          required: false
+
+    - name: Core Gameplay
+      type: elicit
+      prompts:
+        - key: core_gameplay_loop
+          question: Describe the core gameplay loop (what players do minute-to-minute)
+          multiline: true
+          required: true
+        - key: game_mechanics
+          question: List key game mechanics (one per line)
+          multiline: true
+          required: true
+        - key: player_actions
+          question: What actions can the player perform?
+          multiline: true
+          required: true
+        - key: progression_system
+          question: How does the player progress? (leveling, skill trees, unlocks, etc.)
+          multiline: true
+          required: true
+        - key: difficulty_balance
+          question: How will you handle difficulty and balance?
+          multiline: true
+          required: false
+
+    - name: Game Modes
+      type: elicit
+      prompts:
+        - key: single_player_mode
+          question: Describe the single-player mode (if applicable)
+          multiline: true
+          required: false
+        - key: multiplayer_mode
+          question: Describe the multiplayer mode (if applicable)
+          multiline: true
+          required: false
+        - key: other_modes
+          question: Any other game modes? (co-op, competitive, sandbox, etc.)
+          multiline: true
+          required: false
+
+    - name: Levels and Environments
+      type: elicit
+      prompts:
+        - key: level_design_philosophy
+          question: What is your level design philosophy?
+          multiline: true
+          required: false
+        - key: level_structure
+          question: Describe the level structure or world map
+          multiline: true
+          required: true
+        - key: environments
+          question: Describe key environments/biomes
+          multiline: true
+          required: true
+
+    - name: User Interface
+      type: elicit
+      prompts:
+        - key: hud_elements
+          question: What HUD elements will the game have? (health bar, mini-map, inventory, etc.)
+          multiline: true
+          required: true
+        - key: menu_system
+          question: Describe the menu system (main menu, pause menu, settings, etc.)
+          multiline: true
+          required: false
+        - key: controls
+          question: Describe the control scheme (keyboard/mouse, gamepad, touch, etc.)
+          multiline: true
+          required: true
+        - key: accessibility_features
+          question: What accessibility features will you include?
+          multiline: true
+          required: false
+
+    - name: Art and Audio
+      type: elicit
+      prompts:
+        - key: art_style
+          question: Describe the art style (pixel art, realistic, cartoon, low-poly, etc.)
+          multiline: true
+          required: true
+        - key: visual_assets
+          question: List key visual assets needed (characters, environments, props, effects)
+          multiline: true
+          required: true
+        - key: audio_design
+          question: Describe the audio design approach
+          multiline: true
+          required: false
+        - key: music
+          question: Describe the music style and requirements
+          multiline: true
+          required: false
+        - key: sound_effects
+          question: List key sound effects categories
+          multiline: true
+          required: false
+
+    - name: Technical Requirements
+      type: elicit
+      prompts:
+        - key: engine_technology
+          question: What game engine and technologies will you use? (Unity, Unreal, Godot, custom, etc.)
+          multiline: true
+          required: true
+        - key: min_requirements
+          question: What are the minimum system requirements?
+          multiline: true
+          required: false
+        - key: recommended_requirements
+          question: What are the recommended system requirements?
+          multiline: true
+          required: false
+        - key: performance_targets
+          question: What are your performance targets? (FPS, resolution, load times)
+          multiline: true
+          required: true
+        - key: platform_specific
+          question: Any platform-specific considerations? (mobile touch, console certification, etc.)
+          multiline: true
+          required: false
+
+    - name: Monetization
+      type: elicit
+      prompts:
+        - key: business_model
+          question: What is your business model?
+          options:
+            - Premium (one-time purchase)
+            - Free-to-play (F2P)
+            - Freemium
+            - Subscription
+            - Ad-supported
+            - Not decided
+          required: true
+        - key: iap_dlc
+          question: Will you have in-app purchases or DLC? Describe them.
+          multiline: true
+          required: false
+        - key: premium_features
+          question: Any premium or special edition features?
+          multiline: true
+          required: false
+
+    - name: Development Plan
+      type: elicit
+      prompts:
+        - key: project_phases
+          question: What are the major project phases? (pre-production, prototype, alpha, beta, release)
+          multiline: true
+          required: true
+        - key: milestones
+          question: List key milestones and target dates
+          multiline: true
+          required: true
+        - key: team_roles
+          question: What team roles do you need? (programmer, artist, designer, sound, etc.)
+          multiline: true
+          required: true
+        - key: external_assets
+          question: Will you use external assets or outsourcing?
+          multiline: true
+          required: false
+
+    - name: Marketing and Success Metrics
+      type: elicit
+      prompts:
+        - key: target_market
+          question: Describe your target market
+          multiline: true
+          required: false
+        - key: marketing_strategy
+          question: What is your marketing strategy? (social media, influencers, Steam, etc.)
+          multiline: true
+          required: false
+        - key: community_engagement
+          question: How will you engage with the community?
+          multiline: true
+          required: false
+        - key: kpis
+          question: What are your key performance indicators?
+          multiline: true
+          required: true
+        - key: retention_goals
+          question: What are your player retention goals?
+          multiline: true
+          required: false
+
+    - name: Risks and References
+      type: elicit
+      prompts:
+        - key: technical_risks
+          question: What are the technical risks?
+          multiline: true
+          required: false
+        - key: design_risks
+          question: What are the design risks? (scope creep, balance issues, etc.)
+          multiline: true
+          required: false
+        - key: market_risks
+          question: What are the market risks? (competition, trends, etc.)
+          multiline: true
+          required: false
+        - key: mitigation_strategies
+          question: How will you mitigate these risks?
+          multiline: true
+          required: false
+        - key: similar_games
+          question: List similar games for reference/comparison
+          multiline: true
+          required: false
+        - key: references
+          question: Any other references or inspiration?
+          multiline: true
+          required: false
+
+    - name: Generate GDD Document
+      type: template
+      template_path: templates/GDD.md
+      output_path: "{output_folder}/GDD.md"
+      variables:
+        - game_title
+        - user_name
+        - date
+        - madace_version
+        - status
+        - executive_summary
+        - high_concept
+        - genre
+        - platforms
+        - target_audience
+        - unique_selling_points
+        - story_synopsis
+        - setting
+        - characters
+        - narrative_structure
+        - core_gameplay_loop
+        - game_mechanics
+        - player_actions
+        - progression_system
+        - difficulty_balance
+        - single_player_mode
+        - multiplayer_mode
+        - other_modes
+        - level_design_philosophy
+        - level_structure
+        - environments
+        - hud_elements
+        - menu_system
+        - controls
+        - accessibility_features
+        - art_style
+        - visual_assets
+        - audio_design
+        - music
+        - sound_effects
+        - engine_technology
+        - min_requirements
+        - recommended_requirements
+        - performance_targets
+        - platform_specific
+        - business_model
+        - iap_dlc
+        - premium_features
+        - project_phases
+        - milestones
+        - team_roles
+        - external_assets
+        - target_market
+        - marketing_strategy
+        - community_engagement
+        - kpis
+        - retention_goals
+        - technical_risks
+        - design_risks
+        - market_risks
+        - mitigation_strategies
+        - similar_games
+        - references
+
+    - name: Next Steps
+      type: guide
+      content: |
+        # GDD Generated Successfully!
+
+        Your Game Design Document has been created at:
+        `{output_folder}/GDD.md`
+
+        ## Recommended Next Steps:
+
+        1. **Create Prototype**: Build a quick prototype of core mechanics
+        2. **Art Direction**: Create mood boards and concept art
+        3. **Technical Proof-of-Concept**: Test critical technical features
+        4. **Break Down to Epics**: Use the "Epic Breakdown" workflow
+        5. **Generate Tech Spec**: Run the "Tech Spec Generation" workflow
+
+        Ready to start building?
+
+  outputs:
+    - path: "{output_folder}/GDD.md"
+      description: Game Design Document

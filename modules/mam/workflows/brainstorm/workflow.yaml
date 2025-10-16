@@ -1,0 +1,159 @@
+workflow:
+  name: Brainstorming and Research
+  description: Structured brainstorming and research workflow for project discovery
+  version: 1.0.0
+  module: mam
+  type: planning
+
+  steps:
+    - name: Welcome
+      type: guide
+      content: |
+        # Brainstorming and Research Workflow
+
+        This workflow helps you:
+        - Explore project ideas
+        - Research technical approaches
+        - Generate and evaluate alternatives
+        - Document findings
+
+        **Recommended for:** Early planning phase, unclear requirements, exploratory work
+
+        Let's brainstorm!
+
+    - name: Define Topic
+      type: elicit
+      prompts:
+        - key: brainstorm_topic
+          question: What are you brainstorming about?
+          required: true
+        - key: brainstorm_goal
+          question: What's the goal of this brainstorming session?
+          multiline: true
+          required: true
+        - key: brainstorm_type
+          question: What type of brainstorming?
+          options:
+            - Problem definition
+            - Solution exploration
+            - Feature ideation
+            - Technical research
+            - Architecture options
+            - User experience design
+            - Other
+          required: true
+
+    - name: Initial Ideas
+      type: elicit
+      prompts:
+        - key: initial_ideas
+          question: List your initial ideas (one per line, no filtering yet!)
+          multiline: true
+          required: true
+        - key: constraints
+          question: What constraints or requirements must be met?
+          multiline: true
+          required: false
+
+    - name: Research Questions
+      type: elicit
+      prompts:
+        - key: research_questions
+          question: What questions need answers? (one per line)
+          multiline: true
+          required: true
+        - key: research_sources
+          question: Where will you research? (docs, competitors, papers, etc.)
+          multiline: true
+          required: false
+
+    - name: Evaluation Criteria
+      type: elicit
+      prompts:
+        - key: evaluation_criteria
+          question: How will you evaluate options? (cost, time, complexity, scalability, etc.)
+          multiline: true
+          required: true
+
+    - name: Framework Selection
+      type: elicit
+      prompts:
+        - key: brainstorm_framework
+          question: Which brainstorming framework would you like to use?
+          options:
+            - Free-form brainstorming
+            - SCAMPER (Substitute, Combine, Adapt, Modify, Put to another use, Eliminate, Reverse)
+            - Six Thinking Hats (different perspectives)
+            - Mind Mapping
+            - Pros and Cons Analysis
+            - Cost-Benefit Analysis
+            - None / Custom
+          required: true
+
+    - name: Document Findings
+      type: elicit
+      prompts:
+        - key: key_findings
+          question: What are your key findings or insights?
+          multiline: true
+          required: true
+        - key: recommended_approach
+          question: What approach do you recommend based on your research?
+          multiline: true
+          required: true
+        - key: alternative_approaches
+          question: What alternative approaches did you consider?
+          multiline: true
+          required: false
+        - key: open_questions
+          question: What questions remain unanswered?
+          multiline: true
+          required: false
+        - key: next_steps
+          question: What are the recommended next steps?
+          multiline: true
+          required: true
+
+    - name: Generate Brainstorm Report
+      type: template
+      template_path: templates/brainstorm-report.md
+      output_path: "{output_folder}/brainstorm-report.md"
+      variables:
+        - project_name
+        - date
+        - user_name
+        - brainstorm_topic
+        - brainstorm_goal
+        - brainstorm_type
+        - initial_ideas
+        - constraints
+        - research_questions
+        - research_sources
+        - evaluation_criteria
+        - brainstorm_framework
+        - key_findings
+        - recommended_approach
+        - alternative_approaches
+        - open_questions
+        - next_steps
+
+    - name: Complete
+      type: guide
+      content: |
+        # Brainstorming Complete!
+
+        Your brainstorm report has been saved to:
+        `{output_folder}/brainstorm-report.md`
+
+        ## Next Steps:
+
+        - Review and refine your findings
+        - Share with team for feedback
+        - Proceed with recommended approach
+        - Convert to PRD/tech spec if ready
+
+        Happy building!
+
+  outputs:
+    - path: "{output_folder}/brainstorm-report.md"
+      description: Brainstorming and research report

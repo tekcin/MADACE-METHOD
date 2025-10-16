@@ -1,0 +1,80 @@
+workflow:
+  name: Fast-Track (Level 0-1)
+  description: Quick-start workflow for simple tasks and small features
+  version: 1.0.0
+  module: mam
+  type: planning
+
+  prerequisites:
+    - Scale assessment shows Level 0 or Level 1
+
+  steps:
+    - name: Welcome
+      type: guide
+      content: |
+        # Fast-Track Workflow (Level 0-1)
+
+        For simple tasks and small features, skip the heavy planning and jump straight to action!
+
+        **Level 0:** Single task (1-2 hours, 1 file)
+        **Level 1:** Small feature (2-8 hours, 2-5 files)
+
+        Let's get you coding quickly!
+
+    - name: Quick Brief
+      type: elicit
+      prompts:
+        - key: task_description
+          question: What are you building? (1-2 sentences)
+          required: true
+        - key: acceptance_criteria
+          question: How will you know when it's done? (list 2-5 criteria)
+          multiline: true
+          required: true
+        - key: files_to_modify
+          question: Which files will you create or modify?
+          multiline: true
+          required: false
+
+    - name: Technical Approach
+      type: elicit
+      prompts:
+        - key: approach
+          question: What's your technical approach? (high-level plan)
+          multiline: true
+          required: true
+        - key: potential_challenges
+          question: Any potential challenges or unknowns?
+          multiline: true
+          required: false
+
+    - name: Generate Quick Brief
+      type: template
+      template_path: templates/quick-brief.md
+      output_path: "{output_folder}/quick-brief.md"
+      variables:
+        - task_description
+        - acceptance_criteria
+        - files_to_modify
+        - approach
+        - potential_challenges
+
+    - name: Ready to Code
+      type: guide
+      content: |
+        # Ready to Start!
+
+        Your quick brief has been saved to `{output_folder}/quick-brief.md`.
+
+        ## Next Steps:
+
+        1. Start coding!
+        2. Test as you go
+        3. Mark items complete in your brief
+        4. Done!
+
+        No need for heavy planning - just build it!
+
+  outputs:
+    - path: "{output_folder}/quick-brief.md"
+      description: Quick task brief

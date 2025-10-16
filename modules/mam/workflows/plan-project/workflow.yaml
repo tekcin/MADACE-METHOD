@@ -1,0 +1,284 @@
+workflow:
+  name: Plan Project (PRD Generation)
+  description: Generate comprehensive Product Requirements Document for Level 2-4 projects
+  version: 1.0.0
+  module: mam
+  type: planning
+
+  prerequisites:
+    - Scale assessment completed (Level 2-4)
+    - Project type identified
+
+  steps:
+    - name: Welcome
+      type: guide
+      content: |
+        # Product Requirements Document (PRD) Generation
+
+        This workflow will guide you through creating a comprehensive PRD for your project.
+
+        **Recommended for:** Level 2-4 projects
+        **Estimated Time:** 20-45 minutes
+        **Output:** PRD.md in your project docs folder
+
+        Let's begin!
+
+    - name: Executive Summary
+      type: elicit
+      prompts:
+        - key: executive_summary
+          question: Provide a 2-3 sentence executive summary of your project
+          required: true
+        - key: status
+          question: What is the current status?
+          options:
+            - Draft
+            - In Review
+            - Approved
+            - Active Development
+          default: Draft
+          required: true
+
+    - name: Problem Statement
+      type: elicit
+      prompts:
+        - key: current_situation
+          question: Describe the current situation (what exists today?)
+          required: true
+        - key: problems_to_solve
+          question: List the problems this project will solve (one per line)
+          multiline: true
+          required: true
+        - key: success_criteria
+          question: How will you measure success? (specific, measurable criteria)
+          multiline: true
+          required: true
+
+    - name: Goals and Objectives
+      type: elicit
+      prompts:
+        - key: primary_goals
+          question: What are the primary goals? (must-have outcomes)
+          multiline: true
+          required: true
+        - key: secondary_goals
+          question: What are secondary goals? (nice-to-have outcomes)
+          multiline: true
+          required: false
+        - key: non_goals
+          question: What are explicit non-goals? (out of scope)
+          multiline: true
+          required: true
+
+    - name: Users and Stakeholders
+      type: elicit
+      prompts:
+        - key: primary_users
+          question: Who are the primary users? (describe personas)
+          multiline: true
+          required: true
+        - key: secondary_users
+          question: Who are secondary users or audiences?
+          multiline: true
+          required: false
+        - key: stakeholders
+          question: Who are the key stakeholders?
+          multiline: true
+          required: true
+
+    - name: Functional Requirements
+      type: elicit
+      prompts:
+        - key: core_features
+          question: List core features (must-have, one per line)
+          multiline: true
+          required: true
+        - key: nice_to_have_features
+          question: List nice-to-have features (optional, one per line)
+          multiline: true
+          required: false
+        - key: future_considerations
+          question: What features might be added in future versions?
+          multiline: true
+          required: false
+
+    - name: Non-Functional Requirements
+      type: elicit
+      prompts:
+        - key: performance_requirements
+          question: What are the performance requirements? (response time, throughput, etc.)
+          multiline: true
+          required: false
+        - key: security_requirements
+          question: What are the security requirements?
+          multiline: true
+          required: false
+        - key: scalability_requirements
+          question: What are the scalability requirements?
+          multiline: true
+          required: false
+        - key: accessibility_requirements
+          question: What are the accessibility requirements? (WCAG, a11y standards)
+          multiline: true
+          required: false
+        - key: compliance_requirements
+          question: Any compliance requirements? (GDPR, HIPAA, SOC2, etc.)
+          multiline: true
+          required: false
+
+    - name: User Stories
+      type: elicit
+      prompts:
+        - key: user_stories
+          question: |
+            List key user stories in the format:
+            "As a [persona], I want to [action] so that [benefit]"
+            (One per line)
+          multiline: true
+          required: true
+
+    - name: Technical Constraints
+      type: elicit
+      prompts:
+        - key: technology_stack
+          question: What technologies will you use? (languages, frameworks, tools)
+          multiline: true
+          required: true
+        - key: dependencies
+          question: What are the key dependencies? (libraries, services, APIs)
+          multiline: true
+          required: false
+        - key: integration_points
+          question: What systems will this integrate with?
+          multiline: true
+          required: false
+        - key: known_limitations
+          question: What are known technical limitations or constraints?
+          multiline: true
+          required: false
+
+    - name: Timeline and Milestones
+      type: elicit
+      prompts:
+        - key: project_phases
+          question: What are the major project phases?
+          multiline: true
+          required: true
+        - key: milestones
+          question: What are the key milestones and target dates?
+          multiline: true
+          required: true
+        - key: release_plan
+          question: What is the release plan? (MVP, phased rollout, etc.)
+          multiline: true
+          required: true
+
+    - name: Success Metrics
+      type: elicit
+      prompts:
+        - key: kpis
+          question: What are the key performance indicators (KPIs)?
+          multiline: true
+          required: true
+        - key: measurement_plan
+          question: How will you measure and track these KPIs?
+          multiline: true
+          required: false
+
+    - name: Risks and Mitigation
+      type: elicit
+      prompts:
+        - key: technical_risks
+          question: What are the technical risks?
+          multiline: true
+          required: false
+        - key: business_risks
+          question: What are the business risks?
+          multiline: true
+          required: false
+        - key: mitigation_strategies
+          question: What are your mitigation strategies for these risks?
+          multiline: true
+          required: false
+
+    - name: Open Questions and Appendices
+      type: elicit
+      prompts:
+        - key: open_questions
+          question: What questions remain unanswered?
+          multiline: true
+          required: false
+        - key: references
+          question: Any references or research materials?
+          multiline: true
+          required: false
+        - key: glossary
+          question: Define any project-specific terms
+          multiline: true
+          required: false
+
+    - name: Generate PRD Document
+      type: template
+      template_path: templates/PRD.md
+      output_path: "{output_folder}/PRD.md"
+      variables:
+        - project_name
+        - user_name
+        - date
+        - madace_version
+        - executive_summary
+        - status
+        - current_situation
+        - problems_to_solve
+        - success_criteria
+        - primary_goals
+        - secondary_goals
+        - non_goals
+        - primary_users
+        - secondary_users
+        - stakeholders
+        - core_features
+        - nice_to_have_features
+        - future_considerations
+        - performance_requirements
+        - security_requirements
+        - scalability_requirements
+        - accessibility_requirements
+        - compliance_requirements
+        - user_stories
+        - technology_stack
+        - dependencies
+        - integration_points
+        - known_limitations
+        - project_phases
+        - milestones
+        - release_plan
+        - kpis
+        - measurement_plan
+        - technical_risks
+        - business_risks
+        - mitigation_strategies
+        - open_questions
+        - references
+        - glossary
+
+    - name: Next Steps
+      type: guide
+      content: |
+        # PRD Generated Successfully!
+
+        Your Product Requirements Document has been created at:
+        `{output_folder}/PRD.md`
+
+        ## Recommended Next Steps:
+
+        1. **Review and Refine**: Review the PRD and fill in any gaps
+        2. **Get Approval**: Share with stakeholders for feedback
+        3. **Break Down to Epics**: Use the "Epic Breakdown" workflow
+        4. **Generate Tech Spec**: Run the "Tech Spec Generation" workflow
+
+        Ready to proceed?
+
+  outputs:
+    - path: "{output_folder}/PRD.md"
+      description: Product Requirements Document
