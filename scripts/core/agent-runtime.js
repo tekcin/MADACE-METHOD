@@ -458,6 +458,79 @@ class AgentRuntime {
     this.currentAgent = null;
     this.context = {};
   }
+
+  /**
+   * Discover available agents (Story A5)
+   * @returns {Promise<object[]>} Array of available agents
+   */
+  async discoverAgents() {
+    try {
+      if (!this.config) {
+        this.config = await configManager.autoLoadConfig();
+      }
+
+      manifestManager.initialize(this.config._paths.madace_root);
+      const agents = await manifestManager.readAgentManifest();
+
+      return agents.map((agent) => ({
+        id: agent.agent_id,
+        name: agent.name,
+        module: agent.module,
+        type: agent.type,
+        path: agent.file_path,
+      }));
+    } catch (error) {
+      throw new Error(`Failed to discover agents: ${error.message}`);
+    }
+  }
+
+  /**
+   * Find agent by name or ID
+   * @param {string} nameOrId - Agent name or ID
+   * @returns {Promise<object|null>} Agent metadata or null
+   */
+  async findAgent(nameOrId) {
+    const agents = await this.discoverAgents();
+    return (
+      agents.find(
+        (agent) =>
+          agent.name.toLowerCase() === nameOrId.toLowerCase() || agent.id.toLowerCase().includes(nameOrId.toLowerCase())
+      ) || null
+    );
+  }
+
+  /**
+   * List agents by module
+   * @param {string} moduleName - Module name (e.g., 'core', 'mam')
+   * @returns {Promise<object[]>} Array of agents in module
+   */
+  async listAgentsByModule(moduleName) {
+    const agents = await this.discoverAgents();
+    return agents.filter((agent) => agent.module === moduleName);
+  }
+
+  /**
+   * Get agent statistics
+   * @returns {Promise<object>} Agent statistics
+   */
+  async getAgentStats() {
+    const agents = await this.discoverAgents();
+
+    const byModule = {};
+    const byType = {};
+
+    agents.forEach((agent) => {
+      byModule[agent.module] = (byModule[agent.module] || 0) + 1;
+      byType[agent.type] = (byType[agent.type] || 0) + 1;
+    });
+
+    return {
+      total: agents.length,
+      byModule,
+      byType,
+      modules: Object.keys(byModule),
+    };
+  }
 }
 
 // Export singleton instance
