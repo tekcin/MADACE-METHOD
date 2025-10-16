@@ -1,0 +1,83 @@
+{
+  "name": "madace-method",
+  "version": "1.0.0-alpha.1",
+  "description": "MADACE-METHOD (Methodology for AI-Driven Agile Collaboration Engine) - Universal human-AI collaboration framework",
+  "main": "scripts/cli/madace.js",
+  "bin": {
+    "madace": "./scripts/cli/madace.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test runner configured yet\" && exit 0",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "bundle": "node scripts/build/bundler.js",
+    "rebundle": "node scripts/build/bundler.js --rebundle",
+    "validate:bundles": "node scripts/build/validator.js",
+    "flatten": "node scripts/build/flattener.js",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "madace",
+    "ai",
+    "agile",
+    "collaboration",
+    "workflow",
+    "agents",
+    "methodology",
+    "human-ai",
+    "facilitation",
+    "scale-adaptive"
+  ],
+  "author": "MADACE Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/MADACE-METHOD.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/MADACE-METHOD/issues"
+  },
+  "homepage": "https://github.com/your-org/MADACE-METHOD#readme",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "boxen": "^7.1.1",
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0",
+    "csv-parse": "^5.6.0",
+    "fs-extra": "^11.2.0",
+    "glob": "^11.0.0",
+    "inquirer": "^10.2.2",
+    "js-yaml": "^4.1.0",
+    "ora": "^8.1.0",
+    "wrap-ansi": "^9.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-yml": "^1.14.0",
+    "globals": "^15.12.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "yaml-eslint-parser": "^1.2.3"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{yaml,yml}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
+}
