@@ -2,6 +2,7 @@
   "name": "madace-method",
   "version": "1.0.0-alpha.1",
   "description": "MADACE-METHOD (Methodology for AI-Driven Agile Collaboration Engine) - Universal human-AI collaboration framework",
+  "type": "module",
   "main": "scripts/cli/madace.js",
   "bin": {
     "madace": "./scripts/cli/madace.js"
