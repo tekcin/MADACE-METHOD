@@ -1,0 +1,130 @@
+workflow:
+  name: story-context
+  description: Generate targeted expertise XML for current IN PROGRESS story
+  agent: sm
+  phase: 4
+
+  steps:
+    - name: Load Status File
+      action: load_state_machine
+      status_file: "{output_folder}/mam-workflow-status.md"
+
+    - name: Validate IN PROGRESS Story Exists
+      action: validate
+      condition: "{in_progress_story} != null"
+      error_message: |
+        ❌ No story in IN PROGRESS section.
+
+        Cannot generate context - no active story.
+        Run: madace sm story-ready
+
+    - name: Display Story Info
+      action: display
+      message: |
+        📋 Generating Context for Story
+
+        Story ID: [{in_progress_story_id}]
+        Title: {in_progress_story_title}
+        File: {output_folder}/{in_progress_story_filename}
+
+        Analyzing story requirements and gathering relevant expertise...
+
+    - name: Load Story File
+      action: load_file
+      file_path: "{output_folder}/{in_progress_story_filename}"
+
+    - name: Extract Domain Focus
+      action: analyze_story
+      story_content: "{story_file_content}"
+      extract:
+        - technical_domain # frontend, backend, database, api, etc.
+        - frameworks # React, Node, etc.
+        - patterns # MVC, state machine, etc.
+        - dependencies # other stories or external systems
+
+    - name: Load Architecture Document
+      action: load_file_if_exists
+      file_path: "{output_folder}/solution-architecture.md"
+      optional: true
+
+    - name: Extract Relevant Architecture Decisions
+      action: filter_architecture
+      architecture_content: "{architecture_content}"
+      story_domain: "{technical_domain}"
+      extract: # ADRs relevant to this story's domain
+
+    - name: Load Tech Specs
+      action: load_files_matching
+      pattern: "{output_folder}/tech-spec*.md"
+      optional: true
+
+    - name: Extract Relevant Tech Spec Sections
+      action: filter_tech_specs
+      tech_specs_content: "{tech_specs_content}"
+      story_domain: "{technical_domain}"
+      story_patterns: "{patterns}"
+
+    - name: Load Completed Stories
+      action: load_completed_stories
+      status_file: "{output_folder}/mam-workflow-status.md"
+      limit: 5 # Last 5 completed stories
+
+    - name: Extract Related Story Patterns
+      action: filter_completed_stories
+      completed_stories: "{completed_stories}"
+      current_domain: "{technical_domain}"
+      extract: # Patterns and solutions from similar stories
+
+    - name: Render Context XML
+      action: render_template
+      template: templates/story-context.xml
+      output_file: "{output_folder}/story-{in_progress_story_id}-context.xml"
+      variables:
+        story_id: "{in_progress_story_id}"
+        story_title: "{in_progress_story_title}"
+        technical_domain: "{technical_domain}"
+        frameworks: "{frameworks}"
+        patterns: "{patterns}"
+        architecture_decisions: "{relevant_architecture}"
+        tech_spec_sections: "{relevant_tech_specs}"
+        related_stories: "{related_story_patterns}"
+        dependencies: "{dependencies}"
+
+    - name: Confirm Context Generated
+      action: display
+      message: |
+        ✅ Story Context Generated!
+
+        File: {output_folder}/story-{in_progress_story_id}-context.xml
+
+        Context includes:
+        - Technical domain: {technical_domain}
+        - Frameworks: {frameworks}
+        - Architecture decisions: {architecture_decision_count} relevant ADRs
+        - Tech spec sections: {tech_spec_section_count} relevant sections
+        - Related stories: {related_story_count} similar completed stories
+
+        Next steps:
+        1. Load context in your IDE/AI assistant
+        2. Run: madace dev dev-story
+        3. Implement with full context awareness
+
+  variables:
+    in_progress_story: null
+    in_progress_story_id: ""
+    in_progress_story_title: ""
+    in_progress_story_filename: ""
+    story_file_content: ""
+    technical_domain: ""
+    frameworks: ""
+    patterns: ""
+    dependencies: ""
+    architecture_content: ""
+    relevant_architecture: ""
+    tech_specs_content: ""
+    relevant_tech_specs: ""
+    completed_stories: []
+    related_story_patterns: ""
+    architecture_decision_count: 0
+    tech_spec_section_count: 0
+    related_story_count: 0

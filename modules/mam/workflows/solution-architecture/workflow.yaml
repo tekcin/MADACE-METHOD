@@ -1,0 +1,123 @@
+workflow:
+  name: solution-architecture
+  description: Create overall solution architecture (Phase 3 - Levels 3-4 only)
+  agent: architect
+  phase: 3
+
+  steps:
+    - name: Introduction
+      action: display
+      message: |
+        🏗️ Solution Architecture Workflow
+
+        This workflow guides you through creating the overall solution architecture
+        for your project. This is done ONCE at the beginning of Phase 3.
+
+        We'll cover:
+        1. System architecture overview
+        2. Key architectural decisions (ADRs)
+        3. Technology stack
+        4. Component design
+        5. Data architecture
+        6. Integration points
+
+    - name: Load PRD
+      action: load_file
+      file_path: "{output_folder}/PRD.md"
+      optional: false
+
+    - name: Gather System Overview
+      action: elicit
+      prompt: |
+        **System Architecture Overview**
+
+        Describe the high-level architecture of your system:
+        - What are the main components/modules?
+        - How do they interact?
+        - What architectural pattern are you using? (MVC, microservices, layered, etc.)
+
+    - name: Gather Technology Stack
+      action: elicit
+      prompt: |
+        **Technology Stack**
+
+        List the key technologies you'll use:
+        - Frontend: (e.g., React, Vue, vanilla JS)
+        - Backend: (e.g., Node.js, Python, Java)
+        - Database: (e.g., PostgreSQL, MongoDB, SQLite)
+        - Other: (APIs, services, tools)
+
+    - name: Gather Architecture Decisions
+      action: elicit
+      prompt: |
+        **Key Architecture Decisions (ADRs)**
+
+        What important architectural decisions have you made?
+        Format each as: "Decision: Reason"
+
+        Examples:
+        - Use React for UI: Team expertise and component reusability
+        - RESTful API: Simplicity and wide client support
+        - PostgreSQL: Relational data with ACID guarantees
+
+        Enter your decisions (one per line):
+
+    - name: Gather Component Design
+      action: elicit
+      prompt: |
+        **Component Design**
+
+        Describe the main components/modules and their responsibilities:
+
+    - name: Gather Data Architecture
+      action: elicit
+      prompt: |
+        **Data Architecture**
+
+        Describe your data model and how data flows through the system:
+
+    - name: Gather Integration Points
+      action: elicit
+      prompt: |
+        **Integration Points**
+
+        List external systems, APIs, or services you'll integrate with:
+        (Press Enter to skip if none)
+
+    - name: Render Architecture Document
+      action: render_template
+      template: templates/solution-architecture.md
+      output_file: "{output_folder}/solution-architecture.md"
+      variables:
+        system_overview: "{system_overview}"
+        technology_stack: "{technology_stack}"
+        architecture_decisions: "{architecture_decisions}"
+        component_design: "{component_design}"
+        data_architecture: "{data_architecture}"
+        integration_points: "{integration_points}"
+        project_name: "{project_name}"
+        date: "{date}"
+
+    - name: Confirm Architecture Created
+      action: display
+      message: |
+        ✅ Solution Architecture Created!
+
+        File: {output_folder}/solution-architecture.md
+
+        This architecture will guide implementation across all epics.
+        As you implement each epic, you'll create JIT tech specs that
+        reference and expand on this architecture.
+
+        Next steps:
+        1. Review the architecture document
+        2. Initialize BACKLOG: madace sm init-backlog
+        3. For each epic, create JIT tech spec: madace architect jit-tech-spec
+
+  variables:
+    system_overview: ""
+    technology_stack: ""
+    architecture_decisions: ""
+    component_design: ""
+    data_architecture: ""
+    integration_points: ""

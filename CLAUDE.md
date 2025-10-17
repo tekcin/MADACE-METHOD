@@ -220,6 +220,20 @@ MADACE-METHOD/
   (BACKLOG/TODO/IN PROGRESS/DONE)
 - Entry point for checking project status
 
+### Manifest Files (CSV Format)
+
+**Agent Manifest** (`madace/_cfg/agent-manifest.csv`):
+
+- Fields: agent_id, name, module, type, file_path, installed_at
+
+**Workflow Manifest** (`madace/_cfg/workflow-manifest.csv`):
+
+- Fields: workflow_id, name, module, workflow_path, installed_at
+
+**Task Manifest** (`madace/_cfg/task-manifest.csv`):
+
+- Fields: task_id, name, module, installed_at
+
 ### Module Structure
 
 Each module includes:
@@ -253,14 +267,27 @@ Each module includes:
 > **Note**: This is a documentation-first project. Most of the CLI commands are
 > still in development for v1.0-alpha.
 
-### Installation & Management (In Development)
+### Installation & Management
 
 ```bash
-madace install              # Interactive installation
-madace status              # Show installation status
-madace list                # List available modules
-madace uninstall           # Remove installation
-madace update              # Update framework/modules
+# Interactive installation (In Development)
+madace install [--dest <path>] [--modules <modules...>]
+
+# Status and listing (Available Now)
+madace status                               # Show installation details and stats
+madace list [modules|agents|workflows]      # List installed components
+
+# Agent interaction (Available Now)
+madace agent <name> [--command <trigger>]   # Load agent and execute command
+
+# Development & validation (Available Now)
+madace dev validate                         # Validate installation and manifests
+madace dev info                             # Show framework information
+
+# Management (In Development)
+madace uninstall [--force]                  # Remove installation
+madace update [--modules <modules...>]      # Update framework/modules
+madace workflow <name> [--agent <agent>]    # Execute workflow
 ```
 
 ### Code Quality (Available Now)
@@ -360,7 +387,7 @@ madace builder create-module        # Scaffold new module
 ### Runtime
 
 - **Node.js** v20+ (required)
-- **JavaScript** (no TypeScript - intentional simplicity)
+- **JavaScript** ES modules (no TypeScript - intentional simplicity)
 
 ### Key Dependencies
 
@@ -369,18 +396,85 @@ madace builder create-module        # Scaffold new module
 - `inquirer` - Interactive prompts
 - `fs-extra` - File operations
 - `chalk`, `boxen`, `ora` - CLI UI
-- `csv-parse` - Manifest parsing
+- `csv-parse`, `csv-stringify` - Manifest CSV operations
+- `glob` - File pattern matching
+- `cli-table3` - Table formatting
+- `wrap-ansi` - Text wrapping
 
 ### Code Quality
 
-- **ESLint** 9.x with `yaml-eslint-parser`
+- **ESLint** 9.x with `yaml-eslint-parser` and `eslint-plugin-yml`
 - **Prettier** 3.x
 - **Husky** + lint-staged for pre-commit hooks
+- **eslint-config-prettier** for ESLint/Prettier integration
 
 ### Platform Support
 
 - MacOS, Linux, Windows
 - 5 IDE integrations: Claude Code, Windsurf, Cursor, Cline, Qwen
+
+## Core Implementation Architecture
+
+### Key Modules (scripts/core/)
+
+- **agent-loader.js** - YAML parsing and agent validation
+- **agent-runtime.js** - Agent execution context, critical actions, menu system
+- **workflow-engine.js** - Workflow loading, state management, step execution
+- **template-engine.js** - Variable substitution with multiple patterns
+- **config-manager.js** - Configuration loading, validation, path resolution
+- **manifest-manager.js** - CSV manifest operations (read/write/validate)
+- **platform-injections.js** - IDE-specific optimizations
+
+### Agent Runtime Execution Flow
+
+1. **Load Agent** (`agentRuntime.loadAgent`)
+   - Parse agent YAML file
+   - Build execution context (Story F3)
+   - Execute critical actions (Story F9)
+   - Display persona and menu (Story F10)
+
+2. **Execute Command** (`agentRuntime.executeCommand`)
+   - Match menu trigger
+   - Execute action (workflow/elicit/guide/custom)
+   - Track execution history
+
+3. **Execute Workflow** (`workflowEngine`)
+   - Load workflow YAML
+   - Initialize state with context
+   - Execute steps sequentially
+   - Support sub-workflows (Story F11)
+   - Persist state to disk
+
+### Execution Context Structure
+
+The runtime builds a comprehensive context object for each agent that is
+available to all workflows and templates for variable substitution:
+
+- **Agent identity**: `agent_id`, `agent_name`, `agent_title`, `agent_icon`
+- **Persona details**: `role`, `identity`, `communication_style`, `principles`
+- **Configuration**: `config`, `user_name`, `project_name`,
+  `communication_language`
+- **Paths** (cross-platform safe): `madace_root`, `project_root`,
+  `output_folder`
+- **Runtime metadata**: `loaded_at`, `session_id`
+
+### Critical Actions Available
+
+Built-in actions executed during agent initialization:
+
+- `check-config` - Validate configuration
+- `validate-installation` - Check installation integrity
+- `load-manifest` - Load agent/workflow manifests
+- `create-output-folder` - Ensure output directory exists
+
+### Menu Action Types
+
+Menu items can trigger different action types:
+
+- `workflow:<name>` - Execute workflow
+- `elicit:<prompt>` - Ask user for input
+- `guide:<guidance>` - Provide guidance message
+- Custom action strings - Agent-specific actions
 
 ## Development Guidelines
 
@@ -466,14 +560,14 @@ madace builder create-module        # Scaffold new module
 - Manifest consistency
 - Bundle integrity validation
 
-### Testing Commands (When Available)
+### Testing Commands (Planned for v1.0-beta)
 
 ```bash
-npm test                   # Run all tests
-npm run test:unit          # Run unit tests
-npm run test:integration   # Run integration tests
-npm run test:watch         # Watch mode
-npm run test:coverage      # Generate coverage report
+npm test                   # Currently returns success (no tests yet)
+npm run test:unit          # Run unit tests (planned)
+npm run test:integration   # Run integration tests (planned)
+npm run test:watch         # Watch mode (planned)
+npm run test:coverage      # Generate coverage report (planned)
 ```
 
 ### Testing Requirements (From PRD)

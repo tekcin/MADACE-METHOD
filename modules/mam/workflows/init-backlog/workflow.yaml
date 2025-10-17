@@ -1,0 +1,56 @@
+workflow:
+  name: init-backlog
+  description: Initialize BACKLOG from Epics.md and create mam-workflow-status.md
+  agent: sm
+  phase: 4
+
+  steps:
+    - name: Load Epics File
+      action: elicit
+      prompt: |
+        I need to initialize the story BACKLOG from your Epics file.
+
+        Please provide the path to your Epics.md file (or press Enter for default: {output_folder}/Epics.md):
+
+    - name: Verify Epics File Exists
+      action: validate_file
+      file_path: "{epics_path}"
+      error_message: "Epics file not found. Please ensure the file exists and try again."
+
+    - name: Extract Stories
+      action: extract_stories
+      description: Parse Epics.md and extract story list
+      input_file: "{epics_path}"
+
+    - name: Initialize State Machine
+      action: init_state_machine
+      description: Create mam-workflow-status.md with BACKLOG populated
+      output_file: "{output_folder}/mam-workflow-status.md"
+      stories: "{extracted_stories}"
+
+    - name: Confirm Initialization
+      action: display
+      message: |
+        ✅ BACKLOG initialized successfully!
+
+        Status file created: {output_folder}/mam-workflow-status.md
+
+        Stories loaded: {story_count}
+        - BACKLOG: {backlog_count}
+        - TODO: {todo_count} (first story ready for drafting)
+        - IN PROGRESS: 0
+        - DONE: 0
+
+        Next steps:
+        1. Review the TODO story: {todo_story_title}
+        2. Run: madace sm create-story
+        3. Draft the story with all required details
+        4. When ready, run: madace sm story-ready
+
+  variables:
+    epics_path: "{output_folder}/Epics.md"
+    extracted_stories: []
+    story_count: 0
+    backlog_count: 0
+    todo_count: 0
+    todo_story_title: ""

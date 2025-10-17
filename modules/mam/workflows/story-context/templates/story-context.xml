@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context>
+  <metadata>
+    <story-id>{story_id}</story-id>
+    <story-title>{story_title}</story-title>
+    <generated-at>{date}</generated-at>
+    <technical-domain>{technical_domain}</technical-domain>
+  </metadata>
+
+  <frameworks>
+    {frameworks}
+  </frameworks>
+
+  <patterns>
+    {patterns}
+  </patterns>
+
+  <architecture-decisions>
+    <!-- Relevant ADRs from solution-architecture.md -->
+    {architecture_decisions}
+  </architecture-decisions>
+
+  <tech-spec-sections>
+    <!-- Relevant sections from tech-spec files -->
+    {tech_spec_sections}
+  </tech-spec-sections>
+
+  <related-stories>
+    <!-- Patterns and solutions from similar completed stories -->
+    {related_stories}
+  </related-stories>
+
+  <dependencies>
+    {dependencies}
+  </dependencies>
+
+  <expertise-focus>
+    <!-- Domain-specific guidance for this story -->
+    <domain>{technical_domain}</domain>
+    <guidance>
+      This story focuses on {technical_domain} development using {frameworks}.
+      Key patterns to follow: {patterns}
+
+      Consult the architecture decisions and tech specs above for detailed implementation guidance.
+      Review related stories for proven patterns and solutions in this domain.
+    </guidance>
+  </expertise-focus>
+</story-context>

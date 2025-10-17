@@ -1,0 +1,78 @@
+workflow:
+  name: dev-story
+  description: Implement story from IN PROGRESS (Developer guided)
+  agent: dev
+  phase: 4
+
+  steps:
+    - name: Load Status File
+      action: load_state_machine
+      status_file: "{output_folder}/mam-workflow-status.md"
+
+    - name: Validate IN PROGRESS Story Exists
+      action: validate
+      condition: "{in_progress_story} != null"
+      error_message: |
+        ❌ No story in IN PROGRESS section.
+
+        Cannot implement - no active story.
+        Run: madace sm story-ready
+
+    - name: Display Story Info
+      action: display
+      message: |
+        🚀 Implementing Story
+
+        Story ID: [{in_progress_story_id}]
+        Title: {in_progress_story_title}
+        File: {output_folder}/{in_progress_story_filename}
+        Points: {in_progress_story_points}
+
+        Context file: {output_folder}/story-{in_progress_story_id}-context.xml
+
+    - name: Load Story Context
+      action: load_context_file
+      context_file: "{output_folder}/story-{in_progress_story_id}-context.xml"
+      optional: true
+      hint: "Run: madace sm story-context to generate targeted expertise"
+
+    - name: Display Acceptance Criteria
+      action: extract_acceptance_criteria
+      story_file: "{output_folder}/{in_progress_story_filename}"
+
+    - name: Confirm Ready to Implement
+      action: elicit
+      prompt: |
+        Review the story file and acceptance criteria above.
+
+        Are you ready to begin implementation? (yes/no):
+
+    - name: Implementation Guidance
+      action: display
+      message: |
+        🛠️ Implementation Guidelines
+
+        1. Follow acceptance criteria exactly
+        2. Consult context XML for architecture and patterns
+        3. Write tests as you code (TDD recommended)
+        4. Update implementation log in story file
+        5. Run lint/format frequently
+        6. Commit atomic changes with clear messages
+
+        Definition of Done:
+        - [ ] All acceptance criteria met
+        - [ ] Code implemented and reviewed
+        - [ ] Tests written and passing
+        - [ ] Documentation updated
+        - [ ] Code formatted and linted
+        - [ ] Ready for production
+
+        When complete, run: madace dev story-approved
+
+  variables:
+    in_progress_story: null
+    in_progress_story_id: ""
+    in_progress_story_title: ""
+    in_progress_story_filename: ""
+    in_progress_story_points: 0
+    context_loaded: false

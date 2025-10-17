@@ -1,0 +1,115 @@
+workflow:
+  name: story-approved
+  description: Move story from IN PROGRESS to DONE (mark complete)
+  agent: dev
+  phase: 4
+
+  steps:
+    - name: Load Status File
+      action: load_state_machine
+      status_file: "{output_folder}/mam-workflow-status.md"
+
+    - name: Validate IN PROGRESS Story Exists
+      action: validate
+      condition: "{in_progress_story} != null"
+      error_message: |
+        ❌ No story in IN PROGRESS section.
+
+        Cannot mark complete - no active story.
+
+    - name: Display Story Info
+      action: display
+      message: |
+        ✅ Story Ready for Approval
+
+        Story ID: [{in_progress_story_id}]
+        Title: {in_progress_story_title}
+        File: {output_folder}/{in_progress_story_filename}
+        Points: {in_progress_story_points}
+
+    - name: Verify Definition of Done
+      action: elicit
+      prompt: |
+        **Definition of Done Checklist:**
+
+        - [ ] All acceptance criteria met
+        - [ ] Code implemented and reviewed
+        - [ ] Tests written and passing
+        - [ ] Documentation updated
+        - [ ] Code formatted and linted (npm run lint && npm run format:check)
+        - [ ] Ready for production deployment
+
+        Have you completed ALL items in the Definition of Done? (yes/no):
+
+    - name: Confirm DoD Complete
+      action: validate
+      condition: '{dod_complete} == "yes"'
+      error_message: |
+        Story not approved. Please complete all Definition of Done items.
+
+    - name: Run Automated Checks
+      action: run_checks
+      commands:
+        - npm run lint
+        - npm run format:check
+      halt_on_error: true
+      error_message: "Automated checks failed. Please fix issues and try again."
+
+    - name: Request Implementation Summary
+      action: elicit
+      prompt: |
+        Please provide a brief summary of what was implemented (1-3 sentences):
+
+    - name: Request Files Changed
+      action: elicit
+      prompt: |
+        List the main files created or modified (one per line):
+
+    - name: Update Story File
+      action: update_story_file
+      story_file: "{output_folder}/{in_progress_story_filename}"
+      updates:
+        status: "Done"
+        implementation_summary: "{implementation_summary}"
+        files_changed: "{files_changed}"
+        completion_date: "{date}"
+
+    - name: Execute State Transition
+      action: state_transition
+      from: "IN_PROGRESS"
+      to: "DONE"
+      update_status_file: true
+
+    - name: Confirm Completion
+      action: display
+      message: |
+        ✅ Story Marked Complete!
+
+        Story: [{in_progress_story_id}] {in_progress_story_title}
+        Status: Done
+        Points: {in_progress_story_points}
+        Completed: {date}
+
+        State machine updated:
+        - DONE: {done_count} stories complete
+        - IN PROGRESS: Empty (ready for next story)
+        - TODO: {next_todo_story_title}
+        - BACKLOG: {backlog_remaining} stories remaining
+
+        Next steps:
+        1. Review TODO story if available
+        2. Run: madace sm create-story (to draft next story)
+        3. Or run: madace sm retrospective (if epic complete)
+
+  variables:
+    in_progress_story: null
+    in_progress_story_id: ""
+    in_progress_story_title: ""
+    in_progress_story_filename: ""
+    in_progress_story_points: 0
+    dod_complete: ""
+    implementation_summary: ""
+    files_changed: ""
+    done_count: 0
+    next_todo_story_title: ""
+    backlog_remaining: 0

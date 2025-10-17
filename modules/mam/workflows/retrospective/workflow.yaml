@@ -1,0 +1,117 @@
+workflow:
+  name: retrospective
+  description: Capture epic learnings after completion (Scrum Master facilitated)
+  agent: sm
+  phase: 4
+
+  steps:
+    - name: Introduction
+      action: display
+      message: |
+        🎯 Epic Retrospective
+
+        Let's reflect on what you learned during this epic.
+        This helps improve future epics and captures valuable insights.
+
+    - name: Identify Epic
+      action: elicit
+      prompt: |
+        Which epic have you just completed?
+
+        Enter epic number (e.g., 1, 2, 3):
+
+    - name: Load Status File
+      action: load_state_machine
+      status_file: "{output_folder}/mam-workflow-status.md"
+
+    - name: Calculate Epic Stats
+      action: calculate_epic_stats
+      epic_number: "{epic_number}"
+      status_file: "{output_folder}/mam-workflow-status.md"
+
+    - name: Display Epic Summary
+      action: display
+      message: |
+        Epic {epic_number} Summary:
+
+        Stories completed: {stories_completed}
+        Total points: {total_points}
+        Duration: {start_date} to {end_date}
+
+    - name: Gather What Went Well
+      action: elicit
+      prompt: |
+        **What Went Well?**
+
+        What worked well during this epic?
+        - Good decisions
+        - Effective approaches
+        - Things to continue
+
+    - name: Gather What Could Improve
+      action: elicit
+      prompt: |
+        **What Could Improve?**
+
+        What challenges did you face?
+        - Roadblocks
+        - Inefficiencies
+        - Areas for improvement
+
+    - name: Gather Key Learnings
+      action: elicit
+      prompt: |
+        **Key Learnings**
+
+        What did you learn that will help in future epics?
+        - Technical insights
+        - Process improvements
+        - Best practices discovered
+
+    - name: Gather Action Items
+      action: elicit
+      prompt: |
+        **Action Items**
+
+        What will you do differently in the next epic?
+
+    - name: Render Retrospective
+      action: render_template
+      template: templates/retrospective.md
+      output_file: "{output_folder}/retrospective-epic-{epic_number}.md"
+      variables:
+        epic_number: "{epic_number}"
+        stories_completed: "{stories_completed}"
+        total_points: "{total_points}"
+        start_date: "{start_date}"
+        end_date: "{end_date}"
+        what_went_well: "{what_went_well}"
+        what_could_improve: "{what_could_improve}"
+        key_learnings: "{key_learnings}"
+        action_items: "{action_items}"
+        date: "{date}"
+
+    - name: Confirm Retrospective Created
+      action: display
+      message: |
+        ✅ Retrospective Complete!
+
+        File: {output_folder}/retrospective-epic-{epic_number}.md
+
+        Your learnings have been captured and will help improve future epics.
+
+        Next steps:
+        1. Review action items before starting next epic
+        2. If more epics remain: Continue with next epic stories
+        3. If all epics complete: Project done! 🎉
+
+  variables:
+    epic_number: ""
+    stories_completed: 0
+    total_points: 0
+    start_date: ""
+    end_date: ""
+    what_went_well: ""
+    what_could_improve: ""
+    key_learnings: ""
+    action_items: ""

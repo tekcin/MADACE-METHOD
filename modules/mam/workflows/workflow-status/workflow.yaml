@@ -1,0 +1,90 @@
+workflow:
+  name: workflow-status
+  description: Display current workflow status and navigation
+  agent: sm
+  phase: any
+
+  steps:
+    - name: Load Status File
+      action: load_state_machine
+      status_file: "{output_folder}/mam-workflow-status.md"
+      optional: true
+
+    - name: Check Status File Exists
+      action: validate
+      condition: "{status_file_exists} == true"
+      else_message: |
+        📋 MAM Workflow Not Yet Initialized
+
+        Current Phase: Planning or earlier
+
+        To get started:
+        1. Complete Phase 2 (Planning): madace pm plan-project
+        2. (Optional) Phase 3 for Levels 3-4: madace architect solution-architecture
+        3. Initialize BACKLOG: madace sm init-backlog
+
+    - name: Display Current Phase
+      action: display
+      message: |
+        📊 MAM Workflow Status
+
+        **Current Phase:** Phase {current_phase}
+
+    - name: Display BACKLOG Status
+      action: display
+      message: |
+        **BACKLOG** ({backlog_count} stories)
+
+        {backlog_list}
+
+    - name: Display TODO Status
+      action: display
+      message: |
+        **TODO** (1 story max)
+
+        {todo_story_display}
+
+    - name: Display IN PROGRESS Status
+      action: display
+      message: |
+        **IN PROGRESS** (1 story max)
+
+        {in_progress_story_display}
+
+    - name: Display DONE Status
+      action: display
+      message: |
+        **DONE** ({done_count} stories, {done_points} points)
+
+        Recent completions:
+        {recent_done_list}
+
+    - name: Display Navigation
+      action: display
+      message: |
+        ---
+
+        **Next Actions:**
+
+        {next_actions}
+
+        **Available Commands:**
+        - madace sm create-story - Draft story from TODO
+        - madace sm story-ready - Approve TODO story (move to IN PROGRESS)
+        - madace sm story-context - Generate context for IN PROGRESS story
+        - madace dev dev-story - Implement IN PROGRESS story
+        - madace dev story-approved - Mark IN PROGRESS story complete
+        - madace sm retrospective - Capture epic learnings
+        - madace sm workflow-status - Display this status (anytime)
+
+  variables:
+    status_file_exists: false
+    current_phase: 4
+    backlog_count: 0
+    backlog_list: ""
+    todo_story_display: ""
+    in_progress_story_display: ""
+    done_count: 0
+    done_points: 0
+    recent_done_list: ""
+    next_actions: ""

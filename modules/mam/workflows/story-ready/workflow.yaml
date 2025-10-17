@@ -1,0 +1,103 @@
+workflow:
+  name: story-ready
+  description: Move story from TODO to IN PROGRESS (approve for implementation)
+  agent: sm
+  phase: 4
+
+  steps:
+    - name: Load Status File
+      action: load_state_machine
+      status_file: "{output_folder}/mam-workflow-status.md"
+
+    - name: Validate TODO Story Exists
+      action: validate
+      condition: "{todo_story} != null"
+      error_message: |
+        ❌ No story in TODO section.
+
+        Cannot approve story - TODO is empty.
+
+    - name: Display TODO Story
+      action: display
+      message: |
+        📋 Story Ready for Review
+
+        Story ID: [{todo_story_id}]
+        Title: {todo_story_title}
+        File: {output_folder}/{todo_story_filename}
+        Points: {todo_story_points}
+        Current Status: Draft
+
+    - name: Review Story File
+      action: elicit
+      prompt: |
+        Please review the story file at: {output_folder}/{todo_story_filename}
+
+        Checklist:
+        - [ ] User story is clear and complete
+        - [ ] Acceptance criteria are specific and testable
+        - [ ] Technical notes are adequate
+        - [ ] Dependencies are documented
+        - [ ] Testing requirements are defined
+
+        Is this story ready for implementation? (yes/no):
+
+    - name: Confirm Approval
+      action: validate
+      condition: '{approval} == "yes"'
+      error_message: |
+        Story not approved. Please update the story file and run this workflow again.
+
+    - name: Validate IN PROGRESS Empty
+      action: validate
+      condition: "{in_progress_story} == null"
+      error_message: |
+        ❌ Cannot move to IN PROGRESS: Already contains a story.
+
+        Current IN PROGRESS: [{in_progress_story_id}] {in_progress_story_title}
+
+        You must complete the current story before starting a new one:
+        Run: madace dev dev-story
+
+    - name: Update Story File Status
+      action: update_story_status
+      story_file: "{output_folder}/{todo_story_filename}"
+      new_status: "Ready"
+
+    - name: Execute State Transition
+      action: state_transition
+      from: "TODO"
+      to: "IN_PROGRESS"
+      update_status_file: true
+
+    - name: Confirm Transition
+      action: display
+      message: |
+        ✅ Story Approved and Moved to IN PROGRESS!
+
+        Story: [{todo_story_id}] {todo_story_title}
+        Status: Ready
+        File: {output_folder}/{todo_story_filename}
+
+        State machine updated:
+        - IN PROGRESS: [{todo_story_id}] {todo_story_title}
+        - TODO: {next_todo_story_title}
+        - BACKLOG: {backlog_remaining} stories remaining
+
+        Next steps:
+        1. Generate context: madace sm story-context
+        2. Implement story: madace dev dev-story
+        3. When complete: madace dev story-approved
+
+  variables:
+    todo_story: null
+    todo_story_id: ""
+    todo_story_title: ""
+    todo_story_filename: ""
+    todo_story_points: 0
+    in_progress_story: null
+    in_progress_story_id: ""
+    in_progress_story_title: ""
+    approval: ""
+    next_todo_story_title: ""
+    backlog_remaining: 0

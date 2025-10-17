@@ -1,0 +1,136 @@
+workflow:
+  name: create-story
+  description: Draft story from TODO section (Scrum Master guided)
+  agent: sm
+  phase: 4
+
+  steps:
+    - name: Load Status File
+      action: load_state_machine
+      status_file: "{output_folder}/mam-workflow-status.md"
+
+    - name: Validate TODO Story Exists
+      action: validate
+      condition: "{todo_story} != null"
+      error_message: |
+        ❌ No story in TODO section.
+
+        The TODO section is empty. This means either:
+        1. All stories are complete
+        2. The BACKLOG needs to be initialized
+
+        Run: madace sm init-backlog
+
+    - name: Display TODO Story
+      action: display
+      message: |
+        📋 Story Ready for Drafting
+
+        Story ID: [{todo_story_id}]
+        Title: {todo_story_title}
+        File: {todo_story_filename}
+        Points: {todo_story_points}
+        Status: Draft
+
+    - name: Gather Story Title
+      action: elicit
+      prompt: |
+        Let's draft this story together. I'll guide you through each section.
+
+        **Story Title**
+
+        Current: {todo_story_title}
+
+        Is this title clear and descriptive? (Enter to keep, or provide new title):
+
+    - name: Gather User Story
+      action: elicit
+      prompt: |
+        **User Story**
+
+        Write the user story in the format:
+        "As a [role], I want [feature] so that [benefit]"
+
+        This helps us understand WHO needs this, WHAT they need, and WHY:
+
+    - name: Gather Acceptance Criteria
+      action: elicit
+      prompt: |
+        **Acceptance Criteria**
+
+        List the specific, testable conditions that must be met for this story to be "done".
+
+        Format:
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+
+        Enter your acceptance criteria (one per line, or separated by semicolons):
+
+    - name: Gather Technical Notes
+      action: elicit
+      prompt: |
+        **Technical Notes** (Optional)
+
+        Any implementation details, architecture considerations, or technical constraints?
+
+        Enter notes or press Enter to skip:
+
+    - name: Gather Dependencies
+      action: elicit
+      prompt: |
+        **Dependencies** (Optional)
+
+        Does this story depend on other stories or external systems?
+
+        Enter dependencies (comma-separated story IDs like F31,F32) or press Enter to skip:
+
+    - name: Gather Testing Requirements
+      action: elicit
+      prompt: |
+        **Testing Requirements** (Optional)
+
+        What specific testing is needed? (unit tests, integration tests, manual testing)
+
+        Enter requirements or press Enter to skip:
+
+    - name: Render Story Template
+      action: render_template
+      template: templates/story.md
+      output_file: "{output_folder}/{todo_story_filename}"
+      variables:
+        story_id: "{todo_story_id}"
+        story_title: "{story_title_final}"
+        user_story: "{user_story}"
+        acceptance_criteria: "{acceptance_criteria}"
+        technical_notes: "{technical_notes}"
+        dependencies: "{dependencies}"
+        testing_requirements: "{testing_requirements}"
+        story_points: "{todo_story_points}"
+        story_status: "Draft"
+
+    - name: Confirm Story Created
+      action: display
+      message: |
+        ✅ Story Created Successfully!
+
+        File: {output_folder}/{todo_story_filename}
+        Status: Draft
+
+        Next steps:
+        1. Review the story file and make any edits
+        2. When ready for implementation, run: madace sm story-ready
+        3. This will move the story to IN PROGRESS and make the next story available in TODO
+
+  variables:
+    todo_story: null
+    todo_story_id: ""
+    todo_story_title: ""
+    todo_story_filename: ""
+    todo_story_points: 0
+    story_title_final: ""
+    user_story: ""
+    acceptance_criteria: ""
+    technical_notes: ""
+    dependencies: ""
+    testing_requirements: ""
