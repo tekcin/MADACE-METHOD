@@ -194,7 +194,7 @@ Choose a location for the MADACE-METHOD framework (not your project folder):
 cd ~/Documents  # or your preferred location
 
 # Clone the repository
-git clone https://github.com/your-org/MADACE-METHOD.git
+git clone https://github.com/tekcin/MADACE-METHOD.git
 
 # Navigate into the directory
 cd MADACE-METHOD

@@ -238,7 +238,7 @@ Cursor provides multiple ways to clone repositories:
 2. Type: `Git: Clone`
 3. Enter repository URL:
    ```
-   https://github.com/your-org/MADACE-METHOD.git
+   https://github.com/tekcin/MADACE-METHOD.git
    ```
 4. Choose a location (e.g., `~/Documents/`)
 5. Click "Open" when prompted
@@ -250,7 +250,7 @@ Cursor provides multiple ways to clone repositories:
 cd ~/Documents  # or your preferred location
 
 # Clone the repository
-git clone https://github.com/your-org/MADACE-METHOD.git
+git clone https://github.com/tekcin/MADACE-METHOD.git
 
 # Open in Cursor
 cd MADACE-METHOD

@@ -868,10 +868,9 @@ Systems are not directly compatible—complete BMAD projects before switching.
 - **Discord Community**: [Join here](https://discord.gg/your-invite) _(Coming
   soon)_
 - **Issue Tracker**:
-  [Report bugs](https://github.com/your-org/MADACE-METHOD/issues) _(Coming
-  soon)_
+  [Report bugs](https://github.com/tekcin/MADACE-METHOD/issues) _(Coming soon)_
 - **Discussions**:
-  [Share ideas](https://github.com/your-org/MADACE-METHOD/discussions) _(Coming
+  [Share ideas](https://github.com/tekcin/MADACE-METHOD/discussions) _(Coming
   soon)_
 
 ### For Contributors

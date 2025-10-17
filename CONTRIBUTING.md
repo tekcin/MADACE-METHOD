@@ -57,7 +57,7 @@ Follow the standard module structure and submit for community review.
 
 ```bash
 # Clone and install
-git clone https://github.com/your-org/MADACE-METHOD.git
+git clone https://github.com/tekcin/MADACE-METHOD.git
 cd MADACE-METHOD
 npm install
 

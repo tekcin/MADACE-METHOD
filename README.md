@@ -126,7 +126,7 @@ Choose your platform:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/MADACE-METHOD.git
+git clone https://github.com/tekcin/MADACE-METHOD.git
 cd MADACE-METHOD
 
 # Install dependencies
@@ -498,10 +498,9 @@ If you're using Claude Code or another AI coding assistant, see
 - 💬 **Discord Community**: [Join here](https://discord.gg/your-invite) _(Coming
   soon)_
 - 🐛 **Issue Tracker**:
-  [Report bugs](https://github.com/your-org/MADACE-METHOD/issues) _(Coming
-  soon)_
+  [Report bugs](https://github.com/tekcin/MADACE-METHOD/issues) _(Coming soon)_
 - 💡 **Discussions**:
-  [Share ideas](https://github.com/your-org/MADACE-METHOD/discussions) _(Coming
+  [Share ideas](https://github.com/tekcin/MADACE-METHOD/discussions) _(Coming
   soon)_
 - 📖 **Documentation**: [Read the docs](./docs/README.md)
 - 🤖 **For AI Assistants**: See [CLAUDE.md](./CLAUDE.md) for development

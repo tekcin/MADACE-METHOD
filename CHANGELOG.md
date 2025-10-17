@@ -139,6 +139,6 @@ and this project adheres to
 ---
 
 [Unreleased]:
-  https://github.com/your-org/MADACE-METHOD/compare/v1.0.0-alpha.1...HEAD
+  https://github.com/tekcin/MADACE-METHOD/compare/v1.0.0-alpha.1...HEAD
 [1.0.0-alpha.1]:
-  https://github.com/your-org/MADACE-METHOD/releases/tag/v1.0.0-alpha.1
+  https://github.com/tekcin/MADACE-METHOD/releases/tag/v1.0.0-alpha.1
