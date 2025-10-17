@@ -488,13 +488,18 @@ If you're using Claude Code or another AI coding assistant, see
 
 ## Roadmap
 
-### v1.0-alpha (Current - Q1 2026)
+### v1.0-alpha.1 (Released - 2025-10-17)
 
-- ✅ Core framework with agent system
-- ✅ MAM, MAB, CIS modules
-- ✅ 5 IDE integrations
-- ✅ Scale-adaptive planning (Level 0-4)
-- ⏳ Web bundles (experimental)
+- ✅ Core framework with agent system (100% complete)
+- ✅ MAM, MAB, CIS modules (100% complete)
+- ✅ 5 IDE integrations (100% complete)
+- ✅ Scale-adaptive planning Level 0-4 (100% complete)
+- ✅ Web bundles (experimental - bundler functional)
+- ✅ 74/74 stories complete across 9 epics
+- ✅ Code quality enforced (ESLint 9.x + Prettier 3.x)
+- ✅ Pre-commit hooks (Husky + lint-staged)
+- ✅ CI/CD pipeline (GitHub Actions)
+- ✅ Comprehensive documentation
 
 ### v1.0-beta (Q2 2026) - Focus: Stability & Production Readiness
 
