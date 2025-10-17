@@ -1,0 +1,118 @@
+workflow:
+  name: design-thinking
+  description: Design Thinking process - Empathy-driven problem solving
+  agent: creativity
+  phase: any
+
+  steps:
+    - name: Introduction
+      action: display
+      message: |
+        🎨 Design Thinking Workshop
+
+        Design Thinking is a human-centered approach to innovation.
+
+        5 Stages:
+        1. Empathize - Understand the user
+        2. Define - Frame the problem
+        3. Ideate - Generate solutions
+        4. Prototype - Build to think
+        5. Test - Learn and iterate
+
+        Let's begin!
+
+    - name: Stage 1 - Empathize
+      action: elicit
+      prompt: |
+        **Stage 1: EMPATHIZE** - Understand the user
+
+        Questions:
+        - Who is the user?
+        - What are their needs, pains, and desires?
+        - What's their context and environment?
+        - What have you observed about their behavior?
+
+        Your empathy insights:
+
+    - name: Stage 2 - Define
+      action: elicit
+      prompt: |
+        **Stage 2: DEFINE** - Frame the problem
+
+        Create a "How Might We" statement:
+        - Based on your empathy work, what's the real problem?
+        - Frame it as an opportunity, not a constraint
+        - Make it human-centered
+
+        Format: "How might we [action] for [user] so that [benefit]?"
+
+        Your problem statement:
+
+    - name: Stage 3 - Ideate
+      action: elicit
+      prompt: |
+        **Stage 3: IDEATE** - Generate many solutions
+
+        Brainstorm wildly:
+        - Quantity over quality
+        - Build on others' ideas
+        - Go for wild ideas
+        - Defer judgment
+
+        Your solution ideas (one per line):
+
+    - name: Stage 4 - Prototype
+      action: elicit
+      prompt: |
+        **Stage 4: PROTOTYPE** - Build to think
+
+        Select top 3 ideas and describe simple prototypes:
+        - What's the minimum version to test the idea?
+        - What can you build quickly and cheaply?
+        - What's the core assumption to validate?
+
+        Your prototype plans:
+
+    - name: Stage 5 - Test
+      action: elicit
+      prompt: |
+        **Stage 5: TEST** - Learn and iterate
+
+        Design your tests:
+        - Who will you test with?
+        - What questions will you ask?
+        - What metrics will you track?
+        - How will you iterate?
+
+        Your testing plan:
+
+    - name: Render Design Thinking Report
+      action: render_template
+      template: templates/design-thinking-report.md
+      output_file: "{output_folder}/design-thinking-{project_slug}.md"
+      variables:
+        empathize: "{empathize}"
+        define: "{define}"
+        ideate: "{ideate}"
+        prototype: "{prototype}"
+        test: "{test}"
+        date: "{date}"
+
+    - name: Confirm Complete
+      action: display
+      message: |
+        ✅ Design Thinking Workshop Complete!
+
+        File: {output_folder}/design-thinking-{project_slug}.md
+
+        You've gone through all 5 stages of human-centered innovation!
+
+        Next: Build your prototypes and test with real users.
+
+  variables:
+    empathize: ""
+    define: ""
+    ideate: ""
+    prototype: ""
+    test: ""
+    project_slug: ""

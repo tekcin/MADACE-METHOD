@@ -1,0 +1,150 @@
+workflow:
+  name: scamper
+  description: SCAMPER brainstorming - 7 creative lenses for innovation
+  agent: creativity
+  phase: any
+
+  steps:
+    - name: Introduction
+      action: display
+      message: |
+        💡 SCAMPER Brainstorming Session
+
+        SCAMPER is a powerful creative thinking technique that helps you
+        look at challenges from 7 different angles.
+
+        Let's unlock innovative ideas!
+
+    - name: Define Challenge
+      action: elicit
+      prompt: |
+        **Your Challenge**
+
+        What problem, product, or idea do you want to explore?
+
+        Challenge:
+
+    - name: Substitute Ideas
+      action: elicit
+      prompt: |
+        **SUBSTITUTE** - What can you replace or swap?
+
+        Questions to consider:
+        - What materials, processes, or people can be substituted?
+        - What else could work instead?
+        - What other ingredients, components, or approaches?
+
+        Your substitute ideas:
+
+    - name: Combine Ideas
+      action: elicit
+      prompt: |
+        **COMBINE** - What can you merge or blend together?
+
+        Questions to consider:
+        - What ideas, features, or purposes can you combine?
+        - What can you integrate or merge?
+        - What unlikely pairings might work?
+
+        Your combine ideas:
+
+    - name: Adapt Ideas
+      action: elicit
+      prompt: |
+        **ADAPT** - What can you adjust, alter, or tweak?
+
+        Questions to consider:
+        - What else is like this?
+        - What can you copy or emulate?
+        - What context or scenario can you adapt from?
+
+        Your adapt ideas:
+
+    - name: Modify Ideas
+      action: elicit
+      prompt: |
+        **MODIFY/MAGNIFY/MINIFY** - What can you change?
+
+        Questions to consider:
+        - Can you change the shape, look, sound, smell, or feel?
+        - Can you make it bigger, stronger, or more frequent?
+        - Can you make it smaller, lighter, or more compact?
+
+        Your modify ideas:
+
+    - name: Put to Other Uses
+      action: elicit
+      prompt: |
+        **PUT TO OTHER USES** - How else can this be used?
+
+        Questions to consider:
+        - What other purposes could this serve?
+        - Who else could use this?
+        - What other markets or contexts?
+
+        Your other uses ideas:
+
+    - name: Eliminate Ideas
+      action: elicit
+      prompt: |
+        **ELIMINATE** - What can you remove or simplify?
+
+        Questions to consider:
+        - What features can you remove?
+        - What can you streamline?
+        - What's not essential?
+
+        Your eliminate ideas:
+
+    - name: Reverse Ideas
+      action: elicit
+      prompt: |
+        **REVERSE/REARRANGE** - What can you flip or reorder?
+
+        Questions to consider:
+        - What if you reversed the process?
+        - What if you did the opposite?
+        - Can you rearrange components or sequence?
+
+        Your reverse ideas:
+
+    - name: Render SCAMPER Report
+      action: render_template
+      template: templates/scamper-report.md
+      output_file: "{output_folder}/scamper-{challenge_slug}.md"
+      variables:
+        challenge: "{challenge}"
+        substitute_ideas: "{substitute_ideas}"
+        combine_ideas: "{combine_ideas}"
+        adapt_ideas: "{adapt_ideas}"
+        modify_ideas: "{modify_ideas}"
+        other_uses_ideas: "{other_uses_ideas}"
+        eliminate_ideas: "{eliminate_ideas}"
+        reverse_ideas: "{reverse_ideas}"
+        date: "{date}"
+
+    - name: Confirm Complete
+      action: display
+      message: |
+        ✅ SCAMPER Session Complete!
+
+        File: {output_folder}/scamper-{challenge_slug}.md
+
+        You've explored your challenge through 7 creative lenses!
+
+        Next steps:
+        1. Review all ideas
+        2. Identify the most promising ones
+        3. Combine multiple ideas for even better solutions
+        4. Prototype and test!
+
+  variables:
+    challenge: ""
+    challenge_slug: ""
+    substitute_ideas: ""
+    combine_ideas: ""
+    adapt_ideas: ""
+    modify_ideas: ""
+    other_uses_ideas: ""
+    eliminate_ideas: ""
+    reverse_ideas: ""

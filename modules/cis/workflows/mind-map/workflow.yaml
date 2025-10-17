@@ -1,0 +1,104 @@
+workflow:
+  name: mind-map
+  description: Create a mind map for visual ideation
+  agent: creativity
+  phase: any
+
+  steps:
+    - name: Introduction
+      action: display
+      message: |
+        🗺️ Mind Mapping Session
+
+        Mind maps help you visualize connections and generate ideas
+        through radial thinking.
+
+        Start with a central idea and branch outward!
+
+    - name: Central Topic
+      action: elicit
+      prompt: |
+        **Central Topic**
+
+        What's the main idea at the center of your mind map?
+
+        Central topic:
+
+    - name: Main Branches
+      action: elicit
+      prompt: |
+        **Main Branches**
+
+        What are the 4-8 main categories or themes related to your
+        central topic?
+
+        Main branches (one per line):
+
+    - name: Sub-Branches
+      action: elicit
+      prompt: |
+        **Sub-Branches & Details**
+
+        For each main branch, add 2-5 sub-topics or details.
+        Format: [Main Branch] > Sub-topic
+
+        Example:
+        Marketing > Social media
+        Marketing > Content strategy
+        Product > Features
+        Product > User experience
+
+        Your sub-branches:
+
+    - name: Connections
+      action: elicit
+      prompt: |
+        **Cross-Connections**
+
+        What connections exist between different branches?
+        These are the insights where innovation happens!
+
+        Format: [Branch A] <-> [Branch B]: Connection insight
+
+        Your connections:
+
+    - name: Action Items
+      action: elicit
+      prompt: |
+        **Action Items**
+
+        Based on your mind map, what actions should you take?
+
+        Action items:
+
+    - name: Render Mind Map
+      action: render_template
+      template: templates/mind-map-report.md
+      output_file: "{output_folder}/mind-map-{topic_slug}.md"
+      variables:
+        central_topic: "{central_topic}"
+        main_branches: "{main_branches}"
+        sub_branches: "{sub_branches}"
+        connections: "{connections}"
+        action_items: "{action_items}"
+        date: "{date}"
+
+    - name: Confirm Complete
+      action: display
+      message: |
+        ✅ Mind Map Created!
+
+        File: {output_folder}/mind-map-{topic_slug}.md
+
+        You've visualized your thinking radially!
+
+        Pro tip: Draw this out on paper or use a digital tool for
+        even better visual thinking.
+
+  variables:
+    central_topic: ""
+    topic_slug: ""
+    main_branches: ""
+    sub_branches: ""
+    connections: ""
+    action_items: ""

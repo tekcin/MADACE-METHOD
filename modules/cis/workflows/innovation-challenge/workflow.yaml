@@ -1,0 +1,117 @@
+workflow:
+  name: innovation-challenge
+  description: Innovation challenge workshop for breakthrough thinking
+  agent: creativity
+  phase: any
+
+  steps:
+    - name: Introduction
+      action: display
+      message: |
+        🚀 Innovation Challenge Workshop
+
+        Push beyond conventional thinking with this structured
+        innovation process.
+
+        We'll explore provocations, constraints, and breakthroughs!
+
+    - name: Define Challenge
+      action: elicit
+      prompt: |
+        **Innovation Challenge**
+
+        What challenge or opportunity are you tackling?
+
+        Challenge:
+
+    - name: Current State
+      action: elicit
+      prompt: |
+        **Current State**
+
+        What's the current approach or solution?
+        What are its limitations?
+
+        Current state:
+
+    - name: Provocations
+      action: elicit
+      prompt: |
+        **Provocations**
+
+        Answer these provocative questions:
+        - What if money was no object?
+        - What if you had to 10x the result?
+        - What would a child suggest?
+        - What would the opposite solution be?
+
+        Your provocative ideas:
+
+    - name: Constraints as Opportunities
+      action: elicit
+      prompt: |
+        **Constraints as Opportunities**
+
+        What if you added constraints?
+        - Half the budget?
+        - Half the time?
+        - Can only use 3 features?
+
+        How would these constraints drive innovation?
+
+        Constraint-driven ideas:
+
+    - name: Analogies
+      action: elicit
+      prompt: |
+        **Analogies & Metaphors**
+
+        How do other industries solve similar problems?
+        - How does nature solve this?
+        - How does tech solve this?
+        - How does art solve this?
+
+        Analogies and insights:
+
+    - name: Breakthrough Ideas
+      action: elicit
+      prompt: |
+        **Breakthrough Ideas**
+
+        Synthesize your thinking:
+        What are your 3 most breakthrough ideas?
+
+        Breakthrough ideas:
+
+    - name: Render Innovation Report
+      action: render_template
+      template: templates/innovation-report.md
+      output_file: "{output_folder}/innovation-{challenge_slug}.md"
+      variables:
+        challenge: "{challenge}"
+        current_state: "{current_state}"
+        provocations: "{provocations}"
+        constraints: "{constraints}"
+        analogies: "{analogies}"
+        breakthrough_ideas: "{breakthrough_ideas}"
+        date: "{date}"
+
+    - name: Confirm Complete
+      action: display
+      message: |
+        ✅ Innovation Challenge Complete!
+
+        File: {output_folder}/innovation-{challenge_slug}.md
+
+        You've pushed beyond conventional thinking!
+
+        Next: Prototype your breakthrough ideas and test them.
+
+  variables:
+    challenge: ""
+    challenge_slug: ""
+    current_state: ""
+    provocations: ""
+    constraints: ""
+    analogies: ""
+    breakthrough_ideas: ""

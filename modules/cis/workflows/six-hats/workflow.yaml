@@ -1,0 +1,132 @@
+workflow:
+  name: six-hats
+  description: Six Thinking Hats - Parallel thinking from 6 perspectives
+  agent: creativity
+  phase: any
+
+  steps:
+    - name: Introduction
+      action: display
+      message: |
+        🎩 Six Thinking Hats Session
+
+        This technique helps you think about a problem from 6 different
+        perspectives, one at a time, ensuring thorough analysis.
+
+        Each "hat" represents a different mode of thinking.
+
+    - name: Define Topic
+      action: elicit
+      prompt: |
+        **Your Topic**
+
+        What decision, problem, or idea do you want to explore?
+
+        Topic:
+
+    - name: White Hat - Facts
+      action: elicit
+      prompt: |
+        🤍 **WHITE HAT - Facts & Information**
+
+        Focus purely on data and facts:
+        - What information do we have?
+        - What information do we need?
+        - What are the facts?
+
+        Facts and information:
+
+    - name: Red Hat - Feelings
+      action: elicit
+      prompt: |
+        🔴 **RED HAT - Emotions & Intuition**
+
+        Express feelings without justification:
+        - What's your gut feeling?
+        - What emotions come up?
+        - What's your intuition saying?
+
+        Feelings and intuition:
+
+    - name: Yellow Hat - Benefits
+      action: elicit
+      prompt: |
+        🟡 **YELLOW HAT - Benefits & Optimism**
+
+        Explore positive aspects:
+        - What are the benefits?
+        - What's the best-case scenario?
+        - What opportunities exist?
+
+        Benefits and positives:
+
+    - name: Black Hat - Risks
+      action: elicit
+      prompt: |
+        🖤 **BLACK HAT - Risks & Caution**
+
+        Consider risks and problems:
+        - What could go wrong?
+        - What are the weaknesses?
+        - What obstacles exist?
+
+        Risks and concerns:
+
+    - name: Green Hat - Creativity
+      action: elicit
+      prompt: |
+        🟢 **GREEN HAT - Creativity & Alternatives**
+
+        Generate creative ideas:
+        - What are alternative solutions?
+        - What creative possibilities exist?
+        - What if we tried something completely different?
+
+        Creative ideas:
+
+    - name: Blue Hat - Process
+      action: elicit
+      prompt: |
+        🔵 **BLUE HAT - Process & Summary**
+
+        Step back and organize:
+        - What have we learned?
+        - What's the next action?
+        - How do we move forward?
+
+        Summary and next steps:
+
+    - name: Render Six Hats Report
+      action: render_template
+      template: templates/six-hats-report.md
+      output_file: "{output_folder}/six-hats-{topic_slug}.md"
+      variables:
+        topic: "{topic}"
+        white_hat: "{white_hat}"
+        red_hat: "{red_hat}"
+        yellow_hat: "{yellow_hat}"
+        black_hat: "{black_hat}"
+        green_hat: "{green_hat}"
+        blue_hat: "{blue_hat}"
+        date: "{date}"
+
+    - name: Confirm Complete
+      action: display
+      message: |
+        ✅ Six Thinking Hats Complete!
+
+        File: {output_folder}/six-hats-{topic_slug}.md
+
+        You've analyzed your topic from all 6 perspectives!
+
+        The balanced view helps make better decisions.
+
+  variables:
+    topic: ""
+    topic_slug: ""
+    white_hat: ""
+    red_hat: ""
+    yellow_hat: ""
+    black_hat: ""
+    green_hat: ""
+    blue_hat: ""
