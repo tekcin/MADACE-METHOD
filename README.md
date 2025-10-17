@@ -105,11 +105,20 @@ Unlock innovation, problem-solving, and creative thinking:
 
 ## Installation
 
+### Installation Guides
+
+Choose your platform:
+
+- 📘 **[VS Code Installation Guide](./INSTALL-VSCODE.md)** - Step-by-step for
+  Visual Studio Code users
+- 📗 Claude Code, Windsurf, Cursor - Use automated installer below
+
 ### Prerequisites
 
 - [Node.js](https://nodejs.org) v20+ required
 - Git (for version control)
-- One of the supported IDEs: Claude Code, Windsurf, Cursor, Cline, or Qwen
+- One of the supported IDEs: Claude Code, Windsurf, Cursor, Cline, Qwen, or VS
+  Code
 
 ### Quick Start
 
@@ -419,7 +428,21 @@ workflow:
 
 ## Documentation
 
+### Getting Started
+
+- 📘 [VS Code Installation Guide](./INSTALL-VSCODE.md) - Complete setup for VS
+  Code users
 - 📚 [Full Documentation](./docs/README.md)
+
+### For Users
+
+- 🏗️ [MAM Workflows Guide](./docs/modules/mam/workflows/README.md)
+- 🛠️ [Agent Creation Guide](./docs/modules/mab/create-agent/README.md)
+- 📦 [Module Structure Guide](./docs/modules/mab/create-module/README.md)
+- 🎨 [CIS Creativity Guide](./docs/modules/cis/README.md)
+
+### For Developers
+
 - 🤖 [CLAUDE.md](./CLAUDE.md) - Guide for AI assistants working with this
   codebase
 - 📋 [Core PRD](./PRD-MADACE-CORE.md) - Complete product requirements
@@ -427,10 +450,6 @@ workflow:
   (v1.0-beta to stable)
 - 📖 [Terminology Reference](./TERMINOLOGY-REFERENCE.md) - Complete terminology
   guide
-- 🏗️ [MAM Workflows Guide](./docs/modules/mam/workflows/README.md)
-- 🛠️ [Agent Creation Guide](./docs/modules/mab/create-agent/README.md)
-- 📦 [Module Structure Guide](./docs/modules/mab/create-module/README.md)
-- 🎨 [CIS Creativity Guide](./docs/modules/cis/README.md)
 
 ---
 
