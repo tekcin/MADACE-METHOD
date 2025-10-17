@@ -28,12 +28,14 @@ function logTest(name, passed, error = null) {
   } else {
     results.failed++;
     console.log(`❌ ${name}`);
-    if (error) {console.error(`   Error: ${error.message}`);}
+    if (error) {
+      console.error(`   Error: ${error.message}`);
+    }
   }
 }
 
 async function runTests() {
-  console.log('🧪 MADACE-METHOD v1.0-alpha.1 Alpha Test Suite\n');
+  console.log('🧪 MADACE-METHOD v1.0-alpha.2 Alpha Test Suite\n');
   console.log('='.repeat(60));
   console.log('Testing Core Framework Components\n');
 
@@ -151,7 +153,7 @@ async function runTests() {
   }
 
   // Print Summary
-  console.log(`\n${  '='.repeat(60)}`);
+  console.log(`\n${'='.repeat(60)}`);
   console.log('Test Summary\n');
   console.log(`Total Tests: ${results.tests.length}`);
   console.log(`✅ Passed: ${results.passed}`);
@@ -164,11 +166,13 @@ async function runTests() {
       .filter((t) => !t.passed)
       .forEach((t) => {
         console.log(`   - ${t.name}`);
-        if (t.error) {console.log(`     ${t.error.message}`);}
+        if (t.error) {
+          console.log(`     ${t.error.message}`);
+        }
       });
   }
 
-  console.log(`\n${  '='.repeat(60)}`);
+  console.log(`\n${'='.repeat(60)}`);
 
   // Exit with appropriate code
   process.exit(results.failed > 0 ? 1 : 0);

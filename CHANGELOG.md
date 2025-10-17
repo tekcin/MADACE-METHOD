@@ -10,7 +10,39 @@ and this project adheres to
 
 ### Added
 
-- Complete v1.0-alpha implementation
+- Planning v1.0-beta features
+
+## [1.0.0-alpha.2] - 2025-10-17
+
+### Fixed
+
+- **Issue #1: Missing MAM Agent Definitions (HIGH PRIORITY)**
+  - Created all 5 missing MAM agent files:
+    - pm.agent.yaml (Product Manager - scale-adaptive planning)
+    - analyst.agent.yaml (Business Analyst - requirements discovery)
+    - architect.agent.yaml (Solution Architect - technical design)
+    - sm.agent.yaml (Scrum Master - story lifecycle management)
+    - dev.agent.yaml (Developer - implementation specialist)
+
+- **Issue #2: Workflow Schema Mismatch (HIGH PRIORITY)**
+  - Updated workflow engine to accept both 'type' and 'action' fields
+  - Automatic normalization for backward compatibility
+  - All 15+ existing workflows now work without modification
+
+- **Issue #3: Template Engine Pattern Support**
+  - Added singleBrace pattern: {variable-name}
+  - Supports hyphens in variable names
+  - Set as default pattern for workflow compatibility
+
+- **Issue #4: Test Suite Corrections**
+  - Fixed workflow name expectations
+  - Fixed CIS agent name expectations
+  - Removed unused imports
+
+### Changed
+
+- Alpha test success rate improved from 50% (6/12) to 100% (12/12)
+- All critical bugs from alpha.1 testing resolved
 
 ## [1.0.0-alpha.1] - 2025-10-17
 

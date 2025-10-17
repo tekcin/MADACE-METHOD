@@ -488,10 +488,13 @@ If you're using Claude Code or another AI coding assistant, see
 
 ## Roadmap
 
-### v1.0-alpha.1 (Released - 2025-10-17)
+### v1.0-alpha.2 (Released - 2025-10-17)
+
+**Latest stable alpha release**
 
 - ✅ Core framework with agent system (100% complete)
-- ✅ MAM, MAB, CIS modules (100% complete)
+- ✅ MAM module complete with all 5 agents (PM, Analyst, Architect, SM, DEV)
+- ✅ MAB (MADACE Builder) and CIS (Creative Intelligence Suite) modules
 - ✅ 5 IDE integrations (100% complete)
 - ✅ Scale-adaptive planning Level 0-4 (100% complete)
 - ✅ Web bundles (experimental - bundler functional)
@@ -500,6 +503,14 @@ If you're using Claude Code or another AI coding assistant, see
 - ✅ Pre-commit hooks (Husky + lint-staged)
 - ✅ CI/CD pipeline (GitHub Actions)
 - ✅ Comprehensive documentation
+- ✅ 100% alpha test pass rate (12/12 tests)
+
+**What's New in alpha.2:**
+
+- Fixed missing MAM agent definitions (5 agents)
+- Workflow engine accepts both 'type' and 'action' fields
+- Template engine supports single-brace {variable} pattern
+- All alpha test failures resolved
 
 ### v1.0-beta (Q2 2026) - Focus: Stability & Production Readiness
 
