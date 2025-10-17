@@ -165,7 +165,7 @@ Situation:**
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# Password: 12345
+# Password: [REDACTED]
 ```
 
 ### 2. Background Process
@@ -331,8 +331,8 @@ BACKLOG → TODO → IN PROGRESS → DONE
 6. **"lets proceed to next phrase?"** - Continue to Epic 3
 7. **"please run test epic 3?"** - Run comprehensive tests
 8. **"Please reinstall bash?"** - Install Homebrew and newer bash
-9. **"sudo password is 12345. please install bash and brew."** - Provide sudo
-   access
+9. **"sudo password is [REDACTED]. please install bash and brew."** - Provide
+   sudo access
 10. **"lets fix and make it stick?"** - Fix csv-stringify dependency error
 11. **"please update all \*.md files in this code base."** - Update
     documentation
@@ -356,8 +356,8 @@ BACKLOG → TODO → IN PROGRESS → DONE
 
 - **OS:** macOS (Darwin 24.6.0)
 - **Platform:** darwin
-- **User:** nimda
-- **Working Directory:** /Users/nimda/MADACE-METHOD
+- **User:** [REDACTED]
+- **Working Directory:** [PROJECT_ROOT]
 - **Node.js:** v20+ (required)
 - **Bash:** GNU bash 3.2.57 (system default, working fine)
 - **Git:** Initialized, not on remote yet
@@ -460,7 +460,7 @@ When resuming this session:
 1. **Verify Environment:**
 
    ```bash
-   cd /Users/nimda/MADACE-METHOD
+   cd [PROJECT_ROOT]
    git status
    npm run lint
    ```
