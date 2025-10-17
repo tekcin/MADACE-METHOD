@@ -3,904 +3,638 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with
 code in this repository.
 
-## Project Overview
+## Quick Command Reference
 
-MADACE-METHOD (Methodology for AI-Driven Agile Collaboration Engine) is a
-universal human-AI collaboration framework that orchestrates specialized AI
-agents through guided workflows. Unlike traditional AI tools that provide direct
-answers, MADACE agents act as expert facilitators, asking questions and guiding
-reflective processes to amplify human potential.
-
-**Key Philosophy:** Human amplification, not replacement. AI agents facilitate
-thinking rather than do the work.
-
-## Architecture
-
-### Core Components
-
-1. **MADACE Core Engine**
-   - Agent loading system (YAML-defined agents with personas)
-   - Workflow execution engine (orchestrates multi-step processes)
-   - Configuration management (natural language configs: YAML/Markdown/XML)
-   - MADACE Master agent (central orchestrator)
-
-2. **Module System**
-   - **MAM (MADACE Method)**: Agile software development with scale-adaptive
-     planning (Level 0-4)
-   - **MAB (MADACE Builder)**: Tools for creating custom agents, workflows, and
-     modules
-   - **CIS (Creative Intelligence Suite)**: Brainstorming and innovation
-     workflows
-   - All modules install to single `madace/` folder with manifest tracking
-
-3. **Installation System**
-   - Interactive CLI installer with module selection
-   - IDE-specific optimizations (Claude Code, Windsurf, Cursor, Cline, Qwen)
-   - Platform detection and injection
-
-### Key Architectural Patterns
-
-**Scale-Adaptive Planning (MAM):**
-
-- Level 0: Single atomic change → tech-spec + 1 story
-- Level 1: 1-10 stories → tech-spec + epic
-- Level 2: 5-15 stories → Focused PRD
-- Level 3: 12-40 stories → Full PRD + Solutioning
-- Level 4: 40+ stories → Enterprise PRD + Architecture
-
-**Just-In-Time Design:**
-
-- Architecture created once upfront (Phase 3)
-- Tech specs created per epic during implementation (not all upfront)
-- Reduces waste from over-planning
-
-**Story State Machine (Phase 4):**
-
-```
-BACKLOG → TODO → IN PROGRESS → DONE
-```
-
-- Single source of truth: `mam-workflow-status.md`
-- Only one story in TODO, one in IN PROGRESS at a time
-- No searching for "next story"—always read from status file
-
-**Natural Language Configuration:**
-
-- No executable code in core framework definitions
-- All configs in YAML/Markdown/XML
-- Human-readable and AI-optimizable
-
-## Key Concepts
-
-### Scale Levels
-
-Projects automatically route through different workflows based on complexity:
-
-- **Level 0**: Single atomic change → tech-spec + 1 story
-- **Level 1**: 1-10 stories → tech-spec + epic + 2-3 stories
-- **Level 2**: 5-15 stories → Focused PRD + tech-spec
-- **Level 3**: 12-40 stories → Full PRD + Epics → Solutioning phase
-- **Level 4**: 40+ stories → Enterprise PRD + Epics → Solutioning phase
-
-**Routing Logic:**
-
-- PM agent assesses complexity via Q&A
-- Detects project type (web, mobile, backend, game, etc.)
-- Checks greenfield vs brownfield
-- Routes to appropriate sub-workflow
-
-### Four-Phase Workflow (MAM)
-
-1. **Analysis (Optional)**: Brainstorming, research, briefs
-   - Agents: Analyst, Researcher, Game Designer
-   - Workflows: `brainstorm-project`, `research`, `product-brief`, `game-brief`
-
-2. **Planning (Required)**: Scale-adaptive PRD/GDD/tech-spec generation
-   - Agent: PM (Product Manager)
-   - Primary workflow: `plan-project` (scale-adaptive router)
-   - Outputs: PRD.md, GDD.md, tech-spec.md, Epics.md
-
-3. **Solutioning (Levels 3-4 Only)**: Architecture and per-epic JIT tech specs
-   - Agent: Architect
-   - Workflows: `solution-architecture`, `tech-spec` (per epic)
-   - Outputs: solution-architecture.md, tech-spec-epic-N.md
-
-4. **Implementation (Iterative)**: Story creation, context injection,
-   development, approval
-   - Agents: SM (Scrum Master), DEV (Developer)
-   - Workflows: `create-story`, `story-ready`, `story-context`, `dev-story`,
-     `story-approved`, `retrospective`
-   - Uses Story State Machine (see below)
-
-### Story State Machine
-
-Four-state lifecycle that eliminates searching:
-
-- **BACKLOG**: Ordered list of stories to draft (ID, title, filename)
-- **TODO**: Single story ready for drafting (status: "Draft")
-- **IN PROGRESS**: Single story approved for development (status: "Ready")
-- **DONE**: Completed stories with dates and points (status: "Done")
-
-**State Transitions:**
-
-- Phase 2/3 → Phase 4: Populate BACKLOG, initialize TODO
-- `create-story`: Drafts story in TODO
-- `story-ready`: TODO → IN PROGRESS, next BACKLOG → TODO
-- `dev-story`: Implements story from IN PROGRESS
-- `story-approved`: IN PROGRESS → DONE
-
-**Critical Rules:**
-
-- Only ONE story in TODO at a time
-- Only ONE story in IN PROGRESS at a time
-- Agents never search—they always read the exact story from
-  `mam-workflow-status.md`
-- Single source of truth for all story state
-
-### Dynamic Context Injection
-
-`story-context` workflow generates targeted expertise XML per story:
-
-- Relevant architectural decisions (from solution-architecture.md)
-- Related tech spec sections
-- Previously completed story patterns
-- Domain-specific expertise (frontend, backend, database, API)
-
-**Purpose:**
-
-- Replaces static `devLoadAlways` lists with dynamic, targeted context
-- Provides just-in-time knowledge relevant to current story
-- Reduces cognitive load and context switching
-
-### Brownfield vs Greenfield
-
-- **Greenfield**: New project from scratch
-  - Start with Phase 1 (Analysis) or Phase 2 (Planning)
-  - No existing codebase to analyze
-
-- **Brownfield**: Existing codebase
-  - Requires `brownfield-analysis` workflow (planned for v1.0-beta)
-  - Generates: codebase-analysis.md, existing-features.md, technical-debt.md
-  - Supports retroactive story generation for existing features
-  - Enables incremental adoption of MADACE
-
-## File Structure
-
-```
-MADACE-METHOD/
-├── madace/                      # Installed in user projects
-│   ├── core/
-│   │   ├── config.yaml          # Core configuration
-│   │   └── agents/
-│   │       └── madace-master.agent.yaml
-│   ├── _cfg/
-│   │   ├── agent-manifest.csv   # Installed agents
-│   │   ├── workflow-manifest.csv
-│   │   └── task-manifest.csv
-│   ├── mam/                     # MADACE Method module
-│   │   ├── agents/
-│   │   │   ├── pm.agent.yaml
-│   │   │   ├── analyst.agent.yaml
-│   │   │   ├── architect.agent.yaml
-│   │   │   ├── sm.agent.yaml
-│   │   │   └── dev.agent.yaml
-│   │   └── workflows/
-│   │       ├── plan-project/
-│   │       ├── create-story/
-│   │       └── dev-story/
-│   ├── mab/                     # MADACE Builder module
-│   │   └── agents/
-│   │       └── builder.agent.yaml
-│   └── cis/                     # Creative Intelligence Suite
-│       └── agents/
-├── bundles/                     # Web bundles (ChatGPT/Gemini)
-├── docs/                        # Documentation
-├── scripts/                     # CLI and utilities
-└── {output_folder}/
-    ├── PRD.md
-    ├── GDD.md
-    ├── Epics.md
-    ├── tech-spec.md
-    ├── story-*.md
-    └── mam-workflow-status.md   # Phase and story tracking
-```
-
-## Important Files
-
-### Configuration
-
-- `madace/core/config.yaml` - Core config (project_name, output_folder,
-  user_name, communication_language)
-- `madace/_cfg/agent-manifest.csv` - Registry of installed agents
-- `madace/_cfg/workflow-manifest.csv` - Registry of available workflows
-
-### MAM Tracking
-
-- `mam-workflow-status.md` - Phase tracking and story state machine
-  (BACKLOG/TODO/IN PROGRESS/DONE)
-- Entry point for checking project status
-
-### Manifest Files (CSV Format)
-
-**Agent Manifest** (`madace/_cfg/agent-manifest.csv`):
-
-- Fields: agent_id, name, module, type, file_path, installed_at
-
-**Workflow Manifest** (`madace/_cfg/workflow-manifest.csv`):
-
-- Fields: workflow_id, name, module, workflow_path, installed_at
-
-**Task Manifest** (`madace/_cfg/task-manifest.csv`):
-
-- Fields: task_id, name, module, installed_at
-
-### Module Structure
-
-Each module includes:
-
-- `_module-installer/` - Installation configuration and logic
-- `agents/*.agent.yaml` - Agent definitions
-- `workflows/*/workflow.yaml` - Workflow configurations
-- `workflows/*/templates/` - Output templates
-
-## Naming Conventions
-
-### Files
-
-- Agent files: `*.agent.yaml`
-- Workflows: kebab-case (`plan-project`, `create-story`)
-- Config keys: snake_case (`project_name`, `output_folder`)
-- Commands: asterisk prefix (`*list-tasks`, `*plan-project`)
-
-### Stories
-
-- Pattern: `story-{slug}.md` or `story-{slug}-N.md`
-- Example: `story-user-authentication.md`, `story-user-auth-1.md`
-
-### Tech Specs
-
-- Single: `tech-spec.md`
-- Per-epic (JIT): `tech-spec-epic-1.md`, `tech-spec-epic-2.md`
-
-## Development Commands
-
-> **Note**: This is a documentation-first project. Most of the CLI commands are
-> still in development for v1.0-alpha.
-
-### Installation & Management
+### Essential Development Commands
 
 ```bash
-# Interactive installation (In Development)
-madace install [--dest <path>] [--modules <modules...>]
+# Code Quality (Run before commits)
+npm run lint:fix           # Auto-fix ESLint issues
+npm run format:fix         # Auto-format with Prettier
 
-# Status and listing (Available Now)
-madace status                               # Show installation details and stats
-madace list [modules|agents|workflows]      # List installed components
+# Testing
+npm test                   # Run alpha test suite (test-alpha.mjs)
+                          # 12 tests covering agents, workflows, templates
 
-# Agent interaction (Available Now)
-madace agent <name> [--command <trigger>]   # Load agent and execute command
-
-# Development & validation (Available Now)
-madace dev validate                         # Validate installation and manifests
-madace dev info                             # Show framework information
-
-# Management (In Development)
-madace uninstall [--force]                  # Remove installation
-madace update [--modules <modules...>]      # Update framework/modules
-madace workflow <name> [--agent <agent>]    # Execute workflow
-```
-
-### Code Quality (Available Now)
-
-```bash
-npm run lint               # Check code quality (ESLint)
-npm run lint:fix           # Auto-fix linting issues
-npm run format:check       # Check formatting (Prettier)
-npm run format:fix         # Auto-format code
-```
-
-**Pre-commit hooks**: Automatically run `lint:fix` and `format:fix` on staged
-files via Husky.
-
-### Build & Distribution (In Development)
-
-```bash
+# Build & Distribution
 npm run bundle             # Generate web bundles (ChatGPT/Gemini)
-npm run rebundle           # Rebundle existing bundles
+npm run rebundle           # Regenerate existing bundles
 npm run validate:bundles   # Validate bundle integrity
 npm run flatten            # Flatten codebase for analysis
+
+# Setup
+npm install               # Install dependencies + setup Husky hooks
 ```
 
 ### Git Workflow
 
+Pre-commit hooks automatically run `lint:fix` and `format:fix` on staged files.
+
+**Conventional Commits Required:**
+
 ```bash
-# Conventional commits enforced via pre-commit hooks
 feat(scope):      # New features
 fix(scope):       # Bug fixes
-docs(scope):      # Documentation changes
+docs(scope):      # Documentation
 refactor(scope):  # Code refactoring
-test(scope):      # Test additions/changes
-chore(scope):     # Maintenance tasks
+test(scope):      # Tests
+chore(scope):     # Maintenance
 ```
 
 **Examples:**
 
 ```bash
-git commit -m "feat(mam): add brownfield analysis workflow"
-git commit -m "fix(core): resolve state machine race condition"
-git commit -m "docs(readme): update installation instructions"
+git commit -m "feat(mam): add story state validation"
+git commit -m "fix(core): resolve path handling on Windows"
+git commit -m "docs(readme): update installation guide"
 ```
 
-## Workflow Invocation
+---
 
-### Pattern
+## Project Overview
 
-```bash
-madace [agent-name] [workflow-name]
+**MADACE-METHOD** (Methodology for AI-Driven Agile Collaboration Engine) is a
+universal human-AI collaboration framework that orchestrates specialized AI
+agents through guided workflows.
+
+**Core Philosophy:** Human amplification, not replacement. AI agents facilitate
+thinking rather than do the work.
+
+**Key Innovation:** Natural language configuration (YAML/Markdown/XML only - no
+executable code).
+
+---
+
+## Architecture: The Big Picture
+
+### Core System Flow
+
+```
+User Command → CLI (madace.js)
+    ↓
+Agent Runtime (agent-runtime.js)
+    ↓
+├─ Load Agent (agent-loader.js) ──→ Parse YAML + Validate Schema
+├─ Build Context (config-manager.js) ──→ Merge Variables
+├─ Execute Critical Actions ──→ Validate Installation
+└─ Execute Command
+    ↓
+Workflow Engine (workflow-engine.js)
+    ↓
+├─ Load Workflow YAML
+├─ Execute Steps Sequentially
+└─ For Each Step:
+    ├─ Template Engine (template-engine.js) ──→ Render with Variables
+    ├─ State Machine (state-machine.js) ──→ Update Status Files
+    └─ Manifest Manager (manifest-manager.js) ──→ Track Components
 ```
 
-### Common Workflows
+### Critical Component Relationships
 
-**Phase 1 - Analysis (Optional):**
+**1. Context Flow Across Layers**
 
-```bash
-madace analyst workflow-status      # Universal entry point
-madace analyst brainstorm-project   # Explore solution
-madace analyst research             # Conduct research
-madace analyst product-brief        # Strategic planning
+The execution context is built once in `agent-runtime.js` and flows through:
+
+- Workflow Engine → receives full agent context
+- Template Engine → merges workflow + agent context
+- Sub-workflows → inherit parent context + add their own
+
+**Key Insight:** Variables defined at agent load (`{user_name}`,
+`{project_name}`) are available in templates nested 3+ levels deep in
+sub-workflows.
+
+**2. State Machine Integration Points**
+
+`state-machine.js` is NOT standalone - it integrates with:
+
+- **Workflow Engine**: Workflows call `todoToInProgress()`, `inProgressToDone()`
+- **Config Manager**: Paths resolved via `output_folder` config
+- **Template Engine**: Status file uses mustache `{{variable}}` pattern
+
+**Key Insight:** Never directly edit `mam-workflow-status.md`. Always use state
+transition methods to ensure atomic updates and validation.
+
+**3. Template Variable Resolution Priority**
+
+Templates support 5 patterns, resolved in this order:
+
+1. `{variable}` - Single brace (workflow.yaml default)
+2. `{{variable}}` - Mustache (Markdown templates)
+3. `${variable}` - Dollar brace (code contexts)
+4. `%VARIABLE%` - Percent (Windows)
+5. `$variable` - Dollar (shell)
+
+**Key Insight:** Use `{variable}` in `workflow.yaml`, but `{{variable}}` in
+`.md` template files.
+
+**4. Agent-Workflow Binding**
+
+Agents (`*.agent.yaml`) define menu items that trigger workflows:
+
+```yaml
+menu:
+  - trigger: '*create-story'
+    action: 'workflow:create-story'
 ```
 
-**Phase 2 - Planning (Required):**
+The workflow engine resolves `create-story` by:
 
-```bash
-madace pm plan-project              # Scale-adaptive router
+1. Checking manifest (`workflow-manifest.csv`)
+2. Loading from `modules/{module}/workflows/create-story/workflow.yaml`
+3. Executing with agent's execution context
+
+**Key Insight:** Menu actions can be `workflow:<name>`, `elicit:<prompt>`,
+`guide:<text>`, or custom strings.
+
+---
+
+## Module System Architecture
+
+### Module Structure (All Install to `madace/`)
+
+```
+modules/{module-name}/
+├── _module-installer/           # Installation logic
+│   ├── install-menu-config.yaml # Interactive Q&A
+│   ├── installer.js             # Installation script
+│   └── platform-specifics/      # IDE-specific features
+├── agents/
+│   └── *.agent.yaml             # Agent definitions
+└── workflows/
+    └── {workflow-name}/
+        ├── workflow.yaml        # Workflow definition
+        ├── templates/           # Output templates
+        └── README.md
 ```
 
-**Phase 3 - Solutioning (Levels 3-4):**
+### Three Core Modules
 
-```bash
-madace architect solution-architecture  # Overall architecture + ADRs
-madace architect tech-spec              # Per-epic JIT tech spec
+**1. Core (`modules/core/`)** - Always installed
+
+- MADACE Master orchestrator
+- Universal agent/workflow system
+
+**2. MAM (`modules/mam/`)** - Agile Development
+
+- 5 Agents: PM, Analyst, Architect, SM (Scrum Master), DEV
+- Scale-Adaptive Planning: Routes Level 0-4 based on complexity
+- Story State Machine: BACKLOG → TODO → IN PROGRESS → DONE
+- 17 workflows including `plan-project`, `create-story`, `dev-story`
+
+**3. MAB (`modules/mab/`)** - Agent/Workflow Builder
+
+- Builder agent for creating custom agents/workflows/modules
+
+**4. CIS (`modules/cis/`)** - Creative Intelligence
+
+- Creativity agent with brainstorming workflows (SCAMPER, Six Hats, etc.)
+
+### Cross-Module References
+
+Modules can invoke each other's workflows:
+
+- MAM's `brainstorm` workflow uses CIS workflows
+- Custom modules can use MAM's state machine
+- All modules use Core's template engine
+
+---
+
+## Critical Implementation Patterns
+
+### 1. Cross-Platform Path Handling
+
+**Always use:**
+
+```javascript
+import path from 'path';
+
+const filePath = path.join(projectRoot, 'docs', 'story.md'); // ✅
+const resolved = path.resolve(projectRoot, relativePath); // ✅
 ```
 
-**Phase 4 - Implementation (Iterative):**
+**Never use:**
 
-```bash
-madace sm create-story              # Draft story from TODO
-madace sm story-ready               # Approve story (TODO → IN PROGRESS)
-madace sm story-context             # Generate expertise injection XML
-madace dev dev-story                # Implement story
-madace dev story-approved           # Mark done (IN PROGRESS → DONE)
-madace sm retrospective             # Capture epic learnings
+```javascript
+const bad = projectRoot + '/docs/story.md'; // ❌ Breaks on Windows
+const worse = `${projectRoot}\\docs\\story.md`; // ❌ Breaks on Unix
 ```
 
-**Module Creation (MAB):**
+All 8 core scripts follow this pattern. Check `config-manager.js` for reference
+implementation.
 
-```bash
-madace builder create-agent         # Create custom agent
-madace builder create-workflow      # Create custom workflow
-madace builder create-module        # Scaffold new module
+### 2. YAML Schema Validation (Agent Files)
+
+`agent-loader.js` enforces strict schema:
+
+```yaml
+agent:
+  metadata: # Required
+    id: string # Required - unique identifier
+    name: string # Required - short name
+    title: string # Required - full title
+    icon: string # Optional - emoji
+  persona: # Required
+    role: string # Required
+    identity: string # Required
+  critical_actions: # Optional - array of actions
+  menu: # Optional - array of menu items
 ```
+
+Missing required fields throw validation errors. See `agent-loader.js:76-94` for
+validation logic.
+
+### 3. Workflow Step Types
+
+`workflow-engine.js` supports these action types:
+
+- `elicit` - Ask user for input
+- `reflect` - Prompt reflection
+- `guide` - Provide guidance
+- `template` - Render template file
+- `validate` - Apply validation rules
+- `sub-workflow` - Execute nested workflow
+
+**Backward Compatibility:** Both `action:` and `type:` fields are supported.
+
+### 4. State Machine Transition Rules
+
+`state-machine.js` enforces these rules:
+
+- **Only ONE story in TODO** at any time
+- **Only ONE story in IN PROGRESS** at any time
+- Transitions must be atomic: BACKLOG → TODO → IN PROGRESS → DONE
+- No skipping states (e.g., BACKLOG → DONE is invalid)
+
+Violations throw errors. See `state-machine.js:validate()` method.
+
+---
+
+## Common Development Scenarios
+
+### Adding a New Agent
+
+**Files to modify:**
+
+1. Create `modules/{module}/agents/{name}.agent.yaml`
+2. Add entry to `madace/_cfg/agent-manifest.csv` (via installer)
+3. Test: `npm test` should load and validate it
+
+**Key code locations:**
+
+- Validation: `agent-loader.js:76-94`
+- Registration: `manifest-manager.js:addAgent()`
+
+### Adding a New Workflow Step Type
+
+**Files to modify:**
+
+1. Add case in `workflow-engine.js` → `_executeStepAction()` (around line 150)
+2. Update workflow validation if needed
+3. Add example in module's workflow
+
+**Example:**
+
+```javascript
+case 'api-call':
+  result.type = 'api_call';
+  result.endpoint = step.endpoint;
+  await makeApiCall(step);
+  break;
+```
+
+### Modifying State Machine Behavior
+
+**Files to modify:**
+
+1. `state-machine.js` - Update transition methods
+2. `state-machine.js` - Update `validate()` rules
+3. Test with `modules/mam/workflows/*/workflow.yaml` files
+
+**Critical:** Always maintain atomicity - use temp files if needed.
+
+### Adding a New Template Variable Pattern
+
+**Files to modify:**
+
+1. `template-engine.js` - Add pattern to `patterns` object (line ~30)
+2. Update priority in `render()` method
+3. Document in ARCHITECTURE.md
+
+---
+
+## Key Configuration Files
+
+### Core Configuration (`madace/core/config.yaml`)
+
+```yaml
+project_name: string # Required - project name
+output_folder: string # Required - where outputs go
+user_name: string # Required - how agents address you
+communication_language: string # Required - UI language (e.g., "English")
+```
+
+Auto-detected locations (in order):
+
+1. `./madace/core/config.yaml`
+2. `../madace/core/config.yaml`
+3. `$MADACE_CONFIG` environment variable
+4. `~/.madace/config.yaml`
+
+See `config-manager.js:loadConfig()` for resolution logic.
+
+### Manifest Files (CSV Format)
+
+**Agent Manifest** (`madace/_cfg/agent-manifest.csv`):
+
+```csv
+agent_id,name,module,type,file_path,installed_at
+```
+
+**Workflow Manifest** (`madace/_cfg/workflow-manifest.csv`):
+
+```csv
+workflow_id,name,module,workflow_path,installed_at
+```
+
+Managed by `manifest-manager.js` - never edit manually.
+
+---
+
+## Testing Strategy
+
+### Current Test Suite (`test-alpha.mjs`)
+
+**12 tests covering:**
+
+- Agent loading (master, PM, multiple agents)
+- Template engine (variable substitution, path variables)
+- Workflow engine (load workflow)
+- Module validation (CIS, MAB agents exist)
+- File existence (templates, build tools)
+- State machine module loading
+
+**Run with:** `npm test`
+
+**Current status:** 100% pass rate (12/12 tests)
+
+### Adding New Tests
+
+Add test cases to `test-alpha.mjs`:
+
+```javascript
+try {
+  // Your test code
+  logTest('Test Name', condition === expected);
+} catch (error) {
+  logTest('Test Name', false, error);
+}
+```
+
+---
+
+## Scale-Adaptive Planning (MAM Key Feature)
+
+Projects route through different workflows based on complexity:
+
+- **Level 0**: 1 story → Quick tech-spec
+- **Level 1**: 2-10 stories → Tech-spec + Epic
+- **Level 2**: 5-15 stories → Focused PRD
+- **Level 3**: 12-40 stories → Full PRD + Solutioning phase
+- **Level 4**: 40+ stories → Enterprise PRD + Architecture
+
+**Routing Logic:**
+
+1. PM agent runs `assess-scale` workflow
+2. Asks user questions about complexity
+3. Detects project type (web, mobile, backend, game)
+4. Routes to appropriate sub-workflow
+
+See `modules/mam/workflows/plan-project/workflow.yaml` for router logic.
+
+---
+
+## Story State Machine (MAM Key Feature)
+
+### Four States
+
+```
+BACKLOG (ordered list)
+    ↓
+TODO (single story - Draft status)
+    ↓
+IN PROGRESS (single story - Ready status)
+    ↓
+DONE (completed - Done status + date + points)
+```
+
+### Transitions
+
+- **BACKLOG → TODO**: `sm create-story` workflow
+- **TODO → IN PROGRESS**: `sm story-ready` workflow (auto-moves next BACKLOG →
+  TODO)
+- **IN PROGRESS → DONE**: `sm story-approved` workflow
+
+### Critical Rule
+
+**Single source of truth:** `{output_folder}/mam-workflow-status.md`
+
+Agents NEVER search for stories. They ALWAYS read the exact story from the
+status file sections.
+
+See `state-machine.js` for implementation.
+
+---
+
+## Common Pitfalls to Avoid
+
+### 1. Path Handling
+
+❌ Hardcoded slashes: `'path/to/file'` or `'path\\to\\file'` ✅ Use
+`path.join()`: `path.join(base, 'to', 'file')`
+
+### 2. State Machine
+
+❌ Multiple stories in TODO/IN PROGRESS simultaneously ✅ Only ONE story per
+state (enforced by validation)
+
+❌ Manually editing `mam-workflow-status.md` ✅ Use state transition methods in
+workflows
+
+### 3. Template Variables
+
+❌ Using `{variable}` in `.md` templates ✅ Use `{{variable}}` (mustache) in
+Markdown templates
+
+❌ Using `{{variable}}` in `workflow.yaml` ✅ Use `{variable}` (single brace) in
+YAML files
+
+### 4. Agent/Workflow Registration
+
+❌ Creating agent file without manifest entry ✅ Use installer to register in
+`agent-manifest.csv`
+
+❌ Manual CSV editing ✅ Use `manifest-manager.js` methods
+
+---
+
+## Important Acronyms
+
+- **MADACE**: Methodology for AI-Driven Agile Collaboration Engine
+- **MAM**: MADACE Method (Agile Development Module)
+- **MAB**: MADACE Builder (Agent/Workflow Creation Module)
+- **CIS**: Creative Intelligence Suite (Brainstorming Module)
+- **JIT**: Just-In-Time (per-epic tech specs created during implementation)
+- **ADR**: Architecture Decision Record
+
+---
+
+## Current Status: v1.0-alpha.2
+
+**What's Functional:**
+
+- ✅ Core engine (8 core scripts)
+- ✅ MAM, MAB, CIS modules complete
+- ✅ CLI basics (`madace.js`)
+- ✅ Web bundling (experimental)
+- ✅ 100% test pass rate (12/12)
+
+**In Development:**
+
+- 🔧 Advanced CLI commands (`install`, `status`, `list`, `uninstall`)
+- 🔧 Comprehensive test infrastructure
+
+**See Full Roadmap:** `PRD-MADACE-CORE.md` (74 stories across 9 epics)
+
+---
 
 ## Technology Stack
 
-### Runtime
+**Runtime:** Node.js v20+ (ES modules, no TypeScript)
 
-- **Node.js** v20+ (required)
-- **JavaScript** ES modules (no TypeScript - intentional simplicity)
-
-### Key Dependencies
+**Key Dependencies:**
 
 - `js-yaml` - YAML parsing
 - `commander` - CLI framework
 - `inquirer` - Interactive prompts
 - `fs-extra` - File operations
 - `chalk`, `boxen`, `ora` - CLI UI
-- `csv-parse`, `csv-stringify` - Manifest CSV operations
-- `glob` - File pattern matching
-- `cli-table3` - Table formatting
-- `wrap-ansi` - Text wrapping
+- `csv-parse`, `csv-stringify` - Manifest operations
 
-### Code Quality
+**Code Quality:**
 
-- **ESLint** 9.x with `yaml-eslint-parser` and `eslint-plugin-yml`
-- **Prettier** 3.x
-- **Husky** + lint-staged for pre-commit hooks
-- **eslint-config-prettier** for ESLint/Prettier integration
+- ESLint 9.x (with `yaml-eslint-parser` and `eslint-plugin-yml`)
+- Prettier 3.x
+- Husky + lint-staged (pre-commit hooks)
 
-### Platform Support
+---
 
-- MacOS, Linux, Windows
-- 5 IDE integrations: Claude Code, Windsurf, Cursor, Cline, Qwen
+## Key Files Reference
 
-## Core Implementation Architecture
+### Core Engine (`scripts/core/`)
 
-### Key Modules (scripts/core/)
+- `agent-loader.js` - YAML parsing, schema validation
+- `agent-runtime.js` - Execution context, critical actions, menu system
+- `workflow-engine.js` - Workflow loading, step execution, state persistence
+- `template-engine.js` - Variable substitution with 5 patterns
+- `state-machine.js` - Story lifecycle management (BACKLOG/TODO/IN
+  PROGRESS/DONE)
+- `config-manager.js` - Configuration loading, path resolution
+- `manifest-manager.js` - CSV manifest operations (agents/workflows/tasks)
+- `platform-injections.js` - IDE-specific optimizations
 
-- **agent-loader.js** - YAML parsing and agent validation
-- **agent-runtime.js** - Agent execution context, critical actions, menu system
-- **workflow-engine.js** - Workflow loading, state management, step execution
-- **template-engine.js** - Variable substitution with multiple patterns
-- **config-manager.js** - Configuration loading, validation, path resolution
-- **manifest-manager.js** - CSV manifest operations (read/write/validate)
-- **platform-injections.js** - IDE-specific optimizations
+### CLI (`scripts/cli/`)
 
-### Agent Runtime Execution Flow
+- `madace.js` - Main CLI entry point
+- `installer.js` - Interactive installation (in development)
 
-1. **Load Agent** (`agentRuntime.loadAgent`)
-   - Parse agent YAML file
-   - Build execution context (Story F3)
-   - Execute critical actions (Story F9)
-   - Display persona and menu (Story F10)
+### Build Tools (`scripts/build/`)
 
-2. **Execute Command** (`agentRuntime.executeCommand`)
-   - Match menu trigger
-   - Execute action (workflow/elicit/guide/custom)
-   - Track execution history
+- `bundler.js` - Generate web bundles
+- `validator.js` - Validate bundle integrity
+- `flattener.js` - Flatten codebase for analysis
 
-3. **Execute Workflow** (`workflowEngine`)
-   - Load workflow YAML
-   - Initialize state with context
-   - Execute steps sequentially
-   - Support sub-workflows (Story F11)
-   - Persist state to disk
+### Documentation
 
-### Execution Context Structure
+- `CLAUDE.md` (this file) - AI assistant development guide
+- `ARCHITECTURE.md` - Detailed technical architecture
+- `README.md` - Project overview and user guide
+- `PRD-MADACE-CORE.md` - Complete product requirements
+- `TERMINOLOGY-REFERENCE.md` - Naming conventions and glossary
 
-The runtime builds a comprehensive context object for each agent that is
-available to all workflows and templates for variable substitution:
-
-- **Agent identity**: `agent_id`, `agent_name`, `agent_title`, `agent_icon`
-- **Persona details**: `role`, `identity`, `communication_style`, `principles`
-- **Configuration**: `config`, `user_name`, `project_name`,
-  `communication_language`
-- **Paths** (cross-platform safe): `madace_root`, `project_root`,
-  `output_folder`
-- **Runtime metadata**: `loaded_at`, `session_id`
-
-### Critical Actions Available
-
-Built-in actions executed during agent initialization:
-
-- `check-config` - Validate configuration
-- `validate-installation` - Check installation integrity
-- `load-manifest` - Load agent/workflow manifests
-- `create-output-folder` - Ensure output directory exists
-
-### Menu Action Types
-
-Menu items can trigger different action types:
-
-- `workflow:<name>` - Execute workflow
-- `elicit:<prompt>` - Ask user for input
-- `guide:<guidance>` - Provide guidance message
-- Custom action strings - Agent-specific actions
+---
 
 ## Development Guidelines
 
 ### Configuration Philosophy
 
-- **Natural language only**: YAML/Markdown/XML (no executable code in configs)
-- **Human-readable**: Configs should be editable by non-programmers
+- **Natural language only**: YAML/Markdown/XML (no executable code)
+- **Human-readable**: Editable by non-programmers
 - **AI-optimizable**: Designed for LLM comprehension
 
-### Agent Design
-
-- Agents are **facilitators**, not executors
-- Ask questions, provide frameworks, guide reflection
-- Use personas with role, identity, communication_style, principles
-- Critical actions run on agent load
-- Menu items trigger commands (`*command-name`)
-
-### Workflow Design
-
-- Multi-step processes defined in `workflow.yaml`
-- Support templates with variable substitution (`{user_name}`, `{project-root}`)
-- Sub-workflows for modularity
-- State tracking in status files
-
-### File Operations
-
-- Always use `path.join()` and `path.resolve()` (cross-platform)
-- No hardcoded paths with `/` or `\`
-- Handle spaces in paths with proper quoting
-- Validate paths before operations
-- Atomic writes (planned for v1.0-beta):
-  - Write to temporary file first
-  - Rename to target on success
-  - Rollback on failure
-- File locking for concurrent write prevention
-- Checksum verification for integrity
-- Safe deletion: move to `madace/.trash/` (7-day retention)
-
-### Error Handling
-
-- User-friendly error messages with resolution steps
-- Link to documentation or suggest commands
-- Never expose stack traces to users (log only)
-- Centralized error handling system (planned for v1.0-beta):
-  - Error types: USER_ERROR, CONFIG_ERROR, SYSTEM_ERROR, VALIDATION_ERROR
-  - Severity levels: DEBUG, INFO, WARN, ERROR, FATAL
-  - Structured logging to `madace/logs/madace.log`
-  - Log rotation: 10MB max, 5 files retained
-  - Debug mode: `MADACE_DEBUG=1` for verbose logging
-
-### Module Development
-
-- Standard structure: `_module-installer/`, `agents/`, `workflows/`
-- Installation via `install-menu-config.yaml` with Q&A
-- Platform-specific features via `platform-specifics/`
-- Cross-module references allowed (e.g., MAM uses CIS brainstorming)
-
-## Testing Approach
-
-> **Current Status**: Test infrastructure is planned for v1.0-beta. The project
-> is currently in documentation-first phase.
-
-### Pre-Commit Validation (Active)
-
-- Linting runs on staged JS files (ESLint 9.x with yaml-eslint-parser)
-- Formatting runs on staged files (Prettier 3.x)
-- Max warnings: 0 (fail on warnings)
-- Configured via Husky + lint-staged
-- Pre-commit hooks auto-install on `npm install`
-
-### Cross-Platform Testing (Planned for v1.0-beta)
-
-- Test on Mac, Windows, Linux
-- Path handling critical (use `path.join()` and `path.resolve()`)
-- Environment variable expansion ($HOME, %USERPROFILE%)
-- Automated CI/CD tests
-
-### Workflow Validation (Planned for v1.0-beta)
-
-- YAML schema validation (JSON Schema definitions)
-- Template variable substitution
-- State machine transitions
-- Manifest consistency
-- Bundle integrity validation
-
-### Testing Commands (Planned for v1.0-beta)
-
-```bash
-npm test                   # Currently returns success (no tests yet)
-npm run test:unit          # Run unit tests (planned)
-npm run test:integration   # Run integration tests (planned)
-npm run test:watch         # Watch mode (planned)
-npm run test:coverage      # Generate coverage report (planned)
-```
-
-### Testing Requirements (From PRD)
-
-- Installation success rate >95% across platforms
-- Zero data loss in stress tests
-- Error rate <5% of workflow executions
-- Clear error messages in 95%+ of failures
-
-## Common Pitfalls
-
-### YAML Configuration
-
-- ❌ Executable code in YAML
-- ❌ Hardcoded paths (use variables: `{project-root}`, `{output_folder}`)
-- ❌ Missing variable declarations
-- ❌ Invalid schema (will be caught by validator in v1.0-beta)
-- ✅ Natural language definitions only
-- ✅ Cross-platform paths with variables
-- ✅ Variable interpolation: `{user_name}`, `{project-root}`, `{date}`
-- ✅ Validate with `madace validate` (when available)
-
-### State Machine
-
-- ❌ Multiple stories in TODO/IN PROGRESS (violates single-story rule)
-- ❌ Searching for "next story" (always read from status file)
-- ❌ Direct state transitions that skip states (BACKLOG → DONE)
-- ❌ Manual status file editing (use workflows)
-- ✅ Single source of truth (`mam-workflow-status.md`)
-- ✅ Read exact story from status file sections
-- ✅ Atomic state transitions via workflows
-- ✅ State validation and recovery (coming in v1.0-beta)
-
-### File Operations
-
-- ❌ Hardcoded slashes: `path/to/file` or `path\to\file`
-- ❌ Assume single OS: `~/projects` (won't work on Windows)
-- ❌ Direct writes without error handling (race conditions)
-- ❌ No path validation (security risk)
-- ❌ Permanent deletion (no recovery)
-- ✅ Use `path.join()`: `path.join(base, 'file')`
-- ✅ Use `path.resolve()` for absolute paths
-- ✅ Expand env vars: `$HOME`, `%USERPROFILE%`, `${MADACE_CONFIG}`
-- ✅ Atomic writes (temp + rename, coming in v1.0-beta)
-- ✅ Safe deletion: move to `madace/.trash/` (coming in v1.0-beta)
-
-### Manifest Management
-
-- ❌ Orphaned manifest entries (files deleted but entries remain)
-- ❌ Unregistered files (files exist but not in manifest)
-- ❌ Manual manifest editing (error-prone)
-- ✅ Use installer/uninstaller for all module operations
-- ✅ Run `madace verify manifests` after changes (when available)
-- ✅ Let system maintain manifest consistency
-
-### Error Handling
-
-- ❌ Silent failures (no user feedback)
-- ❌ Cryptic error messages ("Error: undefined")
-- ❌ Stack traces shown to users
-- ❌ No recovery suggestions
-- ✅ User-friendly messages with context
-- ✅ Suggest resolution steps ("Try: madace validate config")
-- ✅ Link to relevant documentation
-- ✅ Log detailed errors for debugging
-
-## Terminology
-
-### Acronyms
-
-- **MADACE** = Methodology for AI-Driven Agile Collaboration Engine
-- **MAM** = MADACE Method (Agile Development Module)
-- **MAB** = MADACE Builder (Agent/Workflow Creation Module)
-- **CIS** = Creative Intelligence Suite (Brainstorming Module)
-- **JIT** = Just-In-Time (per-epic tech specs created during implementation)
-- **ADR** = Architecture Decision Record
-- **PRD** = Product Requirements Document
-- **GDD** = Game Design Document
-- **DoD** = Definition of Done
-
-### Priority Levels (From PRD)
-
-- **P0** = Critical (must have for release)
-- **P1** = High (important for release)
-- **P2** = Medium (nice to have)
-- **P3** = Low (future consideration)
-
-### Project States
-
-- **Greenfield**: New project from scratch
-- **Brownfield**: Existing codebase (requires `brownfield-analysis` workflow)
-
-### Story Status (in story files)
-
-- **Draft**: Created, awaiting user review
-- **Ready**: Approved, ready for implementation
-- **In Review**: Implementation complete, awaiting approval
-- **Done**: Approved after DoD complete
-
-### State Machine States (in mam-workflow-status.md)
-
-- **BACKLOG**: Ordered list of stories to draft
-- **TODO**: Single story ready for drafting
-- **IN PROGRESS**: Single story being implemented
-- **DONE**: Completed stories with dates and points
-
-### Release Stages
-
-- **alpha**: Early testing, unstable, frequent breaking changes
-- **beta**: Feature-complete, stabilizing, minimal breaking changes
-- **stable**: Production-ready, semantic versioning
-
-For complete terminology reference, see TERMINOLOGY-REFERENCE.md
-
-## Migration from BMAD-METHOD
-
-This is a rebrand and refactor from BMAD-METHOD:
-
-- **BMAD** → **MADACE** (framework)
-- **BMM** → **MAM** (agile module)
-- **BoMB/BMB** → **MAB** (builder module)
-- `bmad/` → `madace/` (folder)
-- `bmad-master` → `madace-master` (agent)
-- `bmm-workflow-status.md` → `mam-workflow-status.md`
-
-Systems are not directly compatible—complete BMAD projects before switching.
-
-## Roadmap Context
-
-### v1.0-alpha (Current - Q1 2026)
-
-- ✅ Core framework with agent system
-- ✅ MAM, MAB, CIS modules
-- ✅ 5 IDE integrations
-- ✅ Scale-adaptive planning (Level 0-4)
-- ⏳ Web bundles (experimental)
-
-### v1.0-beta (Q2 2026) - Focus: Stability & Production Readiness
-
-**Core Stability Features (P0):**
-
-- State machine validation & recovery
-- YAML schema validation system
-- Cross-platform path handling
-- Error handling & logging framework
-- Config migration system
-- File operation safety & atomicity
-- Manifest consistency enforcement
-- Graceful degradation & fallbacks
-
-**Brownfield Support (P0):**
-
-- Codebase analysis workflow
-- Retroactive story generation
-- Incremental adoption support
-- Technical debt tracking
-
-**Web Bundle Completion (P1):**
-
-- Fully functional ChatGPT Custom GPTs
-- Gemini Gems integration
-- Web bundle parity matrix
-- Web bundle auto-generator
-- Hybrid workflow (web + IDE)
-
-**Orchestration & Progress (P1):**
-
-- Workflow dependencies
-- Workflow composition & orchestration
-- Workflow templates with variables
-- Progress dashboard
-- Story progress tracking
-- Notification system
-- Time tracking & estimates
-
-### v1.0 Stable (Q3 2026) - Focus: Ecosystem & Enterprise
-
-**Community Ecosystem (P1):**
-
-- Community module repository
-- Module quality standards
-- Module templates & scaffolding
-- Module versioning & compatibility
-- Contribution guidelines & governance
-- Documentation hub
-
-**Enterprise Features (P2):**
-
-- Team collaboration support
-- Advanced Jira integration
-- GitHub Project integration
-- Enterprise configuration management
-- Compliance & reporting
-
-**Advanced Integrations (P2):**
-
-- MCP tools auto-discovery
-- AI model selection
-- CI/CD integration (GitHub Actions, GitLab CI, Jenkins)
-- Telemetry & analytics (opt-in)
-
-**Total Estimated Stories:** 74 (Level 4 project scope)
-
-## Contributing
+### Code Conventions
+
+- Use ES modules (`import`/`export`)
+- Always use `path.join()` for cross-platform paths
+- Validate inputs before operations
+- Return user-friendly error messages
+- Log detailed errors for debugging
 
 ### PR Guidelines
 
 - Keep PRs under 800 lines (ideal: 200-400)
-- Use conventional commits (`feat:`, `fix:`, `docs:`, `refactor:`)
+- Use conventional commits with scopes
 - Run `npm run lint:fix` and `npm run format:fix`
 - Update documentation
-- Add entry to CHANGELOG.md
+- Add tests for new features
 
-### Module Contributions
-
-- Use MAB to scaffold: `madace builder create-module`
-- Follow standard structure
-- Include comprehensive README
-- Test cross-platform
-- Submit for community review
-
-## Key Principles
-
-1. **Human Amplification**: AI facilitates thinking, doesn't replace it
-2. **Scale Adaptive**: Documentation matches project complexity
-3. **Just-In-Time**: Create what's needed when it's needed
-4. **Natural Language**: Configs readable by humans and AI
-5. **Single Source of Truth**: State machine eliminates searching
-6. **Context Over Documentation**: Dynamic expertise injection vs static docs
-
-## Current Development Status
-
-**Phase**: Documentation-First (v1.0-alpha preparation)
-
-**What Exists:**
-
-- ✅ Complete product requirements documentation (PRD-MADACE-CORE.md)
-- ✅ Detailed feature roadmap (PRD-MADACE-FEATURES-TO-MERGE.md - 39 features, 74
-  stories)
-- ✅ Comprehensive terminology reference (TERMINOLOGY-REFERENCE.md)
-- ✅ Architecture and design specifications
-- ✅ Module and workflow definitions (YAML/Markdown)
-- ✅ Code quality tooling (ESLint 9.x, Prettier 3.x, Husky)
-- ✅ Project documentation (README.md, CLAUDE.md)
-
-**What's In Development (v1.0-alpha):**
-
-- 🔧 CLI installer and commands (`madace install`, `madace status`, etc.)
-- 🔧 Agent loading and execution system
-- 🔧 Workflow execution engine
-- 🔧 Configuration management system
-- 🔧 Web bundle generation (experimental)
-- 🔧 Test infrastructure
-
-**Planned for v1.0-beta (Q2 2026):**
-
-- 8 Core Stability features (state validation, YAML schemas, error handling,
-  etc.)
-- 4 Brownfield Support features (codebase analysis, retroactive stories, etc.)
-- 5 Web Bundle Completion features (ChatGPT/Gemini integration)
-- 7 Orchestration & Progress features (dependencies, dashboards, tracking)
-
-**Planned for v1.0 Stable (Q3 2026):**
-
-- 6 Community Ecosystem features (module repository, quality standards, docs
-  hub)
-- 5 Enterprise Features (team collaboration, Jira/GitHub integration,
-  compliance)
-- 4 Advanced Integrations (MCP auto-discovery, AI model selection, CI/CD,
-  telemetry)
-
-**When Working on This Codebase:**
-
-- Focus on implementation based on existing PRD and documentation
-- Maintain natural language configuration philosophy (no executable code in
-  configs)
-- Follow cross-platform best practices (use `path.join()`, no hardcoded slashes)
-- Ensure YAML/config files are human-readable and AI-optimizable
-- Add tests as you implement features (test coverage goal: >70%)
-- Keep PRs under 800 lines (ideal: 200-400)
-- Use conventional commits with scopes
+---
 
 ## Getting Help
 
 ### Documentation Resources
 
-- **README.md** - Project overview, installation, usage examples
-- **CLAUDE.md** (this file) - AI assistant guide, architecture, patterns
-- **PRD-MADACE-CORE.md** - Complete product requirements (74 stories across 9
-  epics)
-- **PRD-MADACE-FEATURES-TO-MERGE.md** - Feature roadmap (39 features for
-  v1.0-beta and v1.0)
-- **TERMINOLOGY-REFERENCE.md** - Complete terminology, naming conventions, BMAD
-  migration
+- **README.md** - User guide and overview
+- **CLAUDE.md** (this file) - Development guide for AI assistants
+- **ARCHITECTURE.md** - Detailed technical specifications
+- **PRD-MADACE-CORE.md** - Complete product requirements (74 stories)
+- **TERMINOLOGY-REFERENCE.md** - Complete glossary
 
-### Community & Support (Coming Soon)
+### For AI Assistants
 
-- **Discord Community**: [Join here](https://discord.gg/your-invite) _(Coming
-  soon)_
-- **Issue Tracker**:
-  [Report bugs](https://github.com/tekcin/MADACE-METHOD/issues) _(Coming soon)_
-- **Discussions**:
-  [Share ideas](https://github.com/tekcin/MADACE-METHOD/discussions) _(Coming
-  soon)_
+When working on this codebase:
 
-### For Contributors
+1. Focus on implementation based on existing PRD and docs
+2. Maintain natural language configuration (no code in configs)
+3. Follow cross-platform best practices (`path.join()`, no hardcoded slashes)
+4. Keep PRs focused and under 800 lines
+5. Use conventional commits with scopes
+6. Add tests as you implement features
 
-- **CONTRIBUTING.md** - Contribution guidelines (when available)
-- **CHANGELOG.md** - Version history and changes (when available)
+---
 
 ## Quick Start for Development
 
-1. **Clone and Install Dependencies:**
+```bash
+# 1. Clone and setup
+git clone https://github.com/tekcin/MADACE-METHOD.git
+cd MADACE-METHOD
+npm install
 
-   ```bash
-   git clone <repository-url>
-   cd MADACE-METHOD
-   npm install
-   ```
+# 2. Review documentation
+cat README.md              # Project overview
+cat ARCHITECTURE.md        # Technical details
+cat PRD-MADACE-CORE.md     # Requirements
 
-2. **Review Documentation:**
-   - Start with README.md for project overview
-   - Read PRD-MADACE-CORE.md for detailed requirements
-   - Check TERMINOLOGY-REFERENCE.md for naming conventions
+# 3. Run tests
+npm test                   # Should pass 12/12 tests
 
-3. **Set Up Development Environment:**
-   - Pre-commit hooks auto-install via Husky
-   - Use supported IDE (Claude Code, Windsurf, Cursor, Cline, or Qwen)
-   - Node.js v20+ required
+# 4. Before committing
+npm run lint:fix           # Fix linting
+npm run format:fix         # Format code
+git commit -m "feat(scope): description"  # Hooks run automatically
+```
 
-4. **Before Committing:**
-   ```bash
-   npm run lint:fix      # Fix linting issues
-   npm run format:fix    # Format code
-   git commit           # Hooks will run automatically
-   ```
+---
+
+**Document Version:** 2.0 **Last Updated:** 2025-10-17 **For:** MADACE-METHOD
+v1.0-alpha.2
