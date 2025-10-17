@@ -111,7 +111,9 @@ Choose your platform:
 
 - 📘 **[VS Code Installation Guide](./INSTALL-VSCODE.md)** - Step-by-step for
   Visual Studio Code users
-- 📗 Claude Code, Windsurf, Cursor - Use automated installer below
+- 📙 **[Cursor Installation Guide](./INSTALL-CURSOR.md)** - Optimized for Cursor
+  IDE with native AI features
+- 📗 Claude Code, Windsurf - Use automated installer below (coming in v1.0-beta)
 
 ### Prerequisites
 
@@ -432,6 +434,8 @@ workflow:
 
 - 📘 [VS Code Installation Guide](./INSTALL-VSCODE.md) - Complete setup for VS
   Code users
+- 📙 [Cursor Installation Guide](./INSTALL-CURSOR.md) - Optimized for Cursor IDE
+  with AI features
 - 📚 [Full Documentation](./docs/README.md)
 
 ### For Users
