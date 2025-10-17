@@ -1,0 +1,9 @@
+workflow:
+  name: { workflow_name }
+  description: { workflow_description }
+  agent: { agent_name }
+  phase: { phase }
+
+  steps: { steps }
+
+  variables: { variables }

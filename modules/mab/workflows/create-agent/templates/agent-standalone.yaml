@@ -1,0 +1,27 @@
+agent:
+  metadata:
+    id: madace/core/agents/{agent_name}
+    name: { agent_name }
+    title: { agent_title }
+    icon: { agent_icon }
+    module: core
+    version: 1.0.0
+    type: standalone
+
+  persona:
+    role: { agent_role }
+    identity: |
+      {agent_identity}
+
+    communication_style: |
+      {communication_style}
+
+    principles: { principles }
+
+  critical_actions:
+    - check-config
+    - validate-installation
+
+  menu: { menu_commands }
+
+  prompts: []

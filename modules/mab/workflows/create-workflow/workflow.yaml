@@ -1,0 +1,139 @@
+workflow:
+  name: create-workflow
+  description: Create a custom workflow (Builder guided)
+  agent: builder
+  phase: any
+
+  steps:
+    - name: Introduction
+      action: display
+      message: |
+        ⚡ Custom Workflow Creation
+
+        I'll guide you through creating a custom workflow for MADACE.
+
+        Workflows orchestrate multi-step processes with your agents.
+
+    - name: Gather Workflow Name
+      action: elicit
+      prompt: |
+        **Workflow Name**
+
+        Choose a name for your workflow (kebab-case):
+        Examples: review-code, analyze-data, generate-report
+
+        Workflow name:
+
+    - name: Gather Description
+      action: elicit
+      prompt: |
+        **Workflow Description**
+
+        Brief description of what this workflow does:
+
+        Description:
+
+    - name: Gather Agent Name
+      action: elicit
+      prompt: |
+        **Agent Name**
+
+        Which agent will run this workflow?
+
+        Agent name:
+
+    - name: Gather Phase
+      action: elicit
+      prompt: |
+        **Phase**
+
+        Which phase does this workflow belong to?
+        - 1: Analysis
+        - 2: Planning
+        - 3: Solutioning
+        - 4: Implementation
+        - any: Can run anytime
+
+        Phase:
+
+    - name: Gather Steps
+      action: elicit
+      prompt: |
+        **Workflow Steps**
+
+        Describe the steps your workflow should perform (one per line):
+        Format: Step name: What it does
+
+        Example:
+        Load file: Load the input file
+        Analyze content: Analyze the content
+        Generate report: Create output report
+
+        Steps:
+
+    - name: Gather Variables
+      action: elicit
+      prompt: |
+        **Variables**
+
+        What variables does your workflow need? (one per line)
+        Format: variable_name: default_value
+
+        Example:
+        input_file: ""
+        output_file: "{output_folder}/report.md"
+
+        Variables (or press Enter to skip):
+
+    - name: Determine Workflow Path
+      action: calculate_workflow_path
+      workflow_name: "{workflow_name}"
+      agent_name: "{agent_name}"
+
+    - name: Create Workflow Directory
+      action: create_directory
+      path: "{workflow_path}"
+
+    - name: Create Templates Directory
+      action: create_directory
+      path: "{workflow_path}/templates"
+
+    - name: Render Workflow Definition
+      action: render_template
+      template: templates/workflow-standard.yaml
+      output_file: "{workflow_path}/workflow.yaml"
+      variables:
+        workflow_name: "{workflow_name}"
+        workflow_description: "{workflow_description}"
+        agent_name: "{agent_name}"
+        phase: "{phase}"
+        steps: "{steps}"
+        variables: "{variables}"
+
+    - name: Validate Workflow
+      action: validate_yaml
+      file_path: "{workflow_path}/workflow.yaml"
+
+    - name: Confirm Workflow Created
+      action: display
+      message: |
+        ✅ Custom Workflow Created!
+
+        Directory: {workflow_path}
+        File: {workflow_path}/workflow.yaml
+
+        Your workflow is ready!
+
+        Next steps:
+        1. Review the workflow file
+        2. Add templates to: {workflow_path}/templates/
+        3. Test your workflow: madace {agent_name} {workflow_name}
+
+  variables:
+    workflow_name: ""
+    workflow_description: ""
+    agent_name: ""
+    phase: ""
+    steps: ""
+    variables: ""
+    workflow_path: ""

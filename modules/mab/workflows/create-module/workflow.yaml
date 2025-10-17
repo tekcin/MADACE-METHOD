@@ -1,0 +1,143 @@
+workflow:
+  name: create-module
+  description: Scaffold a complete MADACE module (Builder guided)
+  agent: builder
+  phase: any
+
+  steps:
+    - name: Introduction
+      action: display
+      message: |
+        📦 Custom Module Creation
+
+        I'll help you scaffold a complete MADACE module!
+
+        Modules bundle related agents, workflows, and templates.
+
+    - name: Gather Module Name
+      action: elicit
+      prompt: |
+        **Module Name**
+
+        Choose a name for your module (lowercase, short):
+        Examples: coaching, security, analytics
+
+        Module name:
+
+    - name: Gather Module Title
+      action: elicit
+      prompt: |
+        **Module Title**
+
+        Full descriptive title:
+        Example: "Code Coaching Suite"
+
+        Module title:
+
+    - name: Gather Module Description
+      action: elicit
+      prompt: |
+        **Module Description**
+
+        What does your module do? (1-2 sentences)
+
+        Description:
+
+    - name: Gather Initial Agents
+      action: elicit
+      prompt: |
+        **Initial Agents**
+
+        What agents should be included? (one per line)
+        Format: agent-name: Role description
+
+        Example:
+        coach: Expert code coach
+        mentor: Development mentor
+
+        Agents:
+
+    - name: Gather Initial Workflows
+      action: elicit
+      prompt: |
+        **Initial Workflows**
+
+        What workflows should be included? (one per line)
+
+        Example:
+        coaching-session
+        code-review
+        skill-assessment
+
+        Workflows:
+
+    - name: Create Module Structure
+      action: create_module_structure
+      module_name: "{module_name}"
+      base_path: "modules/{module_name}"
+
+    - name: Create Directories
+      action: create_directories
+      paths:
+        - "modules/{module_name}/_module-installer"
+        - "modules/{module_name}/_module-installer/platform-specifics"
+        - "modules/{module_name}/agents"
+        - "modules/{module_name}/workflows"
+
+    - name: Render Module README
+      action: render_template
+      template: templates/module-README.md
+      output_file: "modules/{module_name}/README.md"
+      variables:
+        module_name: "{module_name}"
+        module_title: "{module_title}"
+        module_description: "{module_description}"
+        initial_agents: "{initial_agents}"
+        initial_workflows: "{initial_workflows}"
+
+    - name: Render Installer Config
+      action: render_template
+      template: templates/install-menu-config.yaml
+      output_file: "modules/{module_name}/_module-installer/install-menu-config.yaml"
+      variables:
+        module_name: "{module_name}"
+        module_title: "{module_title}"
+        module_description: "{module_description}"
+
+    - name: Create Agent Stubs
+      action: create_agent_stubs
+      module_name: "{module_name}"
+      agents: "{initial_agents}"
+
+    - name: Create Workflow Stubs
+      action: create_workflow_stubs
+      module_name: "{module_name}"
+      workflows: "{initial_workflows}"
+
+    - name: Confirm Module Created
+      action: display
+      message: |
+        ✅ Module Scaffolded Successfully!
+
+        Location: modules/{module_name}/
+
+        Structure created:
+        - _module-installer/
+        - agents/ (with {agent_count} stubs)
+        - workflows/ (with {workflow_count} stubs)
+        - README.md
+
+        Next steps:
+        1. Implement agent definitions
+        2. Implement workflow logic
+        3. Test module: madace install --modules {module_name}
+        4. Share with community!
+
+  variables:
+    module_name: ""
+    module_title: ""
+    module_description: ""
+    initial_agents: ""
+    initial_workflows: ""
+    agent_count: 0
+    workflow_count: 0
