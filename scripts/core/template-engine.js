@@ -16,10 +16,13 @@ class TemplateEngine {
   constructor() {
     // Interpolation patterns from TERMINOLOGY-REFERENCE.md
     this.patterns = {
-      // {{variable_name}} - Primary pattern for Markdown templates
+      // {variable-name} - Single brace pattern for workflow variables (supports hyphens)
+      singleBrace: /\{([\w-]+)\}/g,
+
+      // {{variable_name}} - Double brace pattern for Markdown templates
       mustache: /\{\{(\w+)\}\}/g,
 
-      // ${variable_name} - Secondary pattern for code/shell contexts
+      // ${variable_name} - Dollar brace pattern for code/shell contexts
       dollarBrace: /\$\{(\w+)\}/g,
 
       // %VARIABLE_NAME% - Windows environment variable style
@@ -29,8 +32,8 @@ class TemplateEngine {
       dollar: /\$(\w+)\b/g,
     };
 
-    // Default pattern priority
-    this.defaultPatterns = ['mustache', 'dollarBrace'];
+    // Default pattern priority (singleBrace first for workflow compatibility)
+    this.defaultPatterns = ['singleBrace', 'mustache', 'dollarBrace'];
   }
 
   /**

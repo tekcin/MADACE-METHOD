@@ -8,7 +8,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import agentLoader from './scripts/core/agent-loader.js';
 import workflowEngine from './scripts/core/workflow-engine.js';
-import configManager from './scripts/core/config-manager.js';
 import templateEngine from './scripts/core/template-engine.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,7 +28,7 @@ function logTest(name, passed, error = null) {
   } else {
     results.failed++;
     console.log(`❌ ${name}`);
-    if (error) console.error(`   Error: ${error.message}`);
+    if (error) {console.error(`   Error: ${error.message}`);}
   }
 }
 
@@ -89,7 +88,7 @@ async function runTests() {
   try {
     const workflowPath = path.join(__dirname, 'modules/mam/workflows/assess-scale/workflow.yaml');
     const workflow = await workflowEngine.loadWorkflow(workflowPath);
-    logTest('Workflow Engine - Load workflow', workflow.workflow.name === 'assess-scale-level');
+    logTest('Workflow Engine - Load workflow', workflow.workflow.name === 'Assess Project Scale');
   } catch (error) {
     logTest('Workflow Engine - Load workflow', false, error);
   }
@@ -98,7 +97,7 @@ async function runTests() {
   try {
     const cisAgentPath = path.join(__dirname, 'modules/cis/agents/creativity.agent.yaml');
     const agent = await agentLoader.loadAgent(cisAgentPath);
-    logTest('CIS Module - Load creativity agent', agent.agent.metadata.name === 'Creativity Facilitator');
+    logTest('CIS Module - Load creativity agent', agent.agent.metadata.name === 'Creativity');
   } catch (error) {
     logTest('CIS Module - Load creativity agent', false, error);
   }
@@ -152,7 +151,7 @@ async function runTests() {
   }
 
   // Print Summary
-  console.log('\n' + '='.repeat(60));
+  console.log(`\n${  '='.repeat(60)}`);
   console.log('Test Summary\n');
   console.log(`Total Tests: ${results.tests.length}`);
   console.log(`✅ Passed: ${results.passed}`);
@@ -165,11 +164,11 @@ async function runTests() {
       .filter((t) => !t.passed)
       .forEach((t) => {
         console.log(`   - ${t.name}`);
-        if (t.error) console.log(`     ${t.error.message}`);
+        if (t.error) {console.log(`     ${t.error.message}`);}
       });
   }
 
-  console.log('\n' + '='.repeat(60));
+  console.log(`\n${  '='.repeat(60)}`);
 
   // Exit with appropriate code
   process.exit(results.failed > 0 ? 1 : 0);

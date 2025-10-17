@@ -100,8 +100,14 @@ class WorkflowEngine {
       if (!step.name) {
         throw new Error(`Missing 'name' in step ${index} in ${filePath}`);
       }
-      if (!step.action) {
-        throw new Error(`Missing 'action' in step ${index} in ${filePath}`);
+      // Accept both 'action' and 'type' for backward compatibility
+      const action = step.action || step.type;
+      if (!action) {
+        throw new Error(`Missing 'action' or 'type' in step ${index} in ${filePath}`);
+      }
+      // Normalize to 'action' for internal use
+      if (step.type && !step.action) {
+        step.action = step.type;
       }
     });
 
