@@ -12,6 +12,19 @@ and this project adheres to
 
 - Planning v1.0-beta features
 
+### Changed
+
+- **CLAUDE.md Streamlined for AI Assistants**
+  - Reduced file size from 907 to 581 lines (36% reduction)
+  - Reorganized with essential commands at top
+  - Added "Architecture: The Big Picture" with system flow diagram
+  - Added "Critical Component Relationships" explaining cross-file integration
+  - Added "Common Development Scenarios" with specific file references and line
+    numbers
+  - Removed redundant content and obvious advice
+  - Enhanced actionability with copy-paste commands and concrete examples
+  - Better focus on high-level architecture insights
+
 ## [1.0.0-alpha.2] - 2025-10-17
 
 ### Fixed
