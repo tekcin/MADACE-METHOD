@@ -250,7 +250,7 @@ http://localhost:3000/agents/create
 | `/setup` | Initial setup wizard | ✅ |
 | `/ide` | **NEW:** Web IDE with Monaco Editor | ✅ |
 | `/import` | Agent/workflow import | ✅ |
-| `/assess` | Complexity assessment | ✅ |
+| `/assessment` | Complexity assessment | ✅ |
 
 ### CLI Commands
 

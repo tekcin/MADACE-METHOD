@@ -644,7 +644,7 @@ npm run test:e2e           ✅ E2E tests
 /docs                  ✅ Doc viewer
 /sync-status           ✅ Real-time sync dashboard
 /llm-test              ✅ LLM connection tester
-/assess                ✅ Complexity assessment
+/assessment            ✅ Complexity assessment
 ```
 
 **Score**: 10/10

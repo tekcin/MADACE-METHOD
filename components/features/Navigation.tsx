@@ -40,7 +40,7 @@ const navigation = [
   // Project section
   { name: 'Kanban', href: '/kanban', icon: ViewColumnsIcon, section: 'project' },
   { name: 'Workflows', href: '/workflows', icon: RectangleStackIcon, section: 'project' },
-  { name: 'Assess', href: '/assess', icon: ChartBarIcon, section: 'project' },
+  { name: 'Assessment', href: '/assessment', icon: ChartBarIcon, section: 'project' },
 
   // Collaborate section
   { name: 'Chat', href: '/chat', icon: ChatBubbleLeftIcon, section: 'collaborate' },

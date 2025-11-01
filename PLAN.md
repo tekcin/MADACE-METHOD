@@ -294,7 +294,7 @@ The project was divided into four phases, all now complete:
 
 **Key Files**:
 
-- `app/assess/page.tsx` (391 lines, 7 handlers, modal, state persistence)
+- `app/assessment/page.tsx` (391 lines, 7 handlers, modal, state persistence)
 - `components/features/AssessmentResult.tsx` (358 lines, action buttons, view buttons)
 - `lib/workflows/complexity-assessment.ts` (334 lines, scoring algorithm)
 

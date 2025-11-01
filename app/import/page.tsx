@@ -553,7 +553,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
 
                 <button
                   type="button"
-                  onClick={() => router.push('/assess')}
+                  onClick={() => router.push('/assessment')}
                   className="flex items-center gap-2 rounded-lg border border-green-600 bg-white px-6 py-3 text-sm font-semibold text-green-700 hover:bg-green-50 dark:border-green-500 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

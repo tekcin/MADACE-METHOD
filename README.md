@@ -823,13 +823,13 @@ model AgentMemory {
   - API integration with Projects API
   - localStorage configuration persistence
 
-**Assessment Page**: `http://localhost:3000/assess`
+**Assessment Page**: `http://localhost:3000/assessment`
 
 **Documentation**: [ARCHITECTURE.md Section 13](./ARCHITECTURE.md#13-assessment-tool--implementation-actions-) (644 lines)
 
 **Key Files**:
 
-- `app/assess/page.tsx` (239 lines, 4 action handlers)
+- `app/assessment/page.tsx` (239 lines, 4 action handlers)
 - `components/features/AssessmentResult.tsx` (302 lines, action button UI)
 - `lib/workflows/complexity-assessment.ts` (334 lines, scoring algorithm)
 

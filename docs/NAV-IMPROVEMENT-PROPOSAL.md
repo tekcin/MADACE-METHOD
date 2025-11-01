@@ -18,7 +18,7 @@ This document proposes a reorganization of the MADACE v3.0 WebUI navigation to b
 2. CLI Setup (/cli-setup)
 3. Chat (/chat)
 4. Kanban (/kanban)
-5. Assess (/assess)
+5. Assess (/assessment)
 6. Import (/import)
 7. Agents (/agents)
 8. Workflows (/workflows)
@@ -334,7 +334,7 @@ const navigation = [
   // PROJECT section
   { name: 'Kanban', href: '/kanban', icon: ViewColumnsIcon, section: 'project' },
   { name: 'Workflows', href: '/workflows', icon: RectangleStackIcon, section: 'project' },
-  { name: 'Assess', href: '/assess', icon: ChartBarIcon, section: 'project' },
+  { name: 'Assess', href: '/assessment', icon: ChartBarIcon, section: 'project' },
 
   // COLLABORATE section
   { name: 'Chat', href: '/chat', icon: ChatBubbleLeftIcon, section: 'collaborate' },

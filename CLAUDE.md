@@ -423,7 +423,7 @@ steps:
 
 - `/setup` - Initial setup wizard
 - `/settings` - System configuration
-- `/assess` - Complexity assessment tool
+- `/assessment` - Complexity assessment tool
 
 **Development & Tools**:
 

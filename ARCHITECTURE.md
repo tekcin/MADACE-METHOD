@@ -5305,7 +5305,7 @@ The **Project Management & Multi-tenancy** system in MADACE v3.0 provides:
 
 ## 13. Assessment Tool & Implementation Actions ✅
 
-The **Assessment Tool** (`/assess`) provides project complexity evaluation with actionable implementation buttons. This feature transforms passive assessment into active project initiation.
+The **Assessment Tool** (`/assessment`) provides project complexity evaluation with actionable implementation buttons. This feature transforms passive assessment into active project initiation.
 
 ### 13.1. Overview
 
@@ -5321,7 +5321,7 @@ The **Assessment Tool** (`/assess`) provides project complexity evaluation with 
 
 **Files**:
 
-- `app/assess/page.tsx` - Assessment page with handlers (239 lines)
+- `app/assessment/page.tsx` - Assessment page with handlers (239 lines)
 - `components/features/AssessmentResult.tsx` - Result display with action buttons (302 lines)
 - `components/features/AssessmentForm.tsx` - 8-field input form
 - `lib/workflows/complexity-assessment.ts` - Scoring algorithm (334 lines)
@@ -5379,7 +5379,7 @@ interface Props {
 
 ##### Start Recommended Workflow
 
-**Location**: `app/assess/page.tsx:99-105`
+**Location**: `app/assessment/page.tsx:99-105`
 
 ```typescript
 const handleStartWorkflow = () => {
@@ -5400,7 +5400,7 @@ const handleStartWorkflow = () => {
 
 ##### Create Project with Assessment Data
 
-**Location**: `app/assess/page.tsx:107-144`
+**Location**: `app/assessment/page.tsx:107-144`
 
 ```typescript
 const handleCreateProject = async () => {
@@ -5463,7 +5463,7 @@ const handleCreateProject = async () => {
 
 ##### Apply MADACE Configuration
 
-**Location**: `app/assess/page.tsx:146-165`
+**Location**: `app/assessment/page.tsx:146-165`
 
 ```typescript
 const handleApplyConfiguration = () => {
@@ -5501,7 +5501,7 @@ const handleApplyConfiguration = () => {
 
 ##### View Workflow Details
 
-**Location**: `app/assess/page.tsx:167-170`
+**Location**: `app/assessment/page.tsx:167-170`
 
 ```typescript
 const handleViewWorkflowDetails = () => {
@@ -5738,7 +5738,7 @@ const recommendedWorkflow = localStorage.getItem('madace-recommended-workflow');
    # Start dev server
    npm run dev
 
-   # Visit http://localhost:3000/assess
+   # Visit http://localhost:3000/assessment
    ```
 
 2. **Fill Assessment Form**:
@@ -5779,7 +5779,7 @@ const recommendedWorkflow = localStorage.getItem('madace-recommended-workflow');
 **Recommended Test Cases**:
 
 ```typescript
-// __tests__/app/assess/implementation-actions.test.tsx
+// __tests__/app/assessment/implementation-actions.test.tsx
 
 describe('Assessment Implementation Actions', () => {
   it('should navigate to workflows page with query param', () => {
@@ -5815,7 +5815,7 @@ describe('Assessment Implementation Actions', () => {
 
 **Assessment Form**: Heavy component with 8 form fields
 
-- Consider code splitting for `/assess` route
+- Consider code splitting for `/assessment` route
 - Form components already client-side only (`'use client'`)
 
 #### localStorage Performance
@@ -5927,7 +5927,7 @@ const templates = [
 
 #### Implementation Details
 
-**Modal State Management** (`app/assess/page.tsx`):
+**Modal State Management** (`app/assessment/page.tsx`):
 
 ```typescript
 const [viewerModal, setViewerModal] = useState<{
@@ -6083,7 +6083,7 @@ const handleCloseViewer = () => {
 const STORAGE_KEY = 'madace-assessment-form-state';
 ```
 
-**Load State on Mount** (`app/assess/page.tsx`, lines 23-34):
+**Load State on Mount** (`app/assessment/page.tsx`, lines 23-34):
 
 ```typescript
 // Load saved state from localStorage on mount
@@ -6167,7 +6167,7 @@ const handleReset = () => {
 1. User navigates away (e.g., to `/workflows`)
 2. React unmounts component
 3. State remains in localStorage
-4. User returns to `/assess`
+4. User returns to `/assessment`
 5. State automatically restored from localStorage
 
 **On Reset**:
@@ -6293,7 +6293,7 @@ const handleReset = () => {
 
 | File                                       | Purpose                            | Lines      | Changes                                                                     |
 | ------------------------------------------ | ---------------------------------- | ---------- | --------------------------------------------------------------------------- |
-| `app/assess/page.tsx`                      | Assessment page with all features  | 391 (+154) | Added router hook, 7 handler functions, modal component, state persistence  |
+| `app/assessment/page.tsx`                  | Assessment page with all features  | 391 (+154) | Added router hook, 7 handler functions, modal component, state persistence  |
 | `components/features/AssessmentResult.tsx` | Result display with action buttons | 358 (+167) | Added 6 props, implementation actions section, view buttons, reorganized UI |
 
 **Total New Code**: ~321 lines (handlers + UI components + state management)
@@ -6583,7 +6583,7 @@ const [error, setError] = useState<string | null>(null);
                           │                     │
                    Create Project        Assess Complexity
                           │                     │
-                    /api/v3/projects          /assess
+                    /api/v3/projects          /assessment
    ```
 
 **Implementation Highlights**:
@@ -6947,7 +6947,7 @@ if (hasPackageJson) {
 **Integration Points**:
 
 - `/api/v3/projects` (future: auto-create projects)
-- `/assess` (future: pre-fill assessment form)
+- `/assessment` (future: pre-fill assessment form)
 - File system (`./madace-data/cloned-repos/`)
 - GitHub API (via Octokit)
 
@@ -7503,7 +7503,7 @@ All 10 navigation items preserved:
 1. **Dashboard** (`/`) - HomeIcon
 2. **Chat** (`/chat`) - ChatBubbleLeftIcon
 3. **Kanban** (`/kanban`) - ViewColumnsIcon
-4. **Assess** (`/assess`) - ChartBarIcon
+4. **Assess** (`/assessment`) - ChartBarIcon
 5. **Import** (`/import`) - CloudArrowDownIcon
 6. **Agents** (`/agents`) - UserGroupIcon
 7. **Workflows** (`/workflows`) - RectangleStackIcon
