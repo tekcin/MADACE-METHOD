@@ -191,21 +191,21 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
+    <main className="min-h-screen bg-gray-900 py-12">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-4xl font-bold text-white">
             Import GitHub Repository
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-gray-400">
             Clone and analyze any public GitHub repository to import into MADACE
           </p>
         </div>
 
         {/* Import Form */}
-        <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800">
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-8 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-lg font-semibold text-white">
               Import Repository
             </h2>
             {(repoUrl || analysis) && (
@@ -231,7 +231,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
             <div>
               <label
                 htmlFor="repoUrl"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-200"
               >
                 GitHub Repository URL
               </label>
@@ -242,7 +242,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                   value={repoUrl}
                   onChange={(e) => setRepoUrl(e.target.value)}
                   placeholder="https://github.com/owner/repository"
-                  className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500"
+                  className="block w-full rounded-lg border border-gray-600 bg-gray-700 px-4 py-2 text-gray-200 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   disabled={isLoading}
                 />
                 <button
@@ -290,14 +290,14 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                   )}
                 </button>
               </div>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-2 text-sm text-gray-400">
                 Supported formats: https://github.com/owner/repo,
                 https://github.com/owner/repo/tree/branch
               </p>
             </div>
 
             {error && (
-              <div className="rounded-lg border border-red-300 bg-red-50 p-4 dark:border-red-700 dark:bg-red-950">
+              <div className="rounded-lg border border-red-700 bg-red-950 p-4">
                 <div className="flex">
                   <svg
                     className="h-5 w-5 text-red-400"
@@ -313,7 +313,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                     />
                   </svg>
                   <div className="ml-3">
-                    <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+                    <p className="text-sm text-red-200">{error}</p>
                   </div>
                 </div>
               </div>
@@ -325,20 +325,20 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
         {analysis && (
           <div className="mt-8 space-y-6">
             {/* Project Overview */}
-            <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800">
+            <div className="rounded-lg border border-gray-700 bg-gray-800 p-8 shadow-sm">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <h2 className="text-2xl font-bold text-white">
                     {analysis.name}
                   </h2>
                   {analysis.description && (
-                    <p className="mt-2 text-gray-600 dark:text-gray-400">{analysis.description}</p>
+                    <p className="mt-2 text-gray-400">{analysis.description}</p>
                   )}
                   <a
                     href={analysis.repositoryUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                    className="mt-2 inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300"
                   >
                     <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -346,7 +346,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                     View on GitHub
                   </a>
                 </div>
-                <div className="flex gap-4 text-sm text-gray-600 dark:text-gray-400">
+                <div className="flex gap-4 text-sm text-gray-400">
                   <div className="flex items-center gap-1">
                     <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -381,7 +381,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
 
             {/* README Summary */}
             {analysis.readme && (
-              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800">
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
                 <div className="mb-4 flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     📖 Project Overview ({analysis.readme.filename})
@@ -435,38 +435,38 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
 
             {/* Statistics */}
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-                <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+                <div className="text-sm font-medium text-gray-400">
                   Total Files
                 </div>
-                <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                <div className="mt-2 text-3xl font-bold text-white">
                   {analysis.totalFiles.toLocaleString()}
                 </div>
               </div>
 
-              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-                <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+                <div className="text-sm font-medium text-gray-400">
                   Lines of Code
                 </div>
-                <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                <div className="mt-2 text-3xl font-bold text-white">
                   {analysis.totalLines.toLocaleString()}
                 </div>
               </div>
 
-              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-                <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+                <div className="text-sm font-medium text-gray-400">
                   Primary Language
                 </div>
-                <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                <div className="mt-2 text-3xl font-bold text-white">
                   {analysis.language}
                 </div>
               </div>
 
-              <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-                <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+                <div className="text-sm font-medium text-gray-400">
                   Last Updated
                 </div>
-                <div className="mt-2 text-lg font-bold text-gray-900 dark:text-white">
+                <div className="mt-2 text-lg font-bold text-white">
                   {new Date(analysis.lastUpdated).toLocaleDateString()}
                 </div>
               </div>

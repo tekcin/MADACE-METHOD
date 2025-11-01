@@ -133,7 +133,7 @@ export default function SyncStatusPage() {
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <ArrowPathIcon className="mx-auto h-12 w-12 animate-spin text-blue-500" />
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading sync status...</p>
+          <p className="mt-4 text-gray-400">Loading sync status...</p>
         </div>
       </div>
     );
@@ -143,25 +143,25 @@ export default function SyncStatusPage() {
     <div className="container mx-auto max-w-6xl px-4 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+        <h1 className="mb-2 text-3xl font-bold text-white">
           Sync Service Status
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-400">
           Real-time WebSocket synchronization between Web UI and CLI tools
         </p>
       </div>
 
       {/* Error Display */}
       {error && (
-        <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
-          <p className="text-sm text-red-800 dark:text-red-200">
+        <div className="mb-6 rounded-lg border border-red-800 bg-red-900/20 p-4">
+          <p className="text-sm text-red-200">
             <strong>Error:</strong> {error}
           </p>
         </div>
       )}
 
       {/* Service Status Card */}
-      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+      <div className="mb-6 rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
@@ -171,7 +171,7 @@ export default function SyncStatusPage() {
                   : 'bg-gray-300 dark:bg-gray-600'
               }`}
             />
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-white">
               Service Status: {status?.running ? 'Running' : 'Stopped'}
             </h2>
           </div>
@@ -210,16 +210,16 @@ export default function SyncStatusPage() {
 
         {status?.running && (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700/50">
-              <p className="text-sm text-gray-600 dark:text-gray-400">Connected Clients</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="rounded-lg bg-gray-700/50 p-4">
+              <p className="text-sm text-gray-400">Connected Clients</p>
+              <p className="text-2xl font-bold text-white">
                 {status.clientCount}
               </p>
             </div>
 
-            <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700/50">
-              <p className="text-sm text-gray-600 dark:text-gray-400">WebSocket Port</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">3001</p>
+            <div className="rounded-lg bg-gray-700/50 p-4">
+              <p className="text-sm text-gray-400">WebSocket Port</p>
+              <p className="text-2xl font-bold text-white">3001</p>
             </div>
           </div>
         )}
@@ -227,14 +227,14 @@ export default function SyncStatusPage() {
 
       {/* Connected Clients */}
       {status?.running && (
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-white">
             Connected Clients ({status.clientCount})
           </h2>
 
           {status.clientCount === 0 ? (
             <div className="rounded-lg bg-gray-50 p-8 text-center dark:bg-gray-700/50">
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-gray-400">
                 No clients connected. Start a CLI tool or open another Web UI instance to see
                 connections here.
               </p>
@@ -244,7 +244,7 @@ export default function SyncStatusPage() {
               {status.clients.map((client) => (
                 <div
                   key={client.id}
-                  className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-600 dark:bg-gray-700/50"
+                  className="rounded-lg border border-gray-600 bg-gray-700/50 p-4"
                 >
                   <div className="mb-2 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -266,16 +266,16 @@ export default function SyncStatusPage() {
 
                   <div className="grid grid-cols-1 gap-2 text-sm md:grid-cols-2">
                     <div>
-                      <span className="text-gray-600 dark:text-gray-400">Connected:</span>{' '}
-                      <span className="text-gray-900 dark:text-white">
+                      <span className="text-gray-400">Connected:</span>{' '}
+                      <span className="text-white">
                         {formatTimestamp(client.connectedAt)}
                       </span>
                     </div>
 
                     {client.lastPing && (
                       <div>
-                        <span className="text-gray-600 dark:text-gray-400">Last Ping:</span>{' '}
-                        <span className="text-gray-900 dark:text-white">
+                        <span className="text-gray-400">Last Ping:</span>{' '}
+                        <span className="text-white">
                           {formatUptime(client.lastPing)} ago
                         </span>
                       </div>
@@ -290,15 +290,15 @@ export default function SyncStatusPage() {
 
       {/* Connection Instructions */}
       {!status?.running && (
-        <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-blue-900/20">
-          <h3 className="mb-2 text-lg font-semibold text-blue-900 dark:text-blue-100">
+        <div className="mt-6 rounded-lg border border-blue-800 bg-blue-900/20 p-6">
+          <h3 className="mb-2 text-lg font-semibold text-blue-100">
             How to Enable Real-Time Sync
           </h3>
-          <p className="mb-4 text-blue-800 dark:text-blue-200">
+          <p className="mb-4 text-blue-200">
             Click &quot;Start Service&quot; above to enable real-time synchronization between Web UI
             and CLI tools (Claude CLI, Gemini CLI).
           </p>
-          <div className="space-y-2 text-sm text-blue-700 dark:text-blue-300">
+          <div className="space-y-2 text-sm text-blue-300">
             <p>
               <strong>After starting:</strong>
             </p>

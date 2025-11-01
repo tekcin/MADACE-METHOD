@@ -224,15 +224,15 @@ export default function AssessPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
+    <main className="min-h-screen bg-gray-900 py-12">
       <div className="container mx-auto max-w-5xl px-4">
         <div className="mb-8">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-4xl font-bold text-white">
                 Project Complexity Assessment
               </h1>
-              <p className="mt-2 text-gray-600 dark:text-gray-400">
+              <p className="mt-2 text-gray-400">
                 Determine the recommended planning level for your project by answering 8 key
                 questions
               </p>
@@ -241,7 +241,7 @@ export default function AssessPage() {
               <button
                 type="button"
                 onClick={handleReset}
-                className="flex items-center gap-2 rounded-lg border border-red-300 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-100 dark:border-red-700 dark:bg-red-950 dark:text-red-300 dark:hover:bg-red-900"
+                className="flex items-center gap-2 rounded-lg border border-red-700 bg-red-950 px-4 py-2 text-sm font-medium text-red-300 hover:bg-red-900"
                 title="Clear all assessment data"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -260,7 +260,7 @@ export default function AssessPage() {
 
         <div className="space-y-8">
           {/* Assessment Form */}
-          <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800">
+          <div className="rounded-lg border border-gray-700 bg-gray-800 p-8 shadow-sm">
             <AssessmentForm input={input} onChange={handleInputChange} />
           </div>
 
@@ -282,8 +282,8 @@ export default function AssessPage() {
 
           {/* Empty State */}
           {!assessment && Object.keys(input).length > 0 && (
-            <div className="rounded-lg border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-800">
-              <div className="text-gray-500 dark:text-gray-400">
+            <div className="rounded-lg border border-gray-700 bg-gray-800 p-8 text-center shadow-sm">
+              <div className="text-gray-400">
                 <svg
                   className="mx-auto h-12 w-12 text-gray-400"
                   fill="none"
@@ -312,18 +312,18 @@ export default function AssessPage() {
             onClick={handleCloseViewer}
           >
             <div
-              className="relative max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800"
+              className="relative max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-lg border border-gray-700 bg-gray-800 shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-900">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <div className="flex items-center justify-between border-b border-gray-700 bg-gray-900 px-6 py-4">
+                <h2 className="text-xl font-semibold text-white">
                   {viewerModal.type === 'markdown' ? 'Markdown Report' : 'JSON Data'}
                 </h2>
                 <button
                   type="button"
                   onClick={handleCloseViewer}
-                  className="rounded-lg p-2 text-gray-500 hover:bg-gray-200 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                  className="rounded-lg p-2 text-gray-400 hover:bg-gray-700 hover:text-gray-200"
                   aria-label="Close"
                 >
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -339,27 +339,27 @@ export default function AssessPage() {
 
               {/* Modal Content */}
               <div className="max-h-[70vh] overflow-auto p-6">
-                <pre className="rounded-lg bg-gray-50 p-4 font-mono text-sm break-words whitespace-pre-wrap text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+                <pre className="rounded-lg bg-gray-900 p-4 font-mono text-sm break-words whitespace-pre-wrap text-gray-200">
                   {viewerModal.content}
                 </pre>
               </div>
 
               {/* Modal Footer */}
-              <div className="flex justify-end gap-3 border-t border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-900">
+              <div className="flex justify-end gap-3 border-t border-gray-700 bg-gray-900 px-6 py-4">
                 <button
                   type="button"
                   onClick={() => {
                     navigator.clipboard.writeText(viewerModal.content);
                     alert('Content copied to clipboard!');
                   }}
-                  className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                  className="rounded-lg border border-gray-600 bg-gray-700 px-4 py-2 text-sm font-medium text-gray-200 hover:bg-gray-600"
                 >
                   Copy to Clipboard
                 </button>
                 <button
                   type="button"
                   onClick={handleCloseViewer}
-                  className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                  className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
                 >
                   Close
                 </button>

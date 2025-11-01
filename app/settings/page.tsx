@@ -287,7 +287,7 @@ export default function SettingsPage() {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-4 text-sm text-gray-400">
               Loading configuration...
             </p>
           </div>
@@ -299,15 +299,15 @@ export default function SettingsPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">MADACE Settings</h1>
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        <h1 className="text-3xl font-bold text-white">MADACE Settings</h1>
+        <p className="mt-2 text-sm text-gray-400">
           Manage your MADACE configuration and preferences
         </p>
       </div>
 
       {/* Success Message */}
       {successMessage && (
-        <div className="mb-6 rounded-md bg-green-50 p-4 dark:bg-green-900/20">
+        <div className="mb-6 rounded-md bg-green-900/20 p-4">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg
@@ -324,7 +324,7 @@ export default function SettingsPage() {
               </svg>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-green-800 dark:text-green-200">
+              <p className="text-sm font-medium text-green-200">
                 {successMessage}
               </p>
             </div>
@@ -334,7 +334,7 @@ export default function SettingsPage() {
 
       {/* Error Message */}
       {error && (
-        <div className="mb-6 rounded-md bg-red-50 p-4 dark:bg-red-900/20">
+        <div className="mb-6 rounded-md bg-red-900/20 p-4">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg
@@ -351,10 +351,10 @@ export default function SettingsPage() {
               </svg>
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
+              <h3 className="text-sm font-medium text-red-200">
                 Configuration Error
               </h3>
-              <div className="mt-2 text-sm text-red-700 dark:text-red-300">{error}</div>
+              <div className="mt-2 text-sm text-red-300">{error}</div>
             </div>
           </div>
         </div>
@@ -362,11 +362,11 @@ export default function SettingsPage() {
 
       <div className="space-y-6">
         {/* Project Information Section */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-white">
             Project Information
           </h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-400">
             Basic information about your MADACE project
           </p>
 
@@ -374,7 +374,7 @@ export default function SettingsPage() {
             <div>
               <label
                 htmlFor="project_name"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-200"
               >
                 Project Name <span className="text-red-500">*</span>
               </label>
@@ -386,12 +386,12 @@ export default function SettingsPage() {
                 className={`mt-1 block w-full rounded-md border ${
                   getFieldError('project_name')
                     ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                    : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                } bg-white px-3 py-2 text-gray-900 shadow-sm focus:ring-1 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white`}
+                    : 'border-gray-600 focus:border-blue-500 focus:ring-blue-500'
+                } bg-gray-700 px-3 py-2 text-gray-200 placeholder-gray-400 shadow-sm focus:ring-2 focus:outline-none`}
                 placeholder="My MADACE Project"
               />
               {getFieldError('project_name') && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-400">
                   {getFieldError('project_name')}
                 </p>
               )}
@@ -400,7 +400,7 @@ export default function SettingsPage() {
             <div>
               <label
                 htmlFor="output_folder"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-200"
               >
                 Output Folder
               </label>
@@ -409,10 +409,10 @@ export default function SettingsPage() {
                 id="output_folder"
                 value={formData.output_folder}
                 onChange={(e) => setFormData({ ...formData, output_folder: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-gray-200 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 placeholder="docs"
               />
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-gray-400">
                 Folder where MADACE will generate documentation
               </p>
             </div>
@@ -420,7 +420,7 @@ export default function SettingsPage() {
             <div>
               <label
                 htmlFor="user_name"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-200"
               >
                 User Name
               </label>
@@ -429,7 +429,7 @@ export default function SettingsPage() {
                 id="user_name"
                 value={formData.user_name}
                 onChange={(e) => setFormData({ ...formData, user_name: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-gray-200 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 placeholder="Your Name"
               />
             </div>
@@ -437,7 +437,7 @@ export default function SettingsPage() {
             <div>
               <label
                 htmlFor="communication_language"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-200"
               >
                 Communication Language
               </label>
@@ -448,10 +448,10 @@ export default function SettingsPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, communication_language: e.target.value })
                 }
-                className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-gray-200 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 placeholder="en"
               />
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-gray-400">
                 Language code (e.g., en, es, fr, de)
               </p>
             </div>
@@ -459,9 +459,9 @@ export default function SettingsPage() {
         </div>
 
         {/* LLM Configuration Section */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">LLM Configuration</h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-white">LLM Configuration</h2>
+          <p className="mt-1 text-sm text-gray-400">
             Configure your Language Model provider and API settings
           </p>
 
@@ -469,7 +469,7 @@ export default function SettingsPage() {
             <div>
               <label
                 htmlFor="llm_provider"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-200"
               >
                 LLM Provider
               </label>
@@ -479,7 +479,7 @@ export default function SettingsPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, llm_provider: e.target.value as LLMProvider })
                 }
-                className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-gray-200 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="gemini">Google Gemini</option>
                 <option value="claude">Anthropic Claude</option>
@@ -491,7 +491,7 @@ export default function SettingsPage() {
             <div>
               <label
                 htmlFor="llm_api_key"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-200"
               >
                 API Key{' '}
                 {formData.llm_provider !== 'local' && <span className="text-red-500">*</span>}
@@ -513,7 +513,7 @@ export default function SettingsPage() {
                   {getFieldError('llm_api_key')}
                 </p>
               )}
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-gray-400">
                 {formData.llm_provider === 'local'
                   ? 'Local model URL (e.g., http://localhost:11434)'
                   : 'Your API key will be stored securely in .env'}
@@ -523,7 +523,7 @@ export default function SettingsPage() {
             <div>
               <label
                 htmlFor="llm_model"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-200"
               >
                 Model
               </label>
@@ -549,7 +549,7 @@ export default function SettingsPage() {
                   {getFieldError('llm_model')}
                 </p>
               )}
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-gray-400">
                 Choose a model for{' '}
                 {formData.llm_provider === 'local' ? 'local inference' : 'API requests'}
               </p>
@@ -619,9 +619,9 @@ export default function SettingsPage() {
         </div>
 
         {/* Modules Section */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Modules</h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-white">Modules</h2>
+          <p className="mt-1 text-sm text-gray-400">
             Enable or disable MADACE modules
           </p>
 
