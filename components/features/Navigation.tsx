@@ -27,10 +27,10 @@ import { ProjectModal } from './ProjectModal';
 // Navigation sections for better organization
 const sections = {
   main: { label: '', color: '' },
-  project: { label: 'PROJECT', color: 'text-blue-600 dark:text-blue-400' },
-  collaborate: { label: 'COLLABORATE', color: 'text-green-600 dark:text-green-400' },
-  setup: { label: 'SETUP', color: 'text-purple-600 dark:text-purple-400' },
-  dev: { label: 'DEV TOOLS', color: 'text-gray-500 dark:text-gray-400' },
+  project: { label: 'PROJECT', color: 'text-blue-400' },
+  collaborate: { label: 'COLLABORATE', color: 'text-green-400' },
+  setup: { label: 'SETUP', color: 'text-purple-400' },
+  dev: { label: 'DEV TOOLS', color: 'text-gray-400' },
 };
 
 const navigation = [
@@ -87,12 +87,12 @@ export function Navigation() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex flex-col border-r border-gray-200 bg-white transition-all duration-300 dark:border-gray-800 dark:bg-gray-900 ${
+        className={`fixed inset-y-0 left-0 z-50 flex flex-col border-r border-gray-700 bg-gray-800 transition-all duration-300 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0 ${sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'} w-64`}
       >
         {/* Sidebar Header */}
-        <div className="flex h-16 items-center justify-between border-b border-gray-200 px-4 dark:border-gray-800">
+        <div className="flex h-16 items-center justify-between border-b border-gray-700 px-4">
           <Link
             href="/"
             className={`flex items-center ${sidebarCollapsed ? 'lg:justify-center' : ''}`}
@@ -106,7 +106,7 @@ export function Navigation() {
           {/* Mobile close button */}
           <button
             type="button"
-            className="rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 lg:hidden dark:hover:bg-gray-800"
+            className="rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-gray-300 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           >
             <XMarkIcon className="h-6 w-6" />
@@ -115,7 +115,7 @@ export function Navigation() {
           {/* Desktop collapse button */}
           <button
             type="button"
-            className="hidden rounded-md p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-500 lg:block dark:hover:bg-gray-800"
+            className="hidden rounded-md p-1.5 text-gray-400 hover:bg-gray-700 hover:text-gray-300 lg:block"
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
@@ -129,7 +129,7 @@ export function Navigation() {
 
         {/* Project Selector */}
         {!sidebarCollapsed && (
-          <div className="border-b border-gray-200 p-4 dark:border-gray-800">
+          <div className="border-b border-gray-700 p-4">
             <ProjectSelector />
           </div>
         )}
@@ -146,7 +146,7 @@ export function Navigation() {
               <div key={item.name}>
                 {/* Section Header */}
                 {showSectionHeader && !sidebarCollapsed && (
-                  <div className="mb-2 mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  <div className="mb-2 mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
                     <span className={sectionInfo?.color || ''}>{sectionInfo?.label}</span>
                   </div>
                 )}
@@ -156,8 +156,8 @@ export function Navigation() {
                   href={item.href}
                   className={`flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white'
+                      ? 'bg-blue-900 text-blue-200'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                   } ${sidebarCollapsed ? 'lg:justify-center' : ''}`}
                   title={sidebarCollapsed ? item.name : undefined}
                 >
@@ -171,8 +171,8 @@ export function Navigation() {
 
         {/* Sidebar Footer */}
         {!sidebarCollapsed && (
-          <div className="border-t border-gray-200 p-4 dark:border-gray-800">
-            <p className="text-xs text-gray-500 dark:text-gray-400">© 2025 MADACE-Method</p>
+          <div className="border-t border-gray-700 p-4">
+            <p className="text-xs text-gray-400">© 2025 MADACE-Method</p>
           </div>
         )}
       </aside>
