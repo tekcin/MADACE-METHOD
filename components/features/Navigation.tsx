@@ -19,22 +19,42 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CommandLineIcon,
+  CodeBracketIcon,
 } from '@heroicons/react/24/outline';
 import { ProjectSelector } from './ProjectSelector';
 import { ProjectModal } from './ProjectModal';
 
+// Navigation sections for better organization
+const sections = {
+  main: { label: '', color: '' },
+  project: { label: 'PROJECT', color: 'text-blue-600 dark:text-blue-400' },
+  collaborate: { label: 'COLLABORATE', color: 'text-green-600 dark:text-green-400' },
+  setup: { label: 'SETUP', color: 'text-purple-600 dark:text-purple-400' },
+  dev: { label: 'DEV TOOLS', color: 'text-gray-500 dark:text-gray-400' },
+};
+
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: HomeIcon },
-  { name: 'CLI Setup', href: '/cli-setup', icon: CommandLineIcon },
-  { name: 'Chat', href: '/chat', icon: ChatBubbleLeftIcon },
-  { name: 'Kanban', href: '/kanban', icon: ViewColumnsIcon },
-  { name: 'Assess', href: '/assess', icon: ChartBarIcon },
-  { name: 'Import', href: '/import', icon: CloudArrowDownIcon },
-  { name: 'Agents', href: '/agents', icon: UserGroupIcon },
-  { name: 'Workflows', href: '/workflows', icon: RectangleStackIcon },
-  { name: 'Sync Status', href: '/sync-status', icon: ArrowPathIcon },
-  { name: 'LLM Test', href: '/llm-test', icon: BeakerIcon },
-  { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
+  // Main
+  { name: 'Dashboard', href: '/', icon: HomeIcon, section: 'main' },
+
+  // Project section
+  { name: 'Kanban', href: '/kanban', icon: ViewColumnsIcon, section: 'project' },
+  { name: 'Workflows', href: '/workflows', icon: RectangleStackIcon, section: 'project' },
+  { name: 'Assess', href: '/assess', icon: ChartBarIcon, section: 'project' },
+
+  // Collaborate section
+  { name: 'Chat', href: '/chat', icon: ChatBubbleLeftIcon, section: 'collaborate' },
+  { name: 'Agents', href: '/agents', icon: UserGroupIcon, section: 'collaborate' },
+  { name: 'IDE', href: '/ide', icon: CodeBracketIcon, section: 'collaborate' },
+
+  // Setup section
+  { name: 'CLI Setup', href: '/cli-setup', icon: CommandLineIcon, section: 'setup' },
+  { name: 'Import', href: '/import', icon: CloudArrowDownIcon, section: 'setup' },
+  { name: 'Settings', href: '/settings', icon: Cog6ToothIcon, section: 'setup' },
+
+  // Dev tools section
+  { name: 'Sync Status', href: '/sync-status', icon: ArrowPathIcon, section: 'dev' },
+  { name: 'LLM Test', href: '/llm-test', icon: BeakerIcon, section: 'dev' },
 ];
 
 export function Navigation() {
@@ -116,22 +136,35 @@ export function Navigation() {
 
         {/* Navigation Links */}
         <nav className="flex-1 space-y-1 overflow-y-auto p-4">
-          {navigation.map((item) => {
+          {navigation.map((item, index) => {
             const isActive = pathname === item.href;
+            const prevSection = index > 0 ? navigation[index - 1]?.section : null;
+            const showSectionHeader = item.section !== prevSection && item.section !== 'main';
+            const sectionInfo = sections[item.section as keyof typeof sections];
+
             return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white'
-                } ${sidebarCollapsed ? 'lg:justify-center' : ''}`}
-                title={sidebarCollapsed ? item.name : undefined}
-              >
-                <item.icon className={`h-5 w-5 flex-shrink-0 ${sidebarCollapsed ? '' : 'mr-3'}`} />
-                {!sidebarCollapsed && <span>{item.name}</span>}
-              </Link>
+              <div key={item.name}>
+                {/* Section Header */}
+                {showSectionHeader && !sidebarCollapsed && (
+                  <div className="mb-2 mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    <span className={sectionInfo?.color || ''}>{sectionInfo?.label}</span>
+                  </div>
+                )}
+
+                {/* Navigation Link */}
+                <Link
+                  href={item.href}
+                  className={`flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
+                      : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white'
+                  } ${sidebarCollapsed ? 'lg:justify-center' : ''}`}
+                  title={sidebarCollapsed ? item.name : undefined}
+                >
+                  <item.icon className={`h-5 w-5 flex-shrink-0 ${sidebarCollapsed ? '' : 'mr-3'}`} />
+                  {!sidebarCollapsed && <span>{item.name}</span>}
+                </Link>
+              </div>
             );
           })}
         </nav>
