@@ -27,11 +27,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-gray-900`}>
         <ProjectProvider>
           <Navigation />
-          <div className="flex min-h-screen flex-col lg:ml-64">
-            <main className="flex-1">{children}</main>
+          <div className="flex min-h-screen flex-col bg-gray-900 lg:ml-64">
+            <main className="flex-1 bg-gray-900">{children}</main>
             <Footer />
           </div>
         </ProjectProvider>

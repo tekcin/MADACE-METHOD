@@ -176,10 +176,10 @@ export default function WorkflowsPage() {
       {/* Page header */}
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white" data-testid="page-title">
+          <h1 className="text-3xl font-bold text-white" data-testid="page-title">
             MADACE Workflows
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-gray-400">
             Execute MADACE workflows to guide your project from planning through implementation.
           </p>
         </div>
@@ -210,12 +210,12 @@ export default function WorkflowsPage() {
       {/* Error Message */}
       {error && !executionState && (
         <div
-          className="mb-6 rounded-md border-2 border-red-300 bg-red-50 p-4 dark:border-red-700 dark:bg-red-900/20"
+          className="mb-6 rounded-md border-2 border-red-700 bg-red-900/20 p-4"
           data-testid="error-message"
         >
           <div className="flex">
             <svg
-              className="h-5 w-5 text-red-600 dark:text-red-400"
+              className="h-5 w-5 text-red-400"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -226,7 +226,7 @@ export default function WorkflowsPage() {
               />
             </svg>
             <div className="ml-3">
-              <p className="text-sm font-medium text-red-800 dark:text-red-200">{error}</p>
+              <p className="text-sm font-medium text-red-200">{error}</p>
             </div>
           </div>
         </div>
@@ -236,8 +236,8 @@ export default function WorkflowsPage() {
       {loadingWorkflows && !executionState && (
         <div className="flex items-center justify-center py-12" data-testid="loading-state">
           <div className="flex flex-col items-center space-y-4">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-blue-500 dark:border-gray-600 dark:border-t-blue-400"></div>
-            <p className="text-lg font-medium text-gray-900 dark:text-white">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-600 border-t-blue-400"></div>
+            <p className="text-lg font-medium text-white">
               Loading workflows...
             </p>
           </div>
@@ -247,7 +247,7 @@ export default function WorkflowsPage() {
       {/* Workflows grid (hide during execution) */}
       {!executionState && !loadingWorkflows && workflows.length > 0 && (
         <div data-testid="workflows-grid">
-          <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-lg font-medium text-white">
             Available Workflows ({workflows.length})
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -266,7 +266,7 @@ export default function WorkflowsPage() {
       {/* Empty state for when no workflows exist */}
       {workflows.length === 0 && !executionState && !loadingWorkflows && (
         <div
-          className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center dark:border-gray-600 dark:bg-gray-800"
+          className="rounded-lg border-2 border-dashed border-gray-600 bg-gray-800 p-12 text-center"
           data-testid="empty-state"
         >
           <svg
@@ -282,21 +282,21 @@ export default function WorkflowsPage() {
               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">
+          <h3 className="mt-4 text-lg font-medium text-white">
             No workflows available
           </h3>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-sm text-gray-400">
             Workflow files will be loaded from the madace/workflows directory.
           </p>
         </div>
       )}
 
       {/* Information box */}
-      <div className="mt-8 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-        <h3 className="mb-3 text-lg font-bold text-gray-900 dark:text-white">
+      <div className="mt-8 rounded-lg border border-gray-700 bg-gray-800 p-6">
+        <h3 className="mb-3 text-lg font-bold text-white">
           About MADACE Workflows
         </h3>
-        <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+        <div className="space-y-3 text-sm text-gray-400">
           <p>
             MADACE workflows guide you through structured processes for project planning,
             requirements gathering, architecture design, and implementation.
@@ -326,11 +326,11 @@ export default function WorkflowsPage() {
       </div>
 
       {/* Available features */}
-      <div className="mt-8 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-700 dark:bg-green-900/20">
-        <h4 className="mb-2 font-medium text-green-900 dark:text-green-100">
+      <div className="mt-8 rounded-lg border border-green-700 bg-green-900/20 p-4">
+        <h4 className="mb-2 font-medium text-green-100">
           ✅ Workflow Features - 100% Complete
         </h4>
-        <ul className="list-inside list-disc space-y-1 text-sm text-green-700 dark:text-green-300">
+        <ul className="list-inside list-disc space-y-1 text-sm text-green-300">
           <li>✅ Load workflows from YAML files</li>
           <li>✅ Real-time LLM integration for reflect steps</li>
           <li>✅ Interactive input forms for elicit steps</li>
@@ -343,13 +343,13 @@ export default function WorkflowsPage() {
         <div className="mt-3 flex gap-3">
           <a
             href="/workflows/create"
-            className="text-sm font-medium text-green-700 underline hover:text-green-800 dark:text-green-300 dark:hover:text-green-200"
+            className="text-sm font-medium text-green-300 underline hover:text-green-200"
           >
             Create New Workflow →
           </a>
           <a
             href="/docs/workflow-features-implementation-plan.md"
-            className="text-sm font-medium text-green-700 underline hover:text-green-800 dark:text-green-300 dark:hover:text-green-200"
+            className="text-sm font-medium text-green-300 underline hover:text-green-200"
           >
             View Documentation →
           </a>

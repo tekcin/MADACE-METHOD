@@ -129,19 +129,19 @@ export default function KanbanPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="mb-2 text-3xl font-bold">MADACE Workflow Status</h1>
-            <p className="text-muted-foreground">
+            <h1 className="mb-2 text-3xl font-bold text-white">MADACE Workflow Status</h1>
+            <p className="text-gray-400">
               Visual Kanban board for project progress tracking
             </p>
           </div>
           {currentProject && (
-            <div className="rounded-lg border border-blue-200 bg-blue-50 px-4 py-2 dark:border-blue-700 dark:bg-blue-900/20">
-              <div className="text-xs text-blue-600 dark:text-blue-400">Current Project</div>
-              <div className="text-lg font-semibold text-blue-900 dark:text-blue-100">
+            <div className="rounded-lg border border-blue-600 bg-blue-900/20 px-4 py-2">
+              <div className="text-xs text-blue-400">Current Project</div>
+              <div className="text-lg font-semibold text-blue-100">
                 {currentProject.name}
               </div>
               {currentProject.description && (
-                <div className="text-xs text-blue-700 dark:text-blue-300">
+                <div className="text-xs text-blue-300">
                   {currentProject.description}
                 </div>
               )}
@@ -152,35 +152,35 @@ export default function KanbanPage() {
 
       {/* Statistics Panel */}
       <div className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-5">
-        <div className="bg-card rounded-lg border p-4">
-          <div className="text-muted-foreground text-sm">Backlog</div>
-          <div className="text-2xl font-bold">{backlogCount}</div>
+        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
+          <div className="text-gray-400 text-sm">Backlog</div>
+          <div className="text-2xl font-bold text-white">{backlogCount}</div>
         </div>
-        <div className="bg-card rounded-lg border p-4">
-          <div className="text-muted-foreground text-sm">TODO</div>
-          <div className="text-2xl font-bold">
+        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
+          <div className="text-gray-400 text-sm">TODO</div>
+          <div className="text-2xl font-bold text-white">
             {todoCount}
             {todoCount > 1 && <span className="text-xs text-red-500"> ⚠️</span>}
           </div>
-          <div className="text-muted-foreground text-xs">Limit: 1</div>
+          <div className="text-gray-400 text-xs">Limit: 1</div>
         </div>
-        <div className="bg-card rounded-lg border p-4">
-          <div className="text-muted-foreground text-sm">In Progress</div>
-          <div className="text-2xl font-bold">
+        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
+          <div className="text-gray-400 text-sm">In Progress</div>
+          <div className="text-2xl font-bold text-white">
             {inProgressCount}
             {inProgressCount > 1 && <span className="text-xs text-red-500"> ⚠️</span>}
           </div>
-          <div className="text-muted-foreground text-xs">Limit: 1</div>
+          <div className="text-gray-400 text-xs">Limit: 1</div>
         </div>
-        <div className="bg-card rounded-lg border p-4">
-          <div className="text-muted-foreground text-sm">Done</div>
-          <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
+          <div className="text-gray-400 text-sm">Done</div>
+          <div className="text-2xl font-bold text-green-400">
             {totalCompleted}
           </div>
         </div>
-        <div className="bg-card rounded-lg border p-4">
-          <div className="text-muted-foreground text-sm">Total Points</div>
-          <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
+          <div className="text-gray-400 text-sm">Total Points</div>
+          <div className="text-2xl font-bold text-purple-400">
             {totalPoints}
           </div>
         </div>
@@ -189,10 +189,10 @@ export default function KanbanPage() {
       {/* Kanban Board */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {/* BACKLOG Column */}
-        <div className="bg-card flex flex-col rounded-lg border">
-          <div className="border-b p-4">
-            <h2 className="font-semibold">BACKLOG</h2>
-            <div className="text-muted-foreground text-sm">
+        <div className="bg-gray-800 flex flex-col rounded-lg border border-gray-700">
+          <div className="border-b border-gray-700 p-4">
+            <h2 className="font-semibold text-white">BACKLOG</h2>
+            <div className="text-gray-400 text-sm">
               {backlogCount} stories
               {backlogCount > 0 && (
                 <span className="ml-2">
@@ -209,23 +209,23 @@ export default function KanbanPage() {
           <div className="flex-1 space-y-4 p-4">
             {Object.entries(backlogByMilestone).map(([milestone, stories]) => (
               <div key={milestone} className="space-y-2">
-                <h3 className="text-muted-foreground text-sm font-medium">{milestone}</h3>
+                <h3 className="text-gray-400 text-sm font-medium">{milestone}</h3>
                 {stories.map((story: Story) => (
                   <StoryCard key={story.id} story={story} state="backlog" />
                 ))}
               </div>
             ))}
             {backlogCount === 0 && (
-              <div className="text-muted-foreground text-center text-sm">No stories in backlog</div>
+              <div className="text-gray-400 text-center text-sm">No stories in backlog</div>
             )}
           </div>
         </div>
 
         {/* TODO Column */}
-        <div className="bg-card flex flex-col rounded-lg border">
-          <div className="border-b p-4">
-            <h2 className="font-semibold">TODO</h2>
-            <div className="text-muted-foreground text-sm">
+        <div className="bg-gray-800 flex flex-col rounded-lg border border-gray-700">
+          <div className="border-b border-gray-700 p-4">
+            <h2 className="font-semibold text-white">TODO</h2>
+            <div className="text-gray-400 text-sm">
               {todoCount} story • Limit: 1
               {todoCount > 1 && <span className="ml-2 text-red-500">⚠️ Exceeds limit</span>}
             </div>
@@ -235,16 +235,16 @@ export default function KanbanPage() {
               <StoryCard key={story.id} story={story} state="todo" />
             ))}
             {todoCount === 0 && (
-              <div className="text-muted-foreground text-center text-sm">No story in TODO</div>
+              <div className="text-gray-400 text-center text-sm">No story in TODO</div>
             )}
           </div>
         </div>
 
         {/* IN PROGRESS Column */}
-        <div className="bg-card flex flex-col rounded-lg border">
-          <div className="border-b p-4">
-            <h2 className="font-semibold">IN PROGRESS</h2>
-            <div className="text-muted-foreground text-sm">
+        <div className="bg-gray-800 flex flex-col rounded-lg border border-gray-700">
+          <div className="border-b border-gray-700 p-4">
+            <h2 className="font-semibold text-white">IN PROGRESS</h2>
+            <div className="text-gray-400 text-sm">
               {inProgressCount} story • Limit: 1
               {inProgressCount > 1 && <span className="ml-2 text-red-500">⚠️ Exceeds limit</span>}
             </div>
@@ -254,16 +254,16 @@ export default function KanbanPage() {
               <StoryCard key={story.id} story={story} state="in_progress" />
             ))}
             {inProgressCount === 0 && (
-              <div className="text-muted-foreground text-center text-sm">No story in progress</div>
+              <div className="text-gray-400 text-center text-sm">No story in progress</div>
             )}
           </div>
         </div>
 
         {/* DONE Column */}
-        <div className="bg-card flex flex-col rounded-lg border">
-          <div className="border-b p-4">
-            <h2 className="font-semibold">DONE</h2>
-            <div className="text-muted-foreground text-sm">
+        <div className="bg-gray-800 flex flex-col rounded-lg border border-gray-700">
+          <div className="border-b border-gray-700 p-4">
+            <h2 className="font-semibold text-white">DONE</h2>
+            <div className="text-gray-400 text-sm">
               {totalCompleted} stories • {totalPoints} pts
             </div>
           </div>
@@ -272,7 +272,7 @@ export default function KanbanPage() {
               <StoryCard key={story.id} story={story} state="done" />
             ))}
             {totalCompleted === 0 && (
-              <div className="text-muted-foreground text-center text-sm">No completed stories</div>
+              <div className="text-gray-400 text-center text-sm">No completed stories</div>
             )}
           </div>
         </div>
@@ -283,7 +283,7 @@ export default function KanbanPage() {
         <button
           onClick={() => loadWorkflowStatus(true)}
           disabled={refreshing}
-          className="border-border bg-background hover:bg-muted inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+          className="border-gray-700 bg-gray-800 hover:bg-gray-700 inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm text-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {refreshing ? (
             <>
@@ -323,26 +323,26 @@ interface StoryCardProps {
 
 function StoryCard({ story, state }: StoryCardProps) {
   const stateColors = {
-    backlog: 'border-gray-300 dark:border-gray-700',
-    todo: 'border-blue-500 bg-blue-500/5',
-    in_progress: 'border-yellow-500 bg-yellow-500/5',
-    done: 'border-green-500 bg-green-500/5',
+    backlog: 'border-gray-600',
+    todo: 'border-blue-500 bg-blue-500/10',
+    in_progress: 'border-yellow-500 bg-yellow-500/10',
+    done: 'border-green-500 bg-green-500/10',
   };
 
   return (
-    <div className={`bg-card rounded-lg border-2 p-3 ${stateColors[state]}`}>
+    <div className={`bg-gray-800 rounded-lg border-2 p-3 ${stateColors[state]}`}>
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <h3 className="text-sm font-semibold">{story.id}</h3>
-          <p className="text-muted-foreground mt-1 line-clamp-2 text-xs">{story.title}</p>
+          <h3 className="text-sm font-semibold text-white">{story.id}</h3>
+          <p className="text-gray-400 mt-1 line-clamp-2 text-xs">{story.title}</p>
         </div>
-        <span className="bg-primary/10 ml-2 rounded-full px-2 py-1 text-xs font-medium">
+        <span className="bg-blue-600/20 ml-2 rounded-full px-2 py-1 text-xs font-medium text-blue-400">
           {story.points}
         </span>
       </div>
       {story.milestone && (
-        <div className="text-muted-foreground mt-2 text-xs">
-          <span className="bg-muted rounded px-1 py-0.5">{story.milestone}</span>
+        <div className="text-gray-400 mt-2 text-xs">
+          <span className="bg-gray-700 rounded px-1 py-0.5">{story.milestone}</span>
         </div>
       )}
     </div>

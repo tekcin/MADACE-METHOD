@@ -5,12 +5,12 @@ import { ProjectBadge } from '@/components/features/ProjectBadge';
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl bg-gray-900 px-4 py-8 sm:px-6 lg:px-8">
       {/* Page header */}
       <div className="mb-8 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">MADACE Web UI</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <h1 className="text-3xl font-bold text-white">MADACE Web UI</h1>
+          <p className="mt-2 text-gray-400">
             Methodology for AI-Driven Agile Collaboration Engine - v3.0
           </p>
         </div>
@@ -18,14 +18,14 @@ export default function Home() {
       </div>
 
       {/* Quick Actions Bar */}
-      <div className="mb-8 rounded-lg border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 p-4 shadow-sm dark:border-blue-800 dark:from-blue-900/20 dark:to-indigo-900/20">
-        <h2 className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
+      <div className="mb-8 rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-sm">
+        <h2 className="mb-3 text-sm font-semibold text-gray-200">
           Quick Actions
         </h2>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/kanban?action=new"
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md dark:bg-blue-700 dark:hover:bg-blue-600"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md"
           >
             <svg
               className="size-5"
@@ -46,7 +46,7 @@ export default function Home() {
 
           <Link
             href="/workflows"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-green-700 hover:shadow-md dark:bg-green-700 dark:hover:bg-green-600"
+            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-green-700 hover:shadow-md"
           >
             <svg
               className="size-5"
@@ -67,7 +67,7 @@ export default function Home() {
 
           <Link
             href="/chat"
-            className="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-purple-700 hover:shadow-md dark:bg-purple-700 dark:hover:bg-purple-600"
+            className="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-purple-700 hover:shadow-md"
           >
             <svg
               className="size-5"
@@ -88,7 +88,7 @@ export default function Home() {
 
           <Link
             href="/ide"
-            className="inline-flex items-center gap-2 rounded-lg bg-gray-700 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-gray-800 hover:shadow-md dark:bg-gray-600 dark:hover:bg-gray-500"
+            className="inline-flex items-center gap-2 rounded-lg bg-gray-700 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-gray-600 hover:shadow-md"
           >
             <svg
               className="size-5"
@@ -111,38 +111,38 @@ export default function Home() {
 
       {/* Status overview */}
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-          <div className="text-sm text-gray-600 dark:text-gray-400">Total Agents</div>
-          <div className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">22</div>
-          <div className="mt-1 text-xs text-gray-500 dark:text-gray-500">All Modules</div>
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+          <div className="text-sm text-gray-400">Total Agents</div>
+          <div className="mt-1 text-2xl font-bold text-white">22</div>
+          <div className="mt-1 text-xs text-gray-500">All Modules</div>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-          <div className="text-sm text-gray-600 dark:text-gray-400">Active Workflows</div>
-          <div className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">0</div>
-          <div className="mt-1 text-xs text-gray-500 dark:text-gray-500">Ready to start</div>
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+          <div className="text-sm text-gray-400">Active Workflows</div>
+          <div className="mt-1 text-2xl font-bold text-white">0</div>
+          <div className="mt-1 text-xs text-gray-500">Ready to start</div>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-          <div className="text-sm text-gray-600 dark:text-gray-400">System Status</div>
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+          <div className="text-sm text-gray-400">System Status</div>
           <div className="mt-1 flex items-center">
             <div className="size-3 rounded-full bg-green-500"></div>
-            <span className="ml-2 text-lg font-bold text-gray-900 dark:text-white">
+            <span className="ml-2 text-lg font-bold text-white">
               Operational
             </span>
           </div>
-          <div className="mt-1 text-xs text-gray-500 dark:text-gray-500">All systems running</div>
+          <div className="mt-1 text-xs text-gray-500">All systems running</div>
         </div>
       </div>
 
       {/* Quick actions */}
       <div className="mb-8">
-        <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Quick Actions</h2>
+        <h2 className="mb-4 text-xl font-semibold text-white">Quick Actions</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Link
             href="/setup"
-            className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+            className="block rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm transition-shadow hover:shadow-md"
           >
             <div className="flex items-center space-x-3">
-              <div className="flex size-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+              <div className="flex size-12 items-center justify-center rounded-full bg-blue-900 text-blue-300">
                 <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -159,8 +159,8 @@ export default function Home() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Setup Wizard</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <h3 className="font-semibold text-white">Setup Wizard</h3>
+                <p className="text-sm text-gray-400">
                   Configure your installation
                 </p>
               </div>
@@ -169,10 +169,10 @@ export default function Home() {
 
           <Link
             href="/agents"
-            className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+            className="block rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm transition-shadow hover:shadow-md"
           >
             <div className="flex items-center space-x-3">
-              <div className="flex size-12 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300">
+              <div className="flex size-12 items-center justify-center rounded-full bg-green-900 text-green-300">
                 <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -183,18 +183,18 @@ export default function Home() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Agents</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">View and manage agents</p>
+                <h3 className="font-semibold text-white">Agents</h3>
+                <p className="text-sm text-gray-400">View and manage agents</p>
               </div>
             </div>
           </Link>
 
           <Link
             href="/kanban"
-            className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+            className="block rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm transition-shadow hover:shadow-md"
           >
             <div className="flex items-center space-x-3">
-              <div className="flex size-12 items-center justify-center rounded-full bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-300">
+              <div className="flex size-12 items-center justify-center rounded-full bg-purple-900 text-purple-300">
                 <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -205,18 +205,18 @@ export default function Home() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Kanban Board</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Track story lifecycle</p>
+                <h3 className="font-semibold text-white">Kanban Board</h3>
+                <p className="text-sm text-gray-400">Track story lifecycle</p>
               </div>
             </div>
           </Link>
 
           <Link
             href="/workflows"
-            className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+            className="block rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm transition-shadow hover:shadow-md"
           >
             <div className="flex items-center space-x-3">
-              <div className="flex size-12 items-center justify-center rounded-full bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-300">
+              <div className="flex size-12 items-center justify-center rounded-full bg-orange-900 text-orange-300">
                 <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -227,18 +227,18 @@ export default function Home() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Workflows</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Execute workflows</p>
+                <h3 className="font-semibold text-white">Workflows</h3>
+                <p className="text-sm text-gray-400">Execute workflows</p>
               </div>
             </div>
           </Link>
 
           <Link
             href="/llm-test"
-            className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+            className="block rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm transition-shadow hover:shadow-md"
           >
             <div className="flex items-center space-x-3">
-              <div className="flex size-12 items-center justify-center rounded-full bg-pink-100 text-pink-600 dark:bg-pink-900 dark:text-pink-300">
+              <div className="flex size-12 items-center justify-center rounded-full bg-pink-900 text-pink-300">
                 <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -249,18 +249,18 @@ export default function Home() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">LLM Test</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Test LLM connections</p>
+                <h3 className="font-semibold text-white">LLM Test</h3>
+                <p className="text-sm text-gray-400">Test LLM connections</p>
               </div>
             </div>
           </Link>
 
           <Link
             href="/settings"
-            className="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+            className="block rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm transition-shadow hover:shadow-md"
           >
             <div className="flex items-center space-x-3">
-              <div className="flex size-12 items-center justify-center rounded-full bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+              <div className="flex size-12 items-center justify-center rounded-full bg-gray-700 text-gray-300">
                 <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -271,8 +271,8 @@ export default function Home() {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Settings</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Configure application</p>
+                <h3 className="font-semibold text-white">Settings</h3>
+                <p className="text-sm text-gray-400">Configure application</p>
               </div>
             </div>
           </Link>
@@ -280,12 +280,12 @@ export default function Home() {
       </div>
 
       {/* Getting started */}
-      <div className="rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-700 dark:bg-blue-900/20">
-        <h2 className="mb-3 text-lg font-bold text-blue-900 dark:text-blue-100">Getting Started</h2>
-        <p className="mb-4 text-sm text-blue-700 dark:text-blue-300">
+      <div className="rounded-lg border border-gray-700 bg-gray-800 p-6">
+        <h2 className="mb-3 text-lg font-bold text-white">Getting Started</h2>
+        <p className="mb-4 text-sm text-gray-200">
           Welcome to the MADACE Web UI! This interface provides access to all MADACE features:
         </p>
-        <ol className="list-inside list-decimal space-y-2 text-sm text-blue-700 dark:text-blue-300">
+        <ol className="list-inside list-decimal space-y-2 text-sm text-gray-300">
           <li>
             <strong>Setup Wizard</strong> - Configure project settings and LLM provider
           </li>
