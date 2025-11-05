@@ -434,6 +434,151 @@ kubectl get events -n madace --sort-by='.lastTimestamp'
 
 **See also**: [ARCHITECTURE.md Section 18](./ARCHITECTURE.md#18-kubernetes-deployment-architecture) for technical architecture details
 
+#### Podman Deployment (Rootless & Daemonless)
+
+**Perfect for:** Enhanced security, rootless containers, systemd integration, Docker alternative
+
+```bash
+# Quick Start (3 commands)
+
+# 1. Build image
+podman build -t madace-web:latest .
+
+# 2. Run container
+podman run -d \
+  --name madace \
+  -p 3000:3000 \
+  -v ./madace-data:/app/data:Z \
+  madace-web:latest
+
+# 3. Access
+# Open http://localhost:3000
+```
+
+**Features:**
+
+- **Daemonless Architecture**: No background daemon required (vs Docker)
+- **Rootless Containers**: Run as non-root user for enhanced security
+- **Systemd Integration**: Native systemd service support
+- **Pod Support**: Kubernetes-like pods for multi-container apps
+- **Drop-in Docker Replacement**: Compatible with existing Dockerfiles
+- **SELinux Support**: Native SELinux context management
+- **No Docker Desktop License**: Free for all use cases
+
+**Deployment Options:**
+
+1. **Production** - Standard production deployment
+2. **Rootless** - Enhanced security without root privileges
+3. **Systemd** - System service with auto-restart
+4. **Pod** - Multi-container with MADACE + Ollama
+
+**Rootless Deployment (Recommended):**
+
+```bash
+# Enhanced security - no root privileges required
+podman run -d \
+  --name madace \
+  -p 3000:3000 \
+  -v ./madace-data:/app/data:Z \
+  --userns=keep-id \
+  madace-web:latest
+```
+
+**Systemd Service:**
+
+```bash
+# Generate systemd service file
+podman generate systemd --name madace --files --new
+
+# Install as user service
+mkdir -p ~/.config/systemd/user
+mv container-madace.service ~/.config/systemd/user/
+
+# Enable and start service
+systemctl --user enable container-madace.service
+systemctl --user start container-madace.service
+
+# Auto-start on boot
+loginctl enable-linger $USER
+```
+
+**Pod Deployment (MADACE + Ollama):**
+
+```bash
+# Create pod with both services
+podman pod create --name madace-pod \
+  -p 3000:3000 \
+  -p 11434:11434
+
+# Run MADACE in pod
+podman run -d \
+  --pod madace-pod \
+  --name madace \
+  -v ./madace-data:/app/data:Z \
+  madace-web:latest
+
+# Run Ollama in same pod (shares network)
+podman run -d \
+  --pod madace-pod \
+  --name ollama \
+  -v ./ollama-data:/root/.ollama:Z \
+  ollama/ollama:latest
+```
+
+**Requirements:**
+
+- Podman 4.0+
+- 2GB RAM minimum
+- 1GB disk space
+- Linux (native), macOS (via VM), Windows (WSL2)
+
+**Podman vs Docker:**
+
+| Feature | Podman | Docker |
+|---------|--------|--------|
+| **Daemon** | No (fork-exec model) | Yes (dockerd) |
+| **Root** | Optional (rootless mode) | Required (unless rootless) |
+| **Systemd** | Native integration | Third-party |
+| **Pods** | Yes (Kubernetes-like) | No (use compose) |
+| **License** | Apache 2.0 (fully free) | Docker Desktop paid for enterprise |
+| **Security** | Rootless by default | Root by default |
+
+**Installation:**
+
+```bash
+# RHEL/Fedora/CentOS
+sudo dnf install podman
+
+# Ubuntu/Debian
+sudo apt install podman
+
+# macOS (via Homebrew)
+brew install podman
+podman machine init
+podman machine start
+
+# Windows (via WSL2)
+# Install WSL2, then use Linux instructions
+```
+
+**Monitoring:**
+
+```bash
+# View logs
+podman logs -f madace
+
+# Resource usage
+podman stats madace
+
+# Health check
+podman healthcheck run madace
+
+# Inspect container
+podman inspect madace
+```
+
+**📘 See [docs/PODMAN-DEPLOYMENT.md](./docs/PODMAN-DEPLOYMENT.md) for comprehensive Podman deployment guide** (600+ lines with production best practices)
+
 ---
 
 ## CLI Support

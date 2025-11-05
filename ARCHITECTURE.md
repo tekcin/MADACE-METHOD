@@ -10266,3 +10266,750 @@ docs/
 **Status:** ✅ Complete and production-ready
 
 ---
+
+## 19. Podman Deployment Architecture
+
+### Overview
+
+MADACE v3.0 provides comprehensive **Podman deployment support** as a Docker alternative with enhanced security features. Podman is a daemonless, rootless container engine that provides a Docker-compatible CLI while offering improved security and systemd integration.
+
+**Key Advantages:**
+
+- **Daemonless Architecture**: No background daemon (no `dockerd`), uses fork-exec model
+- **Rootless Containers**: Run containers without root privileges by default
+- **Systemd Integration**: Native systemd service generation and management
+- **Pod Support**: Kubernetes-like pods for multi-container applications
+- **Drop-in Replacement**: Uses same Dockerfile, compatible commands
+- **Enhanced Security**: SELinux support, user namespaces, reduced attack surface
+- **No Licensing Concerns**: Apache 2.0 license, free for all use cases
+
+### Architecture Comparison
+
+#### Podman vs Docker Architecture
+
+```
+Docker Architecture:
+┌─────────────────────────────────────────┐
+│         Docker Client (docker)          │
+└────────────────┬────────────────────────┘
+                 │ REST API
+                 ▼
+┌─────────────────────────────────────────┐
+│      Docker Daemon (dockerd)            │
+│      (Runs as root)                     │
+│  ┌──────────┐  ┌──────────┐            │
+│  │Container │  │Container │            │
+│  │  (root)  │  │  (root)  │            │
+│  └──────────┘  └──────────┘            │
+└─────────────────────────────────────────┘
+
+Podman Architecture:
+┌─────────────────────────────────────────┐
+│         Podman Client (podman)          │
+│         (No daemon required)            │
+└────────────────┬────────────────────────┘
+                 │ Fork/Exec
+                 ▼
+┌─────────────────────────────────────────┐
+│        Container Processes              │
+│        (Run as user, rootless)          │
+│  ┌──────────┐  ┌──────────┐            │
+│  │Container │  │Container │            │
+│  │  (user)  │  │  (user)  │            │
+│  └──────────┘  └──────────┘            │
+└─────────────────────────────────────────┘
+```
+
+### Deployment Options
+
+#### 1. Standard Production Deployment
+
+**Scenario:** Production deployment with standard security
+
+```bash
+# Build image (same Dockerfile as Docker)
+podman build -t madace-web:latest .
+
+# Run container
+podman run -d \
+  --name madace \
+  -p 3000:3000 \
+  -v ./madace-data:/app/data:Z \
+  --restart=always \
+  madace-web:latest
+```
+
+**Features:**
+- Uses existing Dockerfile without modification
+- Production-ready with health checks
+- SELinux context (`:Z`) for volume security
+- Automatic restart on failure
+
+#### 2. Rootless Deployment (Recommended)
+
+**Scenario:** Enhanced security with rootless containers
+
+```bash
+# Run as non-root user (no sudo required)
+podman run -d \
+  --name madace \
+  -p 3000:3000 \
+  -v ./madace-data:/app/data:Z \
+  --userns=keep-id \
+  --security-opt label=disable \
+  madace-web:latest
+```
+
+**Security Benefits:**
+- No root privileges required
+- User namespace isolation (`--userns=keep-id`)
+- Files created with user's UID/GID
+- Reduced attack surface
+- Ideal for multi-tenant environments
+
+**Port Mapping (Rootless):**
+```bash
+# Ports < 1024 require sysctl change
+sudo sysctl net.ipv4.ip_unprivileged_port_start=80
+
+# Or use port forwarding
+podman run -d \
+  --name madace \
+  -p 8080:3000 \
+  -v ./madace-data:/app/data:Z \
+  --userns=keep-id \
+  madace-web:latest
+```
+
+#### 3. Systemd Service Deployment
+
+**Scenario:** System service with auto-start and monitoring
+
+```bash
+# Step 1: Create container
+podman run -d \
+  --name madace \
+  -p 3000:3000 \
+  -v ./madace-data:/app/data:Z \
+  madace-web:latest
+
+# Step 2: Generate systemd service file
+podman generate systemd --name madace --files --new
+
+# Step 3: Install as user service
+mkdir -p ~/.config/systemd/user
+mv container-madace.service ~/.config/systemd/user/
+
+# Step 4: Enable and start service
+systemctl --user daemon-reload
+systemctl --user enable container-madace.service
+systemctl --user start container-madace.service
+
+# Step 5: Enable auto-start on boot
+loginctl enable-linger $USER
+```
+
+**Service Management:**
+```bash
+# Check status
+systemctl --user status container-madace.service
+
+# View logs
+journalctl --user -u container-madace.service -f
+
+# Restart service
+systemctl --user restart container-madace.service
+
+# Stop service
+systemctl --user stop container-madace.service
+```
+
+**Generated Service File** (`container-madace.service`):
+```ini
+[Unit]
+Description=Podman container-madace.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=/run/user/1000/containers
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/%n.ctr-id
+ExecStart=/usr/bin/podman run \
+  --cidfile=%t/%n.ctr-id \
+  --cgroups=no-conmon \
+  --rm \
+  --sdnotify=conmon \
+  --replace \
+  --name madace \
+  -p 3000:3000 \
+  -v ./madace-data:/app/data:Z \
+  madace-web:latest
+ExecStop=/usr/bin/podman stop --ignore --cidfile=%t/%n.ctr-id
+ExecStopPost=/usr/bin/podman rm -f --ignore --cidfile=%t/%n.ctr-id
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=default.target
+```
+
+#### 4. Pod Deployment (MADACE + Ollama)
+
+**Scenario:** Multi-container deployment with shared network (Kubernetes-like)
+
+```bash
+# Step 1: Create pod with port mappings
+podman pod create --name madace-pod \
+  -p 3000:3000 \
+  -p 11434:11434
+
+# Step 2: Run MADACE in pod
+podman run -d \
+  --pod madace-pod \
+  --name madace \
+  -v ./madace-data:/app/data:Z \
+  madace-web:latest
+
+# Step 3: Run Ollama in same pod (shares network)
+podman run -d \
+  --pod madace-pod \
+  --name ollama \
+  -v ./ollama-data:/root/.ollama:Z \
+  ollama/ollama:latest
+
+# Both containers share localhost network
+# MADACE can access Ollama at http://localhost:11434
+```
+
+**Pod Management:**
+```bash
+# List pods
+podman pod ls
+
+# View pod details
+podman pod inspect madace-pod
+
+# View containers in pod
+podman ps --pod
+
+# Stop entire pod
+podman pod stop madace-pod
+
+# Start entire pod
+podman pod start madace-pod
+
+# Remove entire pod
+podman pod rm -f madace-pod
+```
+
+**Generate Kubernetes YAML from Pod:**
+```bash
+# Export pod as Kubernetes manifest
+podman generate kube madace-pod > madace-pod.yaml
+
+# Deploy to Kubernetes
+kubectl apply -f madace-pod.yaml
+
+# Re-import from Kubernetes YAML
+podman play kube madace-pod.yaml
+```
+
+**Example Generated Kubernetes YAML:**
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: madace-pod
+spec:
+  containers:
+  - name: madace
+    image: madace-web:latest
+    ports:
+    - containerPort: 3000
+      hostPort: 3000
+    volumeMounts:
+    - mountPath: /app/data
+      name: madace-data
+  - name: ollama
+    image: ollama/ollama:latest
+    ports:
+    - containerPort: 11434
+      hostPort: 11434
+    volumeMounts:
+    - mountPath: /root/.ollama
+      name: ollama-data
+  volumes:
+  - name: madace-data
+    hostPath:
+      path: ./madace-data
+      type: Directory
+  - name: ollama-data
+    hostPath:
+      path: ./ollama-data
+      type: Directory
+```
+
+#### 5. Podman Compose Deployment
+
+**Scenario:** Docker Compose compatibility with Podman
+
+```bash
+# Install podman-compose
+pip3 install podman-compose
+
+# Use existing docker-compose.yml
+podman-compose up -d
+
+# Or use Docker Compose with Podman backend
+export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
+docker-compose up -d
+```
+
+**Compatibility:**
+- Supports Docker Compose v2/v3 syntax
+- Uses existing `docker-compose.yml` files
+- No file modifications required
+
+### Security Features
+
+#### SELinux Integration
+
+Podman provides native SELinux support for enhanced security:
+
+```bash
+# Private volume (not shared between containers)
+podman run -v ./data:/app/data:z madace-web:latest
+
+# Shared volume (shared between containers)
+podman run -v ./data:/app/data:Z madace-web:latest
+
+# Disable SELinux for volume (less secure)
+podman run -v ./data:/app/data:z --security-opt label=disable madace-web:latest
+```
+
+**Volume SELinux Options:**
+- `:z` - Private unshared label (multiple containers with different labels)
+- `:Z` - Private shared label (multiple containers with same label)
+- No flag - Uses existing label (may cause permission errors)
+
+#### User Namespaces
+
+Rootless containers use user namespaces for isolation:
+
+```bash
+# Keep user ID inside container
+podman run --userns=keep-id madace-web:latest
+
+# Map to different UID/GID range
+podman run --uidmap 0:100000:65536 --gidmap 0:100000:65536 madace-web:latest
+
+# View namespace mappings
+podman unshare cat /proc/self/uid_map
+```
+
+#### Capabilities and Privileges
+
+```bash
+# Drop all capabilities
+podman run --cap-drop=ALL madace-web:latest
+
+# Add specific capability
+podman run --cap-drop=ALL --cap-add=NET_BIND_SERVICE madace-web:latest
+
+# No new privileges
+podman run --security-opt=no-new-privileges madace-web:latest
+
+# Read-only root filesystem
+podman run --read-only --tmpfs /tmp:rw madace-web:latest
+```
+
+### Monitoring and Management
+
+#### Container Monitoring
+
+```bash
+# View logs
+podman logs -f madace
+
+# Resource usage
+podman stats madace
+
+# Real-time events
+podman events --filter container=madace
+
+# Inspect container
+podman inspect madace
+
+# Health check
+podman healthcheck run madace
+```
+
+#### System-Wide Monitoring
+
+```bash
+# System resource usage
+podman system df
+
+# Connection information
+podman system connection list
+
+# Service information
+podman system info
+
+# Prune unused resources
+podman system prune -af
+```
+
+### Networking
+
+#### Network Modes
+
+```bash
+# Bridge network (default)
+podman run --network bridge madace-web:latest
+
+# Host network (share host network stack)
+podman run --network host madace-web:latest
+
+# None (no networking)
+podman run --network none madace-web:latest
+
+# Custom network
+podman network create madace-net
+podman run --network madace-net madace-web:latest
+```
+
+#### Port Publishing
+
+```bash
+# Publish single port
+podman run -p 3000:3000 madace-web:latest
+
+# Publish all exposed ports
+podman run -P madace-web:latest
+
+# Bind to specific interface
+podman run -p 127.0.0.1:3000:3000 madace-web:latest
+
+# Publish range of ports
+podman run -p 3000-3010:3000-3010 madace-web:latest
+```
+
+### Backup and Migration
+
+#### Container Export/Import
+
+```bash
+# Export container to tarball
+podman export madace > madace-container.tar
+
+# Import tarball as image
+podman import madace-container.tar madace-backup:latest
+
+# Save image to tarball
+podman save -o madace-image.tar madace-web:latest
+
+# Load image from tarball
+podman load -i madace-image.tar
+```
+
+#### Volume Backup
+
+```bash
+# Backup volume data
+podman run --rm \
+  -v madace-data:/data:ro \
+  -v $(pwd):/backup:Z \
+  alpine tar czf /backup/madace-data-backup.tar.gz /data
+
+# Restore volume data
+podman run --rm \
+  -v madace-data:/data:Z \
+  -v $(pwd):/backup:ro \
+  alpine tar xzf /backup/madace-data-backup.tar.gz -C /
+```
+
+### Production Best Practices
+
+#### 1. Resource Limits
+
+```bash
+podman run -d \
+  --name madace \
+  --memory=2g \
+  --memory-swap=2g \
+  --cpus=2 \
+  --pids-limit=1024 \
+  madace-web:latest
+```
+
+#### 2. Health Checks
+
+```bash
+podman run -d \
+  --name madace \
+  --health-cmd="curl -f http://localhost:3000/api/health || exit 1" \
+  --health-interval=30s \
+  --health-timeout=10s \
+  --health-retries=3 \
+  --health-start-period=40s \
+  madace-web:latest
+```
+
+#### 3. Logging Configuration
+
+```bash
+podman run -d \
+  --name madace \
+  --log-driver=journald \
+  --log-opt=tag=madace \
+  madace-web:latest
+
+# View logs via journald
+journalctl CONTAINER_TAG=madace -f
+```
+
+#### 4. Automatic Updates (Podman Auto-Update)
+
+```bash
+# Label container for auto-update
+podman run -d \
+  --name madace \
+  --label io.containers.autoupdate=registry \
+  madace-web:latest
+
+# Enable systemd timer for auto-update
+systemctl --user enable podman-auto-update.timer
+systemctl --user start podman-auto-update.timer
+
+# Manual update check
+podman auto-update
+```
+
+### Platform-Specific Notes
+
+#### Linux (Native)
+
+Podman runs natively on Linux with full feature support:
+
+```bash
+# Install on RHEL/Fedora/CentOS
+sudo dnf install podman
+
+# Install on Ubuntu/Debian
+sudo apt install podman
+
+# Install on Arch Linux
+sudo pacman -S podman
+```
+
+#### macOS (Podman Machine)
+
+Podman on macOS uses a lightweight VM:
+
+```bash
+# Install via Homebrew
+brew install podman
+
+# Initialize VM
+podman machine init
+
+# Start VM
+podman machine start
+
+# SSH into VM (optional)
+podman machine ssh
+
+# Stop VM
+podman machine stop
+
+# Remove VM
+podman machine rm
+```
+
+**VM Configuration:**
+```bash
+# Create VM with custom resources
+podman machine init --cpus=4 --memory=8192 --disk-size=50
+
+# Set as default machine
+podman machine set --default
+```
+
+#### Windows (WSL2)
+
+Podman on Windows requires WSL2:
+
+```bash
+# Install WSL2
+wsl --install
+
+# Install Podman in WSL2 (Ubuntu)
+sudo apt update
+sudo apt install podman
+
+# Access from Windows
+# Podman commands work from WSL2 terminal
+```
+
+### Troubleshooting
+
+#### Common Issues
+
+**1. SELinux Permission Denied:**
+```bash
+# Solution: Add :Z flag to volumes
+podman run -v ./data:/app/data:Z madace-web:latest
+
+# Or disable SELinux for volume
+podman run -v ./data:/app/data --security-opt label=disable madace-web:latest
+```
+
+**2. Port Already in Use:**
+```bash
+# Find process using port
+sudo lsof -i :3000
+
+# Use different port
+podman run -p 3001:3000 madace-web:latest
+```
+
+**3. Rootless Port < 1024:**
+```bash
+# Enable unprivileged ports
+sudo sysctl net.ipv4.ip_unprivileged_port_start=80
+
+# Or use higher port
+podman run -p 8080:3000 madace-web:latest
+```
+
+**4. Network Connectivity Issues:**
+```bash
+# Reset network
+podman network prune
+
+# Use host network
+podman run --network host madace-web:latest
+
+# Check DNS resolution
+podman run --rm alpine nslookup google.com
+```
+
+**5. Storage Issues:**
+```bash
+# Check storage usage
+podman system df
+
+# Prune unused resources
+podman system prune -af --volumes
+
+# Reset storage (WARNING: deletes all data)
+podman system reset
+```
+
+### Migration from Docker
+
+#### Command Mapping
+
+| Docker Command | Podman Command | Notes |
+|----------------|----------------|-------|
+| `docker build` | `podman build` | Identical syntax |
+| `docker run` | `podman run` | Identical syntax |
+| `docker ps` | `podman ps` | Identical output |
+| `docker images` | `podman images` | Identical output |
+| `docker-compose` | `podman-compose` | Requires `pip install podman-compose` |
+| `docker system prune` | `podman system prune` | Identical syntax |
+
+#### Alias Setup (Optional)
+
+```bash
+# Add to ~/.bashrc or ~/.zshrc
+alias docker=podman
+alias docker-compose=podman-compose
+
+# Source configuration
+source ~/.bashrc
+```
+
+**Note:** This allows using `docker` commands with Podman backend.
+
+### Performance Considerations
+
+#### Startup Time
+
+- **Podman**: Faster startup (no daemon)
+- **Docker**: Requires `dockerd` startup
+
+#### Resource Overhead
+
+- **Podman**: Lower overhead (no daemon process)
+- **Docker**: ~50-100 MB for `dockerd`
+
+#### Build Performance
+
+- **Podman**: Comparable to Docker
+- **Docker**: Established build cache
+
+#### Rootless Trade-offs
+
+- **Pros**: Enhanced security, no root required
+- **Cons**: Slight performance overhead for user namespace mapping
+
+### Documentation
+
+#### Comprehensive Guides
+
+- **[docs/PODMAN-DEPLOYMENT.md](../docs/PODMAN-DEPLOYMENT.md)** - Complete Podman deployment guide (600+ lines)
+- **[README.md](../README.md#podman-deployment-rootless--daemonless)** - Quick start guide
+
+#### Official Resources
+
+- **Podman Documentation**: https://docs.podman.io
+- **Podman GitHub**: https://github.com/containers/podman
+- **Podman Desktop**: https://podman-desktop.io
+
+### Benefits Summary
+
+**Why Choose Podman for MADACE:**
+
+1. **Enhanced Security**: Rootless by default, no daemon attack surface
+2. **Systemd Integration**: Native service management on Linux
+3. **Kubernetes Compatibility**: Generate K8s manifests from pods
+4. **No Licensing**: Apache 2.0, free for all use cases
+5. **Drop-in Replacement**: Same commands, same Dockerfile
+6. **Production Ready**: Battle-tested in RHEL/Fedora ecosystems
+
+**When to Use Podman:**
+
+- ✅ Security-focused deployments (rootless containers)
+- ✅ Linux server deployments (native support)
+- ✅ Enterprise environments (RHEL, CentOS, Fedora)
+- ✅ Kubernetes migration planning (pod compatibility)
+- ✅ Multi-tenant environments (user namespaces)
+- ✅ Systemd-managed services (native integration)
+- ✅ Docker licensing concerns (free alternative)
+
+**When to Use Docker:**
+
+- Docker Desktop features required (GUI, extensions)
+- Windows/macOS native integration needed
+- Established Docker Swarm deployment
+- Third-party tools with Docker-only support
+
+### Impact
+
+- Provides Docker alternative with enhanced security
+- Enables rootless container deployments
+- Maintains full compatibility with existing Dockerfile
+- Adds systemd service management option
+- Supports Kubernetes-like pod deployments
+- Zero breaking changes to application code
+- Production-ready with comprehensive documentation
+
+**Status:** ✅ Complete and production-ready
+
+---
