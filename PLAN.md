@@ -509,6 +509,69 @@ The project was divided into four phases, all now complete:
 - CI/CD pipeline integration ready
 - Zero breaking changes, fully backward compatible
 
+#### 9. Folder Browser for Project Storage (~2 points)
+
+**Status**: ✅ Complete - Production-ready UI enhancement
+
+**Features Delivered:**
+
+- **Browse Folders API**:
+  - Lists subdirectories for any valid path
+  - Security restrictions on system directories (/etc, /var, /sys, etc.)
+  - Hidden directory filtering (excludes dot-prefixed folders)
+  - Parent path detection for "Go Up" navigation
+  - Alphabetical sorting
+
+- **FolderBrowser Modal Component**:
+  - Interactive modal dialog with dark theme styling
+  - Breadcrumb navigation (click any segment to jump)
+  - "Go Up" button for parent directory navigation
+  - Directory list with folder icons
+  - Loading, error, and empty state handling
+  - "Select This Folder" and "Cancel" actions
+
+- **Settings Page Integration**:
+  - "Browse" button next to path input field
+  - Opens modal with current path as starting point
+  - Updates input field when folder selected
+  - Works alongside existing "Test Path" validation button
+
+- **User Experience**:
+  - Visual point-and-click folder selection
+  - Error prevention (reduces typos in path entries)
+  - Quick breadcrumb navigation
+  - Mobile-responsive design
+  - Full ARIA support and keyboard accessibility
+
+**Documentation**: ARCHITECTURE.md Section 17
+
+**Key Files**:
+
+- `app/api/v3/settings/browse-folders/route.ts` (149 lines NEW, API endpoint)
+- `components/features/FolderBrowser.tsx` (220 lines NEW, modal component)
+- `app/settings/page.tsx` (+9 lines, Browse button integration)
+
+**Total Implementation**: 378 lines (API + UI)
+
+**Testing**:
+
+- ✅ Basic navigation: Successfully browsed /Users/nimda (23 directories)
+- ✅ Subdirectory navigation: Correctly navigated into project directories
+- ✅ Security restrictions: Blocked /etc access (403 Forbidden)
+- ✅ Invalid paths: Proper error handling (400 Bad Request)
+- ✅ UI interactions: Modal, breadcrumbs, directory clicks, folder selection
+- ✅ Responsive design: Works on mobile, tablet, desktop
+
+**Commit**: TBD
+
+**Impact**:
+
+- Improves UX for Project Storage path configuration
+- Reduces configuration errors through visual confirmation
+- Faster setup with browse-and-select interface
+- Maintains all existing security and validation
+- Zero breaking changes, purely additive enhancement
+
 ---
 
 **Bonus Features Summary:**
@@ -523,7 +586,8 @@ The project was divided into four phases, all now complete:
 | **GitHub Import Enhancements**       | ~8      | ~1,129     | ✅ Complete | Section 14.17  |
 | **Left Sidebar Navigation**          | ~2      | ~24        | ✅ Complete | Section 14.18  |
 | **Configurable Project Storage**     | ~3      | ~298       | ✅ Complete | Section 16     |
-| **Total**                            | **~60** | **~4,307** | **100%**    | **8 sections** |
+| **Folder Browser for Storage**       | ~2      | ~378       | ✅ Complete | Section 17     |
+| **Total**                            | **~62** | **~4,685** | **100%**    | **9 sections** |
 
 ---
 

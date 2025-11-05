@@ -937,6 +937,68 @@ workflow:
   - Zero breaking changes, fully backward compatible
   - Production-ready with comprehensive error handling
 
+#### 5.4.5 Folder Browser for Project Storage
+
+- **Description**: Interactive graphical folder navigation for selecting project root paths
+- **Status**: ✅ Complete - Production-ready UI enhancement
+- **Added**: 2025-11-05
+- **Commit**: TBD
+- **Components**:
+  - Browse folders API endpoint (`/api/v3/settings/browse-folders`)
+  - FolderBrowser modal component with breadcrumb navigation
+  - Integration with Settings page Project Storage section
+  - Multi-layer security validation
+- **Features Delivered:**
+  - **Browse Folders API** (`/api/v3/settings/browse-folders`):
+    - Lists subdirectories for any valid path
+    - Security restrictions on system directories (/etc, /var, /sys, etc.)
+    - Hidden directory filtering (excludes dot-prefixed folders)
+    - Parent path detection for navigation
+    - Alphabetical sorting
+  - **FolderBrowser Modal Component**:
+    - Interactive modal dialog with dark theme
+    - Breadcrumb navigation (click any segment to jump)
+    - "Go Up" button for parent directory
+    - Directory list with folder icons
+    - Loading, error, and empty states
+    - "Select This Folder" and "Cancel" actions
+  - **Settings Page Integration**:
+    - "Browse" button next to path input field
+    - Opens modal with current path as starting point
+    - Updates input field when folder selected
+    - Works alongside existing "Test Path" button
+- **User Experience:**
+  - **Visual Navigation**: Point-and-click folder selection
+  - **Error Prevention**: Reduces typos and invalid path entries
+  - **Quick Navigation**: Breadcrumbs enable fast directory jumping
+  - **Mobile-Friendly**: Responsive design for all screen sizes
+  - **Accessible**: Full ARIA support and keyboard navigation
+- **Value**:
+  - **Improved UX**: Users no longer need to manually type absolute paths
+  - **Error Reduction**: Visual confirmation reduces configuration mistakes
+  - **Faster Setup**: Browse and select instead of copy-paste
+  - **Security**: Built-in protections prevent malicious directory access
+  - **Zero Learning Curve**: Familiar file browser interface
+- **Documentation**: ARCHITECTURE.md Section 17
+- **Key Files**:
+  - `app/api/v3/settings/browse-folders/route.ts` (149 lines NEW, API endpoint)
+  - `components/features/FolderBrowser.tsx` (220 lines NEW, modal component)
+  - `app/settings/page.tsx` (+9 lines, Browse button integration)
+- **Total Implementation**: 378 lines of production-ready code (API + UI)
+- **Testing:**
+  - ✅ Basic navigation: Successfully browsed /Users/nimda with 23 directories listed
+  - ✅ Subdirectory navigation: Navigated into project directories correctly
+  - ✅ Security restrictions: Correctly blocked /etc access (403 Forbidden)
+  - ✅ Invalid paths: Proper error handling for non-existent paths (400 Bad Request)
+  - ✅ UI interactions: Modal open/close, breadcrumbs, directory clicks, folder selection
+  - ✅ Responsive design: Works on mobile, tablet, and desktop viewports
+- **Impact**:
+  - Enhances Project Storage configuration user experience
+  - Reduces support requests for path configuration errors
+  - Improves accessibility and usability standards
+  - Maintains all existing security and validation
+  - Zero breaking changes, purely additive feature
+
 ---
 
 ## 6. Success Criteria

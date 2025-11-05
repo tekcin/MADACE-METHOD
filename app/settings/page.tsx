@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Config } from '@/lib/config/schema';
+import { FolderBrowser } from '@/components/features/FolderBrowser';
 
 type LLMProvider = 'gemini' | 'claude' | 'openai' | 'local';
 
@@ -58,6 +59,7 @@ export default function SettingsPage() {
   const [validationErrors, setValidationErrors] = useState<FieldError[]>([]);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
   const [pathTestResult, setPathTestResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [isFolderBrowserOpen, setIsFolderBrowserOpen] = useState(false);
 
   // Load configuration on mount
   useEffect(() => {
@@ -499,18 +501,35 @@ export default function SettingsPage() {
               <label htmlFor="project_root_path" className="block text-sm font-medium text-gray-200">
                 Project Root Path <span className="text-red-500">*</span>
               </label>
-              <input
-                type="text"
-                id="project_root_path"
-                value={formData.project_root_path}
-                onChange={(e) => setFormData({ ...formData, project_root_path: e.target.value })}
-                className={`mt-1 block w-full rounded-md border ${
-                  getFieldError('project_root_path')
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                    : 'border-gray-600 focus:border-blue-500 focus:ring-blue-500'
-                } bg-gray-700 px-3 py-2 font-mono text-sm text-gray-200 placeholder-gray-400 shadow-sm focus:ring-2 focus:outline-none`}
-                placeholder="/absolute/path/to/your/project"
-              />
+              <div className="mt-1 flex gap-2">
+                <input
+                  type="text"
+                  id="project_root_path"
+                  value={formData.project_root_path}
+                  onChange={(e) => setFormData({ ...formData, project_root_path: e.target.value })}
+                  className={`block w-full rounded-md border ${
+                    getFieldError('project_root_path')
+                      ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+                      : 'border-gray-600 focus:border-blue-500 focus:ring-blue-500'
+                  } bg-gray-700 px-3 py-2 font-mono text-sm text-gray-200 placeholder-gray-400 shadow-sm focus:ring-2 focus:outline-none`}
+                  placeholder="/absolute/path/to/your/project"
+                />
+                <button
+                  type="button"
+                  onClick={() => setIsFolderBrowserOpen(true)}
+                  className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none whitespace-nowrap"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  Browse
+                </button>
+              </div>
               {getFieldError('project_root_path') && (
                 <p className="mt-1 text-sm text-red-400">{getFieldError('project_root_path')}</p>
               )}
@@ -879,6 +898,14 @@ export default function SettingsPage() {
           </div>
         </div>
       </div>
+
+      {/* Folder Browser Modal */}
+      <FolderBrowser
+        isOpen={isFolderBrowserOpen}
+        onClose={() => setIsFolderBrowserOpen(false)}
+        onSelect={(path) => setFormData({ ...formData, project_root_path: path })}
+        initialPath={formData.project_root_path}
+      />
     </div>
   );
 }
