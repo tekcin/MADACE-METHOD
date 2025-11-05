@@ -9,6 +9,7 @@
 
 import React, { useState } from 'react';
 import { useProject } from '@/lib/context/ProjectContext';
+import { DeleteProjectButton } from '@/components/features/projects/DeleteProjectButton';
 
 export function ProjectSelector() {
   const { currentProject, projects, switchProject, isLoading } = useProject();
@@ -89,56 +90,79 @@ export function ProjectSelector() {
               {projects.length === 0 ? (
                 <div className="px-4 py-3 text-center text-sm text-gray-500">No projects found</div>
               ) : (
-                projects.map((project) => (
-                  <button
-                    key={project.id}
-                    onClick={() => handleProjectSelect(project.id)}
-                    className={`flex w-full items-start gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-gray-700 ${
-                      project.id === currentProject.id
-                        ? 'bg-blue-900/20 text-blue-300'
-                        : 'text-gray-200'
-                    }`}
-                    data-testid={`project-option-${project.id}`}
-                  >
-                    <svg
-                      className="mt-0.5 h-4 w-4 flex-shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                projects.map((project) => {
+                  // Determine user's role in this project (for delete permission)
+                  const userMember = project.members.find((m) => m.userId === 'default-user');
+                  const userRole = userMember?.role as 'owner' | 'admin' | 'member' | null;
+
+                  return (
+                    <div
+                      key={project.id}
+                      className={`group flex items-start gap-2 px-4 py-2 text-sm transition-colors hover:bg-gray-700 ${
+                        project.id === currentProject.id
+                          ? 'bg-blue-900/20 text-blue-300'
+                          : 'text-gray-200'
+                      }`}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
-                      />
-                    </svg>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium">{project.name}</p>
-                      {project.description && (
-                        <p className="truncate text-xs text-gray-400">{project.description}</p>
-                      )}
-                      <div className="mt-1 flex gap-3 text-xs text-gray-500">
-                        <span>{project._count.agents} agents</span>
-                        <span>{project._count.workflows} workflows</span>
-                        <span>{project._count.stories} stories</span>
+                      <button
+                        onClick={() => handleProjectSelect(project.id)}
+                        className="flex flex-1 items-start gap-3 text-left"
+                        data-testid={`project-option-${project.id}`}
+                      >
+                        <svg
+                          className="mt-0.5 h-4 w-4 flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+                          />
+                        </svg>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate font-medium">{project.name}</p>
+                          {project.description && (
+                            <p className="truncate text-xs text-gray-400">{project.description}</p>
+                          )}
+                          <div className="mt-1 flex gap-3 text-xs text-gray-500">
+                            <span>{project._count.agents} agents</span>
+                            <span>{project._count.workflows} workflows</span>
+                            <span>{project._count.stories} stories</span>
+                          </div>
+                        </div>
+                        {project.id === currentProject.id && (
+                          <svg
+                            className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        )}
+                      </button>
+
+                      {/* Delete Button (visible on hover, owner only) */}
+                      <div className="opacity-0 transition-opacity group-hover:opacity-100">
+                        <DeleteProjectButton
+                          project={project}
+                          userRole={userRole}
+                          variant="icon"
+                          onDeleteSuccess={() => {
+                            setIsOpen(false);
+                            // Project context will handle switching to another project
+                          }}
+                        />
                       </div>
                     </div>
-                    {project.id === currentProject.id && (
-                      <svg
-                        className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-400"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    )}
-                  </button>
-                ))
+                  );
+                })
               )}
             </div>
 
