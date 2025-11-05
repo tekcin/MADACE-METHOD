@@ -732,6 +732,7 @@ npm run test:e2e:debug       # Step through tests
 - [E2E-TESTING-GUIDE.md](./E2E-TESTING-GUIDE.md) - E2E testing guide
 - [TESTING-POLICY.md](./TESTING-POLICY.md) - Testing standards
 - [docs/HTTPS-DEPLOYMENT.md](./docs/HTTPS-DEPLOYMENT.md) - Production deployment
+- [docs/ARCHITECTURE-PROJECT-DELETION.md](./docs/ARCHITECTURE-PROJECT-DELETION.md) - Project deletion feature architecture
 
 **V2 Archive**:
 
