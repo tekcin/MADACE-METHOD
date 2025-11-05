@@ -4,7 +4,6 @@ import './globals.css';
 import { Navigation } from '@/components/features/Navigation';
 import { Footer } from '@/components/features/Footer';
 import { ProjectProvider } from '@/lib/context/ProjectContext';
-import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,12 +20,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <head>
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-        />
-      </head>
       <body className={`${inter.className} bg-gray-900`}>
         <ProjectProvider>
           <Navigation />
@@ -35,7 +28,6 @@ export default function RootLayout({
             <Footer />
           </div>
         </ProjectProvider>
-        <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" />
       </body>
     </html>
   );
