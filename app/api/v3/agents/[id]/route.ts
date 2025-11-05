@@ -2,24 +2,36 @@
  * Individual Agent API Routes
  *
  * Endpoints:
- * - GET /api/v3/agents/:id - Get single agent
+ * - GET /api/v3/agents/:id - Get single agent (by ID or name)
  * - PUT /api/v3/agents/:id - Update agent
  * - DELETE /api/v3/agents/:id - Delete agent
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getAgent, updateAgent, deleteAgent, DatabaseError } from '@/lib/services';
+import {
+  getAgent,
+  getAgentByName,
+  updateAgent,
+  deleteAgent,
+  DatabaseError,
+} from '@/lib/services';
 
 /**
  * GET /api/v3/agents/:id
  *
- * Get a single agent by ID
+ * Get a single agent by ID or name
+ * - If id is a CUID (starts with 'c' and length > 10), lookup by database ID
+ * - Otherwise, lookup by name
  */
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
 
-    const agent = await getAgent(id);
+    // Determine if this is a database ID (CUID) or a name
+    const isCuid = id.startsWith('c') && id.length > 10;
+
+    // Try to get agent by ID or name
+    const agent = isCuid ? await getAgent(id) : await getAgentByName(id);
 
     if (!agent) {
       return NextResponse.json(
