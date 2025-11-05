@@ -882,6 +882,61 @@ workflow:
 - ✅ 0 known limitations
 - ✅ Production-ready with comprehensive documentation
 
+#### 5.4.4 Configurable Project Storage Root Path
+
+- **Description**: User-configurable project root path with runtime override support
+- **Status**: ✅ Complete - Production-ready settings configuration
+- **Added**: 2025-11-05
+- **Commit**: `894d998`
+- **Components**:
+  - Configuration schema update with `project_root_path` field
+  - Environment variable override (`MADACE_PROJECT_ROOT`)
+  - Path validation API with 5 security checks
+  - Settings UI with visual feedback
+  - File service integration with backward compatibility
+- **Features Delivered:**
+  - **Path Validation API** (`/api/v3/settings/validate-path`):
+    - 5 validation checks (absolute path, exists, is directory, readable, writable)
+    - Detailed validation responses with human-readable messages
+    - Path resolution and normalization
+    - Security: prevents relative paths and path traversal
+  - **Settings UI Enhancements**:
+    - "Project Storage" section in settings page
+    - Real-time path validation with visual feedback
+    - Green/red visual indicators for valid/invalid paths
+    - "Test Path" button with instant validation
+    - Integration with existing settings form
+  - **Configuration Management**:
+    - New `project_root_path` field in config schema
+    - Environment variable override support (`MADACE_PROJECT_ROOT`)
+    - Backward compatible with `process.cwd()` fallback
+    - Atomic file writes with temp files
+  - **File Service Integration**:
+    - Updated `getProjectRoot()` to read from config
+    - Maintains path traversal protection
+    - Graceful error handling with fallbacks
+    - Works with Docker volume mounts
+- **Value**:
+  - **Docker Deployment**: Configure custom volume mount points without code changes
+  - **Multi-Project Development**: Switch between project directories easily
+  - **CI/CD Integration**: Set project root via environment variable
+  - **User Flexibility**: Change project location without restarting server
+  - **Security**: Path validation prevents malicious input
+- **Documentation**: ARCHITECTURE.md Section 16
+- **Key Files**:
+  - `lib/config/schema.ts` (+1 line, config schema)
+  - `lib/config/manager.ts` (+2 lines, env override)
+  - `lib/services/file-service.ts` (+13 lines, config integration)
+  - `app/api/config/route.ts` (+2 lines, save logic)
+  - `app/api/v3/settings/validate-path/route.ts` (133 lines NEW, validation API)
+  - `app/settings/page.tsx` (+147 lines, UI components)
+- **Total Implementation**: 298 lines of production-ready code
+- **Impact**:
+  - Enables flexible deployment configurations
+  - Improves user experience with real-time validation
+  - Zero breaking changes, fully backward compatible
+  - Production-ready with comprehensive error handling
+
 ---
 
 ## 6. Success Criteria

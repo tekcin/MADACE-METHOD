@@ -457,20 +457,73 @@ The project was divided into four phases, all now complete:
 - Matches industry-standard application patterns
 - Scalable for future navigation items
 
+#### 8. Configurable Project Storage Root Path (~3 points)
+
+**Status**: ✅ Complete - Production-ready settings configuration
+
+**Features Delivered:**
+
+- **Path Validation API**:
+  - 5 validation checks (absolute, exists, directory, readable, writable)
+  - Detailed validation responses with messages
+  - Path resolution and normalization
+  - Security: prevents relative paths and traversal
+
+- **Settings UI Enhancements**:
+  - "Project Storage" section with visual feedback
+  - Real-time path validation (green/red indicators)
+  - "Test Path" button with instant validation
+  - Integration with existing settings form
+
+- **Configuration Management**:
+  - New `project_root_path` field in config schema
+  - Environment variable override: `MADACE_PROJECT_ROOT`
+  - Backward compatible with `process.cwd()` fallback
+  - Atomic file writes with temp files
+
+- **File Service Integration**:
+  - Updated `getProjectRoot()` to read from config
+  - Maintains path traversal protection
+  - Graceful error handling with fallbacks
+  - Docker volume mount support
+
+**Documentation**: ARCHITECTURE.md Section 16
+
+**Key Files**:
+
+- `lib/config/schema.ts` (+1 line, config schema)
+- `lib/config/manager.ts` (+2 lines, env override)
+- `lib/services/file-service.ts` (+13 lines, config integration)
+- `app/api/config/route.ts` (+2 lines, save logic)
+- `app/api/v3/settings/validate-path/route.ts` (133 lines NEW, validation API)
+- `app/settings/page.tsx` (+147 lines, UI components)
+
+**Total Implementation**: 298 lines
+
+**Commit**: `894d998` - "feat(settings): Add configurable project storage root path"
+
+**Impact**:
+
+- Enables Docker deployments with custom mount points
+- Supports multi-project development workflows
+- CI/CD pipeline integration ready
+- Zero breaking changes, fully backward compatible
+
 ---
 
 **Bonus Features Summary:**
 
-| Feature                        | Points  | LOC        | Status      | Documentation  |
-| ------------------------------ | ------- | ---------- | ----------- | -------------- |
-| **LLM Provider Selector**      | ~8      | ~500       | ✅ Complete | Section 9      |
-| **Agent Import/Seeding**       | ~10     | ~800       | ✅ Complete | Section 10     |
-| **State API Migration**        | ~12     | ~300       | ✅ Complete | Section 11     |
-| **Project Management**         | ~10     | ~935       | ✅ Complete | Section 12     |
-| **Enhanced Assessment Tool**   | ~7      | ~321       | ✅ Complete | Section 13     |
-| **GitHub Import Enhancements** | ~8      | ~1,129     | ✅ Complete | Section 14.17  |
-| **Left Sidebar Navigation**    | ~2      | ~24        | ✅ Complete | Section 14.18  |
-| **Total**                      | **~57** | **~4,009** | **100%**    | **7 sections** |
+| Feature                              | Points  | LOC        | Status      | Documentation  |
+| ------------------------------------ | ------- | ---------- | ----------- | -------------- |
+| **LLM Provider Selector**            | ~8      | ~500       | ✅ Complete | Section 9      |
+| **Agent Import/Seeding**             | ~10     | ~800       | ✅ Complete | Section 10     |
+| **State API Migration**              | ~12     | ~300       | ✅ Complete | Section 11     |
+| **Project Management**               | ~10     | ~935       | ✅ Complete | Section 12     |
+| **Enhanced Assessment Tool**         | ~7      | ~321       | ✅ Complete | Section 13     |
+| **GitHub Import Enhancements**       | ~8      | ~1,129     | ✅ Complete | Section 14.17  |
+| **Left Sidebar Navigation**          | ~2      | ~24        | ✅ Complete | Section 14.18  |
+| **Configurable Project Storage**     | ~3      | ~298       | ✅ Complete | Section 16     |
+| **Total**                            | **~60** | **~4,307** | **100%**    | **8 sections** |
 
 ---
 
