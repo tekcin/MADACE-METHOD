@@ -342,6 +342,98 @@ docker-compose -f docker-compose.https.yml up -d
 
 **📘 See [docs/HTTPS-DEPLOYMENT.md](./docs/HTTPS-DEPLOYMENT.md) for complete HTTPS setup guide**
 
+#### Kubernetes Deployment (Enterprise Cloud)
+
+**Perfect for:** Enterprise cloud deployment, scalable production workloads, multi-environment deployments
+
+```bash
+# Quick Start (3 steps)
+
+# 1. Configure secrets (base64-encode your API keys)
+echo -n "your-gemini-api-key" | base64
+# Edit k8s/02-secret.yaml with encoded values
+
+# 2. Update domain in k8s/06-ingress.yaml
+#    Replace madace.yourdomain.com with your domain
+
+# 3. Deploy to Kubernetes
+kubectl apply -f k8s/
+
+# 4. Verify deployment
+kubectl get all -n madace
+kubectl get ingress -n madace
+
+# Access at https://madace.yourdomain.com
+```
+
+**Features:**
+
+- Production-ready security (non-root user, secrets, network policies)
+- High availability (health probes, rolling updates, persistent storage)
+- Horizontal and vertical scaling support
+- WebSocket sticky sessions for real-time collaboration
+- TLS/HTTPS with cert-manager integration
+- Optional local LLM server (Ollama) deployment
+- Compatible with all major K8s providers (GKE, EKS, AKS, DigitalOcean, k3s)
+
+**Deployment Options:**
+
+1. **Minimal** (Files 00-06): Uses external LLM providers only
+2. **Full** (Files 00-08): Includes Ollama for local models
+3. **Development** (Files 00-05): Port-forward for local access
+
+**Kubernetes Manifests** (10 files in `k8s/` directory):
+
+- `00-namespace.yaml` - Dedicated madace namespace
+- `01-configmap.yaml` - Configuration management
+- `02-secret.yaml` - API key storage (edit before deploying)
+- `03-pvc.yaml` - Persistent storage (10Gi app data + 50Gi models)
+- `04-deployment.yaml` - MADACE application with security & health checks
+- `05-service.yaml` - Internal service with sticky sessions
+- `06-ingress.yaml` - HTTPS ingress (update domain)
+- `07-ollama-deployment.yaml` - Optional local LLM server
+- `08-ollama-service.yaml` - Ollama internal service
+- `README.md` - Quick reference guide
+
+**Requirements:**
+
+- Kubernetes v1.25+
+- 2 CPU cores, 4GB RAM minimum (8 CPU, 12GB for full deployment)
+- Persistent storage provisioner
+- Ingress controller (nginx, traefik, etc.)
+- cert-manager (optional, for TLS)
+
+**Scaling:**
+
+```bash
+# Horizontal scaling
+kubectl scale deployment madace -n madace --replicas=3
+
+# Auto-scaling (HPA)
+kubectl autoscale deployment madace -n madace \
+  --cpu-percent=70 --min=2 --max=10
+
+# Vertical scaling (edit resource limits)
+kubectl apply -f k8s/04-deployment.yaml
+```
+
+**Monitoring:**
+
+```bash
+# View logs
+kubectl logs -f -n madace deployment/madace
+
+# Resource usage
+kubectl top pods -n madace
+
+# Events
+kubectl get events -n madace --sort-by='.lastTimestamp'
+```
+
+**📘 See [docs/KUBERNETES-DEPLOYMENT.md](./docs/KUBERNETES-DEPLOYMENT.md) for comprehensive deployment guide** (664 lines with production best practices)
+
+**See also**: [ARCHITECTURE.md Section 18](./ARCHITECTURE.md#18-kubernetes-deployment-architecture) for technical architecture details
+
 ---
 
 ## CLI Support
