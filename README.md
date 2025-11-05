@@ -1147,6 +1147,42 @@ gemini --project madace workflow create-story
 - **[USING-MADACE.md](./USING-MADACE.md)** - Using MADACE to build MADACE
 - **[LLM-SELECTION.md](./docs/LLM-SELECTION.md)** - LLM selection guide
 
+### Testing & Quality Assurance
+
+MADACE v3.0 includes **comprehensive E2E testing infrastructure** with 37 tests covering critical functionality:
+
+- **[COMPREHENSIVE-E2E-TEST-PLAN.md](./docs/COMPREHENSIVE-E2E-TEST-PLAN.md)** - 🔥 YOLO Mode testing strategy (400+ lines)
+- **[YOLO-MODE-TEST-ANALYSIS.md](./docs/YOLO-MODE-TEST-ANALYSIS.md)** - Root cause analysis and fixes (500+ lines)
+- **[DEPLOYMENT-TEST-REPORT.md](./docs/DEPLOYMENT-TEST-REPORT.md)** - Deployment validation results
+
+**Test Coverage:**
+- ✅ **37 comprehensive E2E tests** (1,150+ lines of test code)
+- ✅ **Multi-browser testing** (Chromium, Firefox, WebKit, Mobile)
+- ✅ **Accessibility testing** (WCAG 2.1 compliance)
+- ✅ **API testing** (All CRUD endpoints, error handling)
+- ✅ **Database schema validation** (Prisma ORM integration)
+
+**Quick Commands:**
+
+```bash
+# Run all comprehensive tests
+npx playwright test --config=playwright.comprehensive.config.ts
+
+# Run specific test suite
+npx playwright test agent-list.spec.ts
+
+# Run on specific browser
+npx playwright test --project=chromium
+
+# Debug mode
+npx playwright test --debug
+
+# View HTML report
+npx playwright show-report e2e-tests/reports/comprehensive
+```
+
+**Documentation:** [ARCHITECTURE.md Section 20](./ARCHITECTURE.md#20-comprehensive-e2e-testing---yolo-mode-) (Complete E2E testing architecture)
+
 ### Architecture Decision Records (ADRs)
 
 - **[ADR-003](./docs/adrs/ADR-003-architecture-simplification.md)** - Next.js Full-Stack Architecture ✅
