@@ -301,7 +301,7 @@ describe('EntityValidator', () => {
     it('should validate float number', async () => {
       const entity: NLUEntity = {
         type: '@number',
-        value: 3.14,
+        value: '3.14',
         originalText: '3.14',
         confidence: 1.0,
       };
@@ -372,9 +372,9 @@ describe('EntityValidator', () => {
       const results = await validator.validateEntities(entities);
 
       expect(results).toHaveLength(3);
-      expect(results[0].valid).toBe(true);
-      expect(results[1].valid).toBe(true);
-      expect(results[2].valid).toBe(true);
+      expect(results[0]?.valid).toBe(true);
+      expect(results[1]?.valid).toBe(true);
+      expect(results[2]?.valid).toBe(true);
     });
   });
 });

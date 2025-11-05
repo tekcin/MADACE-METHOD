@@ -177,7 +177,10 @@ export async function transaction<T>(
  */
 export async function exists<
   T extends {
-    findUnique: (args: { where: { id: string }; select: { id: true } }) => Promise<{ id: string } | null>;
+    findUnique: (args: {
+      where: { id: string };
+      select: { id: true };
+    }) => Promise<{ id: string } | null>;
   },
 >(model: T, id: string): Promise<boolean> {
   try {

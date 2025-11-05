@@ -128,9 +128,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-          Workflow Steps
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Workflow Steps</h2>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Define the steps that make up your workflow
         </p>
@@ -157,7 +155,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
               value={step.name}
               onChange={(e) => setStep({ ...step, name: e.target.value })}
               placeholder="e.g., gather-requirements"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               Lowercase with hyphens (e.g., my-step-name)
@@ -176,7 +174,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
               id="step-action"
               value={step.action}
               onChange={(e) => handleActionTypeChange(e.target.value as WorkflowActionType)}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             >
               {Object.entries(ACTION_DESCRIPTIONS).map(([type, description]) => (
                 <option key={type} value={type}>
@@ -201,7 +199,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                 onChange={(e) => setStep({ ...step, message: e.target.value })}
                 placeholder="Message to display to the user..."
                 rows={3}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>
           )}
@@ -221,7 +219,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                   onChange={(e) => setStep({ ...step, prompt: e.target.value })}
                   placeholder="Prompt for AI or user input..."
                   rows={3}
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
 
@@ -240,7 +238,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                       value={step.variable || ''}
                       onChange={(e) => setStep({ ...step, variable: e.target.value })}
                       placeholder="e.g., user_input"
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                   <div>
@@ -256,7 +254,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                       value={step.validation || ''}
                       onChange={(e) => setStep({ ...step, validation: e.target.value })}
                       placeholder="e.g., ^[a-zA-Z0-9]+$"
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                     />
                   </div>
                 </>
@@ -278,7 +276,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                         value={step.model || 'gemma3:latest'}
                         onChange={(e) => setStep({ ...step, model: e.target.value })}
                         placeholder="gemma3:latest"
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                       />
                     </div>
                     <div>
@@ -294,7 +292,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                         value={step.store_as || ''}
                         onChange={(e) => setStep({ ...step, store_as: e.target.value })}
                         placeholder="variable_name"
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                       />
                     </div>
                   </div>
@@ -311,7 +309,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                         id="step-max-tokens"
                         value={step.max_tokens || 500}
                         onChange={(e) => setStep({ ...step, max_tokens: parseInt(e.target.value) })}
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                       />
                     </div>
                     <div>
@@ -328,8 +326,10 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                         step="0.1"
                         min="0"
                         max="2"
-                        onChange={(e) => setStep({ ...step, temperature: parseFloat(e.target.value) })}
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                        onChange={(e) =>
+                          setStep({ ...step, temperature: parseFloat(e.target.value) })
+                        }
+                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                       />
                     </div>
                   </div>
@@ -353,7 +353,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                   value={step.template || ''}
                   onChange={(e) => setStep({ ...step, template: e.target.value })}
                   placeholder="templates/example.hbs"
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
               <div>
@@ -369,7 +369,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                   value={step.output_file || ''}
                   onChange={(e) => setStep({ ...step, output_file: e.target.value })}
                   placeholder="output/{{'{filename}'}}.md"
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
             </>
@@ -389,7 +389,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                 value={step.workflow_name || ''}
                 onChange={(e) => setStep({ ...step, workflow_name: e.target.value })}
                 placeholder="example-workflow"
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>
           )}
@@ -408,7 +408,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
                 value={step.workflow_file || ''}
                 onChange={(e) => setStep({ ...step, workflow_file: e.target.value })}
                 placeholder="workflows/sub-workflow.yaml"
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>
           )}
@@ -427,7 +427,7 @@ export function StepsEditorStep({ workflowData, setWorkflowData }: StepsEditorSt
               value={step.condition || ''}
               onChange={(e) => setStep({ ...step, condition: e.target.value })}
               placeholder="e.g., complexity >= 2"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               JavaScript expression to determine if step should execute

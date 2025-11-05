@@ -17,6 +17,10 @@ import { startREPL } from '../lib/cli/repl';
 import { startDashboard } from '../lib/cli/dashboard';
 import { chatCommand } from '../lib/cli/commands/chat';
 import { registerMemoryCommands } from '../lib/cli/commands/memory';
+import {
+  registerConvertAgentCommand,
+  registerConvertAgentsBatchCommand,
+} from '../lib/cli/commands/convert-agent';
 
 const program = new Command();
 
@@ -59,6 +63,10 @@ program
 
 // Memory commands
 registerMemoryCommands(program);
+
+// Convert agent commands (BMAD-MADACE compatibility)
+registerConvertAgentCommand(program);
+registerConvertAgentsBatchCommand(program);
 
 // Parse command line arguments
 program.parse(process.argv);

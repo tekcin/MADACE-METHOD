@@ -1,8 +1,11 @@
 @import 'tailwindcss';
 
+/* Import MADACE Dark Theme - Based on Sidebar Design */
+@import './madace-theme.css';
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #111827; /* Force dark background */
+  --foreground: #d1d5db; /* Force light text */
 }
 
 @theme inline {
@@ -10,13 +13,49 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Override gray colors for better dark mode contrast - Sidebar-inspired */
+  --color-gray-300: #d1d5db; /* Lighter for better readability */
+  --color-gray-400: #9ca3af; /* Brighter than default */
+  --color-gray-500: #6b7280; /* Slightly brighter */
+  --color-gray-600: #4b5563; /* Brighter for better contrast */
+  --color-gray-700: #374151; /* Sidebar border color */
+  --color-gray-800: #1f2937; /* Sidebar background */
+  --color-gray-900: #111827; /* Deeper dark background */
+
+  /* Blue accent colors - Matching sidebar */
+  --color-blue-200: #bfdbfe; /* Active text in sidebar */
+  --color-blue-600: #2563eb; /* Brand color */
+  --color-blue-700: #1d4ed8; /* Hover state */
+  --color-blue-900: #1e3a8a; /* Active background */
+}
+
+/* Force dark mode - no light mode support */
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #111827;
+    --foreground: #d1d5db;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #111827;
+    --foreground: #d1d5db;
   }
+}
+
+/* Global dark mode text improvements */
+.dark {
+  /* Better default text colors for dark backgrounds */
+  --tw-prose-body: #d1d5db; /* gray-300 instead of gray-400 */
+  --tw-prose-headings: #f9fafb; /* gray-50 for headings */
+  --tw-prose-links: #60a5fa; /* blue-400 for links */
+  --tw-prose-bold: #f3f4f6; /* gray-100 for bold text */
+  --tw-prose-counters: #9ca3af; /* gray-400 for counters */
+  --tw-prose-bullets: #9ca3af; /* gray-400 for bullets */
+  --tw-prose-quotes: #d1d5db; /* gray-300 for quotes */
+  --tw-prose-code: #f3f4f6; /* gray-100 for inline code */
 }
 
 body {

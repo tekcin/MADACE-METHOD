@@ -51,7 +51,7 @@ export default function CodeBlock({
   return (
     <div className="group relative my-4">
       {/* Header Bar */}
-      <div className="flex items-center justify-between rounded-t-lg bg-gray-800 px-4 py-2 dark:bg-gray-950">
+      <div className="flex items-center justify-between rounded-t-lg bg-gray-950 px-4 py-2">
         {/* Language Badge */}
         <div className="flex items-center gap-2">
           {language && language !== 'plaintext' && (
@@ -94,7 +94,7 @@ export default function CodeBlock({
       </div>
 
       {/* Code Block */}
-      <pre className="overflow-x-auto rounded-b-lg bg-gray-900 p-0 text-sm dark:bg-gray-950">
+      <pre className="overflow-x-auto rounded-b-lg bg-gray-950 p-0 text-sm">
         <code ref={codeRef} className="block">
           {showLineNumbers ? (
             <table className="w-full border-collapse">
@@ -102,7 +102,7 @@ export default function CodeBlock({
                 {lines.map((line, index) => (
                   <tr key={index}>
                     <td
-                      className="border-r border-gray-700 bg-gray-800 px-4 py-1 text-right align-top text-gray-500 select-none dark:border-gray-800 dark:bg-gray-900"
+                      className="border-r border-gray-800 bg-gray-900 px-4 py-1 text-right align-top text-gray-500 select-none"
                       style={{ minWidth: '3em' }}
                     >
                       {index + 1}

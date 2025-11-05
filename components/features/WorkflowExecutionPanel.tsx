@@ -85,7 +85,10 @@ export function WorkflowExecutionPanel({
       {/* Header */}
       <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white" data-testid="workflow-name">
+          <h2
+            className="text-2xl font-bold text-gray-900 dark:text-white"
+            data-testid="workflow-name"
+          >
             {state.workflowName}
           </h2>
           <div className="flex gap-2" data-testid="workflow-status-badges">
@@ -273,7 +276,10 @@ export function WorkflowExecutionPanel({
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
-                  <h4 className="font-medium text-gray-900 dark:text-white" data-testid={`step-${index}-name`}>
+                  <h4
+                    className="font-medium text-gray-900 dark:text-white"
+                    data-testid={`step-${index}-name`}
+                  >
                     {index + 1}. {step.name}
                   </h4>
                   <span

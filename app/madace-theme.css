@@ -1,0 +1,463 @@
+/**
+ * MADACE Dark Theme - Based on Sidebar Styling
+ *
+ * This theme provides consistent dark mode styling across the entire application
+ * following the design patterns from the Navigation sidebar component.
+ */
+
+/* ===================================================================
+   THEME VARIABLES - Based on Sidebar Design
+   =================================================================== */
+
+:root {
+  /* Primary Background Colors (Sidebar-inspired) */
+  --madace-bg-primary: #1f2937; /* gray-800 - Main backgrounds */
+  --madace-bg-secondary: #111827; /* gray-900 - Deeper backgrounds */
+  --madace-bg-tertiary: #0f172a; /* slate-900 - Darkest backgrounds */
+
+  /* Border Colors */
+  --madace-border-primary: #374151; /* gray-700 - Main borders */
+  --madace-border-secondary: #4b5563; /* gray-600 - Lighter borders */
+
+  /* Text Colors */
+  --madace-text-primary: #ffffff; /* white - Headings, important text */
+  --madace-text-secondary: #d1d5db; /* gray-300 - Body text, readable */
+  --madace-text-tertiary: #9ca3af; /* gray-400 - Labels, secondary info */
+  --madace-text-muted: #6b7280; /* gray-500 - Disabled, placeholders */
+
+  /* Accent Colors */
+  --madace-blue-primary: #2563eb; /* blue-600 - Brand color */
+  --madace-blue-hover: #1d4ed8; /* blue-700 - Hover states */
+  --madace-blue-light: #bfdbfe; /* blue-200 - Light accents */
+  --madace-blue-dark: #1e3a8a; /* blue-900 - Active states */
+
+  /* State Colors */
+  --madace-success: #10b981; /* green-500 */
+  --madace-warning: #f59e0b; /* amber-500 */
+  --madace-error: #ef4444; /* red-500 */
+  --madace-info: #3b82f6; /* blue-500 */
+
+  /* Interactive States */
+  --madace-hover-bg: #374151; /* gray-700 - Hover background */
+  --madace-active-bg: #1e3a8a; /* blue-900 - Active background */
+  --madace-active-text: #bfdbfe; /* blue-200 - Active text */
+}
+
+/* ===================================================================
+   GLOBAL RESETS & DEFAULTS
+   =================================================================== */
+
+/* Force dark mode everywhere */
+body {
+  background-color: var(--madace-bg-secondary) !important;
+  color: var(--madace-text-secondary) !important;
+}
+
+/* Remove all light mode backgrounds */
+* {
+  /* Override any white or light backgrounds */
+  --tw-bg-opacity: 1;
+}
+
+/* ===================================================================
+   UTILITY CLASSES - Sidebar-Inspired
+   =================================================================== */
+
+/* Backgrounds */
+.madace-bg-primary {
+  background-color: var(--madace-bg-primary) !important;
+}
+
+.madace-bg-secondary {
+  background-color: var(--madace-bg-secondary) !important;
+}
+
+.madace-bg-tertiary {
+  background-color: var(--madace-bg-tertiary) !important;
+}
+
+/* Text Colors */
+.madace-text-primary {
+  color: var(--madace-text-primary) !important;
+}
+
+.madace-text-secondary {
+  color: var(--madace-text-secondary) !important;
+}
+
+.madace-text-tertiary {
+  color: var(--madace-text-tertiary) !important;
+}
+
+.madace-text-muted {
+  color: var(--madace-text-muted) !important;
+}
+
+/* Borders */
+.madace-border {
+  border-color: var(--madace-border-primary) !important;
+}
+
+.madace-border-light {
+  border-color: var(--madace-border-secondary) !important;
+}
+
+/* ===================================================================
+   COMPONENT STYLES - Consistent with Sidebar
+   =================================================================== */
+
+/* Cards & Panels */
+.madace-card,
+.madace-panel {
+  background-color: var(--madace-bg-primary);
+  border: 1px solid var(--madace-border-primary);
+  border-radius: 0.5rem;
+  color: var(--madace-text-secondary);
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.madace-heading {
+  color: var(--madace-text-primary) !important;
+  font-weight: 700;
+}
+
+/* Body Text */
+p,
+span,
+div,
+.madace-body-text {
+  color: var(--madace-text-secondary);
+}
+
+/* Labels & Secondary Text */
+label,
+.madace-label,
+dt,
+.madace-label-text {
+  color: var(--madace-text-tertiary) !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Links - Sidebar style */
+a.madace-link {
+  color: var(--madace-text-secondary);
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+
+a.madace-link:hover {
+  color: var(--madace-text-primary);
+  background-color: var(--madace-hover-bg);
+}
+
+a.madace-link.active {
+  background-color: var(--madace-active-bg);
+  color: var(--madace-active-text);
+}
+
+/* Buttons - Primary */
+.madace-btn-primary {
+  background-color: var(--madace-blue-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.madace-btn-primary:hover {
+  background-color: var(--madace-blue-hover);
+}
+
+/* Buttons - Secondary */
+.madace-btn-secondary {
+  background-color: var(--madace-bg-primary);
+  color: var(--madace-text-secondary);
+  border: 1px solid var(--madace-border-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.madace-btn-secondary:hover {
+  background-color: var(--madace-hover-bg);
+  color: var(--madace-text-primary);
+}
+
+/* Input Fields */
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='number'],
+textarea,
+select,
+.madace-input {
+  background-color: var(--madace-bg-primary);
+  border: 1px solid var(--madace-border-primary);
+  color: var(--madace-text-secondary);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.madace-input:focus {
+  outline: none;
+  border-color: var(--madace-blue-primary);
+  ring: 2px;
+  ring-color: var(--madace-blue-primary);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--madace-text-muted);
+}
+
+/* Tables */
+.madace-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.madace-table thead {
+  background-color: var(--madace-bg-primary);
+  border-bottom: 2px solid var(--madace-border-primary);
+}
+
+.madace-table th {
+  color: var(--madace-text-primary);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+}
+
+.madace-table td {
+  color: var(--madace-text-secondary);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--madace-border-primary);
+}
+
+.madace-table tbody tr:hover {
+  background-color: var(--madace-hover-bg);
+}
+
+/* Modals */
+.madace-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.madace-modal {
+  background-color: var(--madace-bg-primary);
+  border: 1px solid var(--madace-border-primary);
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.madace-modal-header {
+  border-bottom: 1px solid var(--madace-border-primary);
+  padding: 1.5rem;
+  background-color: var(--madace-bg-secondary);
+}
+
+.madace-modal-title {
+  color: var(--madace-text-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.madace-modal-body {
+  padding: 1.5rem;
+}
+
+.madace-modal-footer {
+  border-top: 1px solid var(--madace-border-primary);
+  padding: 1.5rem;
+  background-color: var(--madace-bg-secondary);
+}
+
+/* Badges */
+.madace-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.madace-badge-blue {
+  background-color: rgba(37, 99, 235, 0.2);
+  color: var(--madace-blue-light);
+}
+
+.madace-badge-green {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+}
+
+.madace-badge-red {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+.madace-badge-gray {
+  background-color: var(--madace-bg-primary);
+  color: var(--madace-text-tertiary);
+}
+
+/* Alerts */
+.madace-alert {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid;
+}
+
+.madace-alert-info {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+  color: #93c5fd;
+}
+
+.madace-alert-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+  color: #6ee7b7;
+}
+
+.madace-alert-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: #f59e0b;
+  color: #fbbf24;
+}
+
+.madace-alert-error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+/* ===================================================================
+   OVERRIDE EXISTING TAILWIND CLASSES
+   =================================================================== */
+
+/* Force dark backgrounds on common Tailwind classes */
+.bg-white {
+  background-color: var(--madace-bg-primary) !important;
+}
+
+.bg-gray-50 {
+  background-color: var(--madace-bg-secondary) !important;
+}
+
+.bg-gray-100 {
+  background-color: var(--madace-bg-primary) !important;
+}
+
+/* Force readable text colors */
+.text-gray-400 {
+  color: var(--madace-text-tertiary) !important;
+}
+
+.text-gray-500 {
+  color: var(--madace-text-tertiary) !important;
+}
+
+.text-gray-600 {
+  color: var(--madace-text-secondary) !important;
+}
+
+.text-gray-700 {
+  color: var(--madace-text-secondary) !important;
+}
+
+.text-gray-800 {
+  color: var(--madace-text-primary) !important;
+}
+
+.text-gray-900 {
+  color: var(--madace-text-primary) !important;
+}
+
+/* Force dark borders */
+.border-gray-200 {
+  border-color: var(--madace-border-primary) !important;
+}
+
+.border-gray-300 {
+  border-color: var(--madace-border-primary) !important;
+}
+
+/* ===================================================================
+   RESPONSIVE ADJUSTMENTS
+   =================================================================== */
+
+@media (max-width: 768px) {
+  .madace-card,
+  .madace-panel {
+    border-radius: 0.375rem;
+  }
+
+  .madace-modal {
+    margin: 1rem;
+    max-width: calc(100% - 2rem);
+  }
+}
+
+/* ===================================================================
+   PRINT STYLES
+   =================================================================== */
+
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  .madace-bg-primary,
+  .madace-bg-secondary {
+    background-color: white !important;
+  }
+
+  .madace-text-primary,
+  .madace-text-secondary {
+    color: black !important;
+  }
+}
+
+/* ===================================================================
+   ACCESSIBILITY
+   =================================================================== */
+
+/* High contrast focus indicators */
+*:focus-visible {
+  outline: 2px solid var(--madace-blue-primary);
+  outline-offset: 2px;
+}
+
+/* Ensure sufficient contrast for links */
+a {
+  text-decoration-skip-ink: auto;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -37,8 +37,8 @@ export function ModuleConfigStep({ config, setConfig }: Props) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Module Selection</h2>
-      <p className="text-sm text-gray-600 dark:text-gray-400">
+      <h2 className="text-xl font-semibold text-white">Module Selection</h2>
+      <p className="text-sm text-gray-300">
         Choose which MADACE modules to enable for your project
       </p>
 
@@ -51,7 +51,7 @@ export function ModuleConfigStep({ config, setConfig }: Props) {
           return (
             <div
               key={moduleKey}
-              className="flex items-start rounded-lg border border-gray-300 p-4 dark:border-gray-700"
+              className="flex items-start rounded-lg border border-gray-600 border-gray-700 p-4"
             >
               <div className="flex h-6 items-center">
                 <input
@@ -59,31 +59,29 @@ export function ModuleConfigStep({ config, setConfig }: Props) {
                   id={moduleKey}
                   checked={isEnabled}
                   onChange={(e) => updateModuleConfig(fieldName, e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="h-4 w-4 rounded border-gray-600 text-blue-600 focus:ring-blue-500"
                 />
               </div>
               <div className="ml-3 flex-1">
                 <label
                   htmlFor={moduleKey}
-                  className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="flex items-center gap-2 text-sm font-medium text-white"
                 >
                   {moduleData.name}
                   {moduleData.recommended && (
-                    <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                    <span className="rounded-full bg-blue-900 bg-blue-900/30 px-2 py-0.5 text-xs font-medium text-blue-200 text-blue-800">
                       Recommended
                     </span>
                   )}
                 </label>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                  {moduleData.description}
-                </p>
+                <p className="mt-1 text-sm text-gray-300">{moduleData.description}</p>
               </div>
             </div>
           );
         })}
       </div>
 
-      <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+      <div className="rounded-lg bg-blue-900/20 p-4">
         <div className="flex">
           <div className="flex-shrink-0">
             <svg
@@ -100,7 +98,7 @@ export function ModuleConfigStep({ config, setConfig }: Props) {
             </svg>
           </div>
           <div className="ml-3 flex-1">
-            <p className="text-sm text-blue-700 dark:text-blue-300">
+            <p className="text-sm text-blue-300">
               MAM is recommended for all projects. MAB and CIS are optional and can be enabled
               later.
             </p>

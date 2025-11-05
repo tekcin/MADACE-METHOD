@@ -38,9 +38,7 @@ export default function CreateWorkflowPage() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Create New Workflow
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Create New Workflow</h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
             Build a custom MADACE workflow with step-by-step guidance
           </p>
@@ -62,9 +60,7 @@ export default function CreateWorkflowPage() {
                 />
               </svg>
               <div className="ml-3">
-                <p className="text-sm font-medium text-red-800 dark:text-red-200">
-                  {error}
-                </p>
+                <p className="text-sm font-medium text-red-800 dark:text-red-200">{error}</p>
               </div>
             </div>
           </div>
@@ -72,9 +68,7 @@ export default function CreateWorkflowPage() {
 
         {/* Workflow Creator */}
         <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-          {!saving && (
-            <WorkflowCreator onComplete={handleComplete} onCancel={handleCancel} />
-          )}
+          {!saving && <WorkflowCreator onComplete={handleComplete} onCancel={handleCancel} />}
           {saving && (
             <div className="flex items-center justify-center py-12">
               <div className="flex flex-col items-center space-y-4">
@@ -89,7 +83,7 @@ export default function CreateWorkflowPage() {
 
         {/* Saving Overlay */}
         {saving && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black">
             <div className="rounded-lg bg-white p-8 shadow-xl dark:bg-gray-800">
               <div className="flex flex-col items-center space-y-4">
                 <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-blue-500 dark:border-gray-600 dark:border-t-blue-400"></div>

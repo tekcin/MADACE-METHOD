@@ -152,10 +152,7 @@ export async function createResilientLLMClient(
   /**
    * Attempt a request with a specific provider
    */
-  async function attemptRequest(
-    provider: LLMProvider,
-    request: LLMRequest
-  ): Promise<LLMResponse> {
+  async function attemptRequest(provider: LLMProvider, request: LLMRequest): Promise<LLMResponse> {
     const config = getProviderConfig(provider);
     const client = createLLMClient(config);
 

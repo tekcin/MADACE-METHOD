@@ -7,20 +7,14 @@ import fs from 'fs/promises';
  * POST /api/v3/workflows/[id]/resume
  * Resume workflow execution after input submission or pause
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
 
     // Find and load workflow
     const workflowPath = await findWorkflowPath(id);
     if (!workflowPath) {
-      return NextResponse.json(
-        { success: false, error: 'Workflow not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'Workflow not found' }, { status: 404 });
     }
 
     const workflow = await loadWorkflow(workflowPath);

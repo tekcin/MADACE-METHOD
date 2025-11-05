@@ -288,10 +288,8 @@ export default function StatusPage() {
       {/* Page header */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Status Dashboard</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Real-time project status and activity monitoring
-          </p>
+          <h1 className="text-3xl font-bold text-white">Status Dashboard</h1>
+          <p className="mt-2 text-gray-300">Real-time project status and activity monitoring</p>
         </div>
         <div className="flex items-center space-x-4">
           {/* WebSocket status indicator */}
@@ -299,9 +297,7 @@ export default function StatusPage() {
             <div
               className={`size-3 rounded-full ${wsConnected ? 'bg-green-500' : 'bg-gray-400'}`}
             ></div>
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              {wsConnected ? 'Connected' : 'Offline'}
-            </span>
+            <span className="text-sm text-gray-300">{wsConnected ? 'Connected' : 'Offline'}</span>
           </div>
 
           {/* Refresh button */}
@@ -316,23 +312,17 @@ export default function StatusPage() {
       </div>
 
       {/* Last update timestamp */}
-      <div className="mb-6 text-sm text-gray-500 dark:text-gray-400">
-        Last updated: {lastUpdate}
-      </div>
+      <div className="mb-6 text-sm text-gray-300">Last updated: {lastUpdate}</div>
 
       {/* State machine overview (Kanban summary) */}
       <div className="mb-8">
-        <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-          State Machine Overview
-        </h2>
+        <h2 className="mb-4 text-xl font-semibold text-white">State Machine Overview</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {/* BACKLOG */}
-          <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
-            <div className="text-sm font-medium text-gray-600 dark:text-gray-400">BACKLOG</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {summary.backlog}
-            </div>
-            <div className="mt-1 text-xs text-gray-500 dark:text-gray-500">Ready to start</div>
+          <div className="rounded-lg border border-gray-700 bg-gray-900 p-6">
+            <div className="text-sm font-medium text-gray-300">BACKLOG</div>
+            <div className="mt-2 text-3xl font-bold text-white">{summary.backlog}</div>
+            <div className="mt-1 text-xs text-gray-400">Ready to start</div>
           </div>
 
           {/* TODO */}
@@ -378,9 +368,7 @@ export default function StatusPage() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Quick status lookup */}
         <div>
-          <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-            Quick Status Lookup
-          </h2>
+          <h2 className="mb-4 text-xl font-semibold text-white">Quick Status Lookup</h2>
           <form onSubmit={handleSearch} className="mb-4">
             <div className="flex space-x-2">
               <input
@@ -388,7 +376,7 @@ export default function StatusPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Enter story ID (e.g., STORY-V3-010)"
-                className="flex-1 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500"
+                className="flex-1 rounded-md border border-gray-700 bg-gray-800 px-4 py-2 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               />
               <button
                 type="submit"
@@ -408,11 +396,9 @@ export default function StatusPage() {
           )}
 
           {searchResult && (
-            <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+            <div className="rounded-lg border border-gray-700 bg-gray-900 p-6">
               <div className="mb-4 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {searchResult.entity.id}
-                </h3>
+                <h3 className="text-lg font-semibold text-white">{searchResult.entity.id}</h3>
                 <span
                   className={`rounded-full px-3 py-1 text-xs font-medium ${
                     searchResult.status?.state === 'DONE'
@@ -430,23 +416,17 @@ export default function StatusPage() {
               </div>
               <dl className="space-y-2">
                 <div>
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Type</dt>
-                  <dd className="text-sm text-gray-900 dark:text-white">
-                    {searchResult.entity.type}
-                  </dd>
+                  <dt className="text-sm font-medium text-gray-300">Type</dt>
+                  <dd className="text-sm text-white">{searchResult.entity.type}</dd>
                 </div>
                 <div>
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Source</dt>
-                  <dd className="text-sm break-all text-gray-900 dark:text-white">
-                    {searchResult.source}
-                  </dd>
+                  <dt className="text-sm font-medium text-gray-300">Source</dt>
+                  <dd className="text-sm break-all text-white">{searchResult.source}</dd>
                 </div>
                 {searchResult.status?.details && (
                   <div>
-                    <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      Details
-                    </dt>
-                    <dd className="text-sm text-gray-900 dark:text-white">
+                    <dt className="text-sm font-medium text-gray-300">Details</dt>
+                    <dd className="text-sm text-white">
                       <pre className="mt-1 overflow-x-auto rounded bg-gray-100 p-2 text-xs dark:bg-gray-800">
                         {JSON.stringify(searchResult.status.details, null, 2)}
                       </pre>
@@ -460,26 +440,22 @@ export default function StatusPage() {
 
         {/* Recent activity feed */}
         <div>
-          <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-            Recent Activity
-          </h2>
+          <h2 className="mb-4 text-xl font-semibold text-white">Recent Activity</h2>
           <div className="space-y-4">
             {activities.length === 0 ? (
-              <div className="rounded-lg border border-gray-200 bg-white p-6 text-center dark:border-gray-800 dark:bg-gray-900">
-                <p className="text-sm text-gray-500 dark:text-gray-400">No recent activity</p>
+              <div className="rounded-lg border border-gray-700 bg-gray-900 p-6 text-center">
+                <p className="text-sm text-gray-300">No recent activity</p>
               </div>
             ) : (
               activities.map((activity) => (
                 <div
                   key={activity.id}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
+                  className="rounded-lg border border-gray-700 bg-gray-900 p-4"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
-                        <span className="font-medium text-gray-900 dark:text-white">
-                          {activity.entityId}
-                        </span>
+                        <span className="font-medium text-white">{activity.entityId}</span>
                         <span
                           className={`rounded-full px-2 py-0.5 text-xs font-medium ${
                             activity.state === 'DONE'
@@ -495,11 +471,9 @@ export default function StatusPage() {
                         </span>
                       </div>
                       {activity.details && (
-                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                          {activity.details}
-                        </p>
+                        <p className="mt-1 text-sm text-gray-300">{activity.details}</p>
                       )}
-                      <p className="mt-1 text-xs text-gray-500 dark:text-gray-500">
+                      <p className="mt-1 text-xs text-gray-400">
                         {new Date(activity.timestamp).toLocaleString()}
                       </p>
                     </div>

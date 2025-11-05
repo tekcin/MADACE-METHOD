@@ -11,6 +11,7 @@
 This document tracks the implementation status of enhanced workflow features for MADACE v3.0.
 
 **Status Summary:**
+
 - ✅ **Core Foundation**: 100% Complete (YAML loading, LLM, templates, state)
 - ✅ **API Layer**: 100% Complete (5 endpoints implemented)
 - ✅ **UI Components**: 100% Complete (input forms, execution monitoring)
@@ -23,14 +24,17 @@ This document tracks the implementation status of enhanced workflow features for
 ### ✅ Completed Features
 
 #### 1. Load Workflows from YAML Files
+
 **Status:** ✅ COMPLETE (Existed in v3.0-beta)
 
 **Implementation:**
+
 - `lib/workflows/loader.ts` - YAML workflow loader
 - `lib/workflows/executor.ts` - Workflow execution engine
 - `lib/workflows/schema.ts` - Zod validation schemas
 
 **Features:**
+
 - Load workflows from YAML files
 - Validate workflow structure
 - Support for all action types
@@ -39,6 +43,7 @@ This document tracks the implementation status of enhanced workflow features for
 - Scale-adaptive routing
 
 **Example:**
+
 ```typescript
 import { loadWorkflow, createWorkflowExecutor } from '@/lib/workflows';
 
@@ -51,14 +56,17 @@ await executor.executeNextStep();
 ---
 
 #### 2. Real-time LLM Integration for Reflect Steps
+
 **Status:** ✅ COMPLETE (Added 2025-10-31)
 
 **Implementation:**
+
 - Enhanced `handleReflect()` in `lib/workflows/executor.ts`
 - Added `ReflectionResult` type in `lib/workflows/types.ts`
 - Added `getLLMConfig()` method for configuration
 
 **Features:**
+
 - Real-time LLM responses during workflow execution
 - Multi-provider support (local/Gemini/Claude/OpenAI)
 - Configurable model, max_tokens, temperature per step
@@ -67,39 +75,44 @@ await executor.executeNextStep();
 - Fallback to environment variables
 
 **Example Workflow Step:**
+
 ```yaml
 - name: 'Analyze Requirements'
   action: reflect
   prompt: 'Review the user requirements and suggest a technical architecture'
-  model: 'gemma3:latest'  # Optional: override default model
-  max_tokens: 1000         # Optional: default 500
-  temperature: 0.7         # Optional: default 0.7
-  store_as: 'architecture_suggestion'  # Optional: default 'last_reflection'
+  model: 'gemma3:latest' # Optional: override default model
+  max_tokens: 1000 # Optional: default 500
+  temperature: 0.7 # Optional: default 0.7
+  store_as: 'architecture_suggestion' # Optional: default 'last_reflection'
 ```
 
 **Reflection Result Structure:**
+
 ```typescript
 {
-  prompt: string;          // Original prompt
-  response: string;        // LLM response
-  model: string;           // Model used
-  tokensUsed: number;      // Tokens consumed
-  durationMs: number;      // Execution time
-  timestamp: string;       // ISO 8601 timestamp
+  prompt: string; // Original prompt
+  response: string; // LLM response
+  model: string; // Model used
+  tokensUsed: number; // Tokens consumed
+  durationMs: number; // Execution time
+  timestamp: string; // ISO 8601 timestamp
 }
 ```
 
 ---
 
 #### 3. Template Rendering with Handlebars
+
 **Status:** ✅ COMPLETE (Added 2025-10-31)
 
 **Implementation:**
+
 - Enhanced `handleTemplate()` in `lib/workflows/executor.ts`
 - Integration with existing `lib/templates/engine.ts`
 - Support for file and inline templates
 
 **Features:**
+
 - Full Handlebars template support
 - Variable substitution from workflow state
 - File-based templates
@@ -108,10 +121,11 @@ await executor.executeNextStep();
 - Template metadata tracking
 
 **Example Workflow Step:**
+
 ```yaml
 - name: 'Generate PRD Document'
   action: template
-  template: 'templates/prd-template.hbs'  # File path or inline template
+  template: 'templates/prd-template.hbs' # File path or inline template
   output_file: 'docs/PRD-{{project_name}}.md'
   variables:
     project_name: 'MyProject'
@@ -119,21 +133,25 @@ await executor.executeNextStep();
 ```
 
 **Supported Template Patterns:**
+
 - Handlebars: `{{variable}}`
 - Legacy: `{variable}`, `${variable}`, `%VAR%`
 
 ---
 
 #### 4. Workflow State Persistence and Resume
+
 **Status:** ✅ COMPLETE (Existed in v3.0-beta)
 
 **Implementation:**
+
 - State persistence in `.state.json` files
 - Resume capability in `lib/workflows/executor.ts`
 - Child workflow tracking
 - Hierarchical state management
 
 **Features:**
+
 - Automatic state saving after each step
 - Resume from any step
 - Sub-workflow state tracking
@@ -141,11 +159,12 @@ await executor.executeNextStep();
 - Reset capability
 
 **Example:**
+
 ```typescript
 // Resume workflow
 const executor = createWorkflowExecutor(workflow, '.madace/state');
-await executor.initialize();  // Loads existing state
-await executor.resume();      // Resumes from saved step
+await executor.initialize(); // Loads existing state
+await executor.resume(); // Resumes from saved step
 
 // Get state
 const state = executor.getState();
@@ -159,44 +178,51 @@ await executor.reset();
 ---
 
 #### 5. Interactive Input Forms for Elicit Steps
+
 **Status:** ✅ COMPLETE (Added 2025-10-31)
 
 **Implementation:**
+
 - `components/features/workflow/WorkflowInputForm.tsx` - React input component
 - `app/api/v3/workflows/[id]/input/route.ts` - Input submission endpoint
 - Integrated with WorkflowRunner for seamless UX
 
 **Features:**
+
 - ✅ Visual input forms for elicit steps
 - ✅ Multi-line textarea input
 - ✅ Real-time validation with regex support
-- ✅ Workflow pause via _WAITING_FOR_INPUT flag
+- ✅ Workflow pause via \_WAITING_FOR_INPUT flag
 - ✅ Input stored in workflow variables
 - ✅ Dark mode support
 - ✅ Accessible design (ARIA labels, keyboard nav)
 - ✅ Loading states and error handling
 
 **Example Workflow Step:**
+
 ```yaml
 - name: 'Get Project Name'
   action: elicit
   prompt: 'Enter the project name'
   variable: 'project_name'
-  validation: '[a-zA-Z0-9-_]+'  # Optional regex validation
+  validation: '[a-zA-Z0-9-_]+' # Optional regex validation
 ```
 
 ---
 
 #### 7. Visual Workflow Execution UI
+
 **Status:** ✅ COMPLETE (Added 2025-10-31)
 
 **Implementation:**
+
 - `components/features/workflow/WorkflowRunner.tsx` - Main execution component (433 lines)
 - `app/api/v3/workflows/[id]/stream/route.ts` - Server-Sent Events endpoint
 - `app/api/v3/workflows/[id]/execute/route.ts` - Start workflow endpoint
 - Real-time state synchronization
 
 **Features:**
+
 - ✅ Start/Reset workflow controls
 - ✅ Step-by-step progress visualization
 - ✅ Live execution logs with color coding
@@ -209,6 +235,7 @@ await executor.reset();
 - ✅ Auto-start option for workflows
 
 **Architecture:**
+
 - SSE stream polls `.madace/workflow-states/.{id}.state.json` every 500ms
 - Sends updates only when state changes (efficient)
 - Detects `completed` flag and `_WAITING_FOR_INPUT` variable
@@ -218,12 +245,14 @@ await executor.reset();
 ---
 
 #### 8. Complete API Endpoints
+
 **Status:** ✅ COMPLETE (Added 2025-10-31)
 
 **Implementation:**
 All workflow API endpoints implemented with Next.js 15 App Router:
 
 **Endpoints:**
+
 ```
 ✅ POST   /api/v3/workflows/[id]/execute  Start/resume workflow execution
 ✅ GET    /api/v3/workflows/[id]/state    Get current execution state
@@ -234,6 +263,7 @@ All workflow API endpoints implemented with Next.js 15 App Router:
 ```
 
 **Features:**
+
 - ✅ Next.js 15 async params support
 - ✅ Proper TypeScript typing
 - ✅ Zod validation where applicable
@@ -246,10 +276,12 @@ All workflow API endpoints implemented with Next.js 15 App Router:
 
 ---
 
-####  6. Custom Workflow Creation Wizard
+#### 6. Custom Workflow Creation Wizard
+
 **Status:** ✅ COMPLETE (Added 2025-10-31)
 
 **Implementation:**
+
 - `lib/types/workflow-create.ts` - TypeScript types (106 lines)
 - `components/features/workflow/create/BasicInfoStep.tsx` - Basic info step (167 lines)
 - `components/features/workflow/create/StepsEditorStep.tsx` - Steps editor (572 lines)
@@ -259,6 +291,7 @@ All workflow API endpoints implemented with Next.js 15 App Router:
 - `app/workflows/create/page.tsx` - Page wrapper (110 lines)
 
 **Features:**
+
 - ✅ Multi-step wizard (4 steps: Basic, Steps, Variables, Preview)
 - ✅ Action type selection with 7 types (display, reflect, elicit, template, workflow, sub-workflow, route)
 - ✅ Dynamic form fields based on action type
@@ -272,6 +305,7 @@ All workflow API endpoints implemented with Next.js 15 App Router:
 - ✅ Progress indicator with step status
 
 **Wizard Steps:**
+
 1. **Basic Information**: Name, description, primary agent, MADACE phase (1-5)
 2. **Steps Editor**: Add/edit/delete workflow steps with dynamic forms for each action type
 3. **Variables**: Define workflow-level variables with type-safe values
@@ -285,15 +319,18 @@ Navigate to `/workflows/create` to access the wizard. The wizard will guide you 
 ---
 
 #### 7. Visual Workflow Execution UI
+
 **Status:** 📋 PLANNED (Estimated: 5-6 hours)
 
 **Design:**
+
 - React component: `WorkflowRunner.tsx`
 - Real-time updates via Server-Sent Events (SSE)
 - Progress visualization
 - Execution logs
 
 **Features:**
+
 - Start/pause/resume controls
 - Step-by-step progress bar
 - Live execution logs
@@ -304,9 +341,11 @@ Navigate to `/workflows/create` to access the wizard. The wizard will guide you 
 ---
 
 #### 8. Complete API Endpoints
+
 **Status:** 📋 PLANNED (Estimated: 2-3 hours)
 
 **Endpoints:**
+
 ```
 POST   /api/v3/workflows              Create workflow
 GET    /api/v3/workflows              List workflows
@@ -326,6 +365,7 @@ POST   /api/v3/workflows/[id]/reset   Reset workflow state
 ## Implementation Timeline
 
 ### Phase 1: Core Enhancements ✅ COMPLETE
+
 **Duration:** 1 day (2025-10-31)
 
 - ✅ Template engine integration (2-3 hours)
@@ -333,6 +373,7 @@ POST   /api/v3/workflows/[id]/reset   Reset workflow state
 - ✅ Testing and documentation (1 hour)
 
 ### Phase 2: Interactive Features ✅ COMPLETE
+
 **Duration:** 1 day (2025-10-31)
 
 - ✅ Interactive input forms (4-5 hours)
@@ -341,6 +382,7 @@ POST   /api/v3/workflows/[id]/reset   Reset workflow state
 - ✅ SSE implementation (2-3 hours)
 
 ### Phase 3: Creation Tools ✅ COMPLETE
+
 **Duration:** 1 day (2025-10-31)
 
 - ✅ Workflow creation wizard (8-10 hours)
@@ -356,18 +398,21 @@ POST   /api/v3/workflows/[id]/reset   Reset workflow state
 ## Testing Status
 
 ### Unit Tests
+
 - ✅ Workflow loader tests exist
 - ✅ Template engine tests exist
 - ⏳ LLM integration tests (TODO)
 - ⏳ Executor enhancement tests (TODO)
 
 ### Integration Tests
+
 - ✅ Sub-workflow tests exist
 - ✅ Routing tests exist
 - ⏳ End-to-end workflow execution (TODO)
 - ⏳ Input collection flow (TODO)
 
 ### E2E Tests
+
 - ⏳ Workflow creation wizard (TODO)
 - ⏳ Workflow execution UI (TODO)
 - ⏳ Interactive input forms (TODO)
@@ -377,12 +422,14 @@ POST   /api/v3/workflows/[id]/reset   Reset workflow state
 ## Documentation
 
 ### Completed
+
 - ✅ `docs/workflow-features-implementation-plan.md` (30 pages)
 - ✅ `docs/WORKFLOW-FEATURES-STATUS.md` (this document)
 - ✅ Code comments in executor.ts
 - ✅ Type documentation in types.ts
 
 ### TODO
+
 - ⏳ API endpoint documentation
 - ⏳ User guide for workflow creation
 - ⏳ Examples and tutorials
@@ -457,6 +504,7 @@ workflow:
 For each feature to be considered complete:
 
 ✅ **Template Rendering**
+
 - [x] Handlebars integration
 - [x] File and inline templates
 - [x] Variable substitution
@@ -464,6 +512,7 @@ For each feature to be considered complete:
 - [x] Error handling
 
 ✅ **LLM Integration**
+
 - [x] Multi-provider support
 - [x] Reflection results stored
 - [x] Token tracking
@@ -471,6 +520,7 @@ For each feature to be considered complete:
 - [x] Error handling
 
 ✅ **Interactive Input**
+
 - [x] Input form component
 - [x] API endpoint
 - [x] Workflow pause mechanism
@@ -478,6 +528,7 @@ For each feature to be considered complete:
 - [x] Resume functionality
 
 ✅ **Visual Execution**
+
 - [x] Execution UI component
 - [x] SSE for live updates
 - [x] Progress visualization
@@ -485,6 +536,7 @@ For each feature to be considered complete:
 - [x] Error handling
 
 ✅ **Workflow Creation**
+
 - [x] Wizard component
 - [x] Steps editor
 - [x] YAML preview
@@ -498,6 +550,7 @@ For each feature to be considered complete:
 ### All Features Complete ✅
 
 All 8 workflow features have been successfully implemented:
+
 1. ✅ YAML workflow loading
 2. ✅ Real-time LLM integration
 3. ✅ Template rendering with Handlebars
@@ -530,6 +583,7 @@ All 8 workflow features have been successfully implemented:
 The workflow system is **fully production-ready** with complete API coverage, interactive UI components, visual workflow creation, and real-time monitoring. All core and advanced functionality is operational.
 
 **What Works Right Now:**
+
 1. ✅ Load and execute YAML workflows
 2. ✅ Real-time LLM integration with multiple providers
 3. ✅ Template rendering with Handlebars
@@ -548,4 +602,3 @@ The workflow system is **fully production-ready** with complete API coverage, in
 **Created:** 2025-10-31
 **Last Updated:** 2025-10-31
 **Next Review:** When v3.1 enhancements are planned
-

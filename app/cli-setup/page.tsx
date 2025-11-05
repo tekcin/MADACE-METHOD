@@ -2,11 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import {
-  CommandLineIcon,
-  ClipboardDocumentIcon,
-  CheckIcon,
-} from '@heroicons/react/24/outline';
+import { CommandLineIcon, ClipboardDocumentIcon, CheckIcon } from '@heroicons/react/24/outline';
 
 type OS = 'mac' | 'linux' | 'windows';
 
@@ -26,14 +22,14 @@ function CommandBlock({ command, description }: CommandBlockProps) {
 
   return (
     <div className="mb-4">
-      {description && <p className="mb-2 text-sm text-gray-600 dark:text-gray-400">{description}</p>}
+      {description && <p className="mb-2 text-sm text-gray-300">{description}</p>}
       <div className="group relative">
         <pre className="overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100 dark:bg-gray-950">
           <code>{command}</code>
         </pre>
         <button
           onClick={handleCopy}
-          className="absolute right-2 top-2 rounded-md bg-gray-800 p-2 text-gray-400 opacity-0 transition-opacity hover:bg-gray-700 hover:text-white group-hover:opacity-100"
+          className="absolute top-2 right-2 rounded-md bg-gray-800 p-2 text-gray-300 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-gray-700 hover:text-white"
           title="Copy to clipboard"
         >
           {copied ? (
@@ -56,7 +52,8 @@ export default function CLISetupPage() {
       prereqs: [
         {
           title: 'Homebrew (recommended)',
-          command: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"',
+          command:
+            '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"',
         },
         {
           title: 'Node.js 20+ (via Homebrew)',
@@ -70,7 +67,8 @@ export default function CLISetupPage() {
         },
         {
           title: 'Or clone from GitHub',
-          command: 'git clone https://github.com/tekcin/MADACE-Method-v2.git\ncd MADACE-Method-v2.0\nnpm install',
+          command:
+            'git clone https://github.com/tekcin/MADACE-Method-v2.git\ncd MADACE-Method-v2.0\nnpm install',
         },
       ],
     },
@@ -79,11 +77,13 @@ export default function CLISetupPage() {
       prereqs: [
         {
           title: 'Node.js 20+ (Ubuntu/Debian)',
-          command: 'curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -\nsudo apt-get install -y nodejs',
+          command:
+            'curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -\nsudo apt-get install -y nodejs',
         },
         {
           title: 'Node.js 20+ (Fedora/RHEL)',
-          command: 'curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -\nsudo dnf install -y nodejs',
+          command:
+            'curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -\nsudo dnf install -y nodejs',
         },
       ],
       install: [
@@ -93,7 +93,8 @@ export default function CLISetupPage() {
         },
         {
           title: 'Or clone from GitHub',
-          command: 'git clone https://github.com/tekcin/MADACE-Method-v2.git\ncd MADACE-Method-v2.0\nnpm install',
+          command:
+            'git clone https://github.com/tekcin/MADACE-Method-v2.git\ncd MADACE-Method-v2.0\nnpm install',
         },
       ],
     },
@@ -102,7 +103,8 @@ export default function CLISetupPage() {
       prereqs: [
         {
           title: 'Node.js 20+ (via installer)',
-          command: '# Download from https://nodejs.org/\n# Or use winget:\nwinget install OpenJS.NodeJS.LTS',
+          command:
+            '# Download from https://nodejs.org/\n# Or use winget:\nwinget install OpenJS.NodeJS.LTS',
         },
         {
           title: 'Git for Windows',
@@ -116,7 +118,8 @@ export default function CLISetupPage() {
         },
         {
           title: 'Or clone from GitHub',
-          command: 'git clone https://github.com/tekcin/MADACE-Method-v2.git\ncd MADACE-Method-v2.0\nnpm install',
+          command:
+            'git clone https://github.com/tekcin/MADACE-Method-v2.git\ncd MADACE-Method-v2.0\nnpm install',
         },
       ],
     },
@@ -128,14 +131,13 @@ export default function CLISetupPage() {
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8" data-testid="cli-setup-page">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center gap-3 mb-3">
+        <div className="mb-3 flex items-center gap-3">
           <CommandLineIcon className="h-10 w-10 text-blue-600" />
-          <h1 className="text-3xl font-bold text-white">
-            Install MADACE CLI
-          </h1>
+          <h1 className="text-3xl font-bold text-white">Install MADACE CLI</h1>
         </div>
-        <p className="text-lg text-gray-400">
-          Get started with the MADACE command-line interface for powerful AI-driven development workflows.
+        <p className="text-lg text-gray-300">
+          Get started with the MADACE command-line interface for powerful AI-driven development
+          workflows.
         </p>
       </div>
 
@@ -147,10 +149,10 @@ export default function CLISetupPage() {
               <button
                 key={os}
                 onClick={() => setSelectedOS(os)}
-                className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition-colors ${
+                className={`border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap transition-colors ${
                   selectedOS === os
-                    ? 'border-blue-500 text-blue-500'
-                    : 'border-transparent text-gray-400 hover:border-gray-600 hover:text-gray-300'
+                    ? 'border-blue-500 text-blue-400'
+                    : 'border-transparent text-gray-300 hover:border-gray-500 hover:text-white'
                 }`}
               >
                 {osConfig[os].label}
@@ -162,18 +164,14 @@ export default function CLISetupPage() {
 
       {/* Prerequisites */}
       <section className="mb-12">
-        <h2 className="mb-4 text-2xl font-bold text-white">
-          Prerequisites
-        </h2>
-        <p className="mb-6 text-gray-400">
+        <h2 className="mb-4 text-2xl font-bold text-white">Prerequisites</h2>
+        <p className="mb-6 text-gray-300">
           Before installing MADACE CLI, ensure you have the following installed:
         </p>
         <div className="space-y-6">
           {config.prereqs.map((prereq, index) => (
             <div key={index}>
-              <h3 className="mb-3 text-lg font-semibold text-gray-200">
-                {prereq.title}
-              </h3>
+              <h3 className="mb-3 text-lg font-semibold text-white">{prereq.title}</h3>
               <CommandBlock command={prereq.command} />
             </div>
           ))}
@@ -182,15 +180,11 @@ export default function CLISetupPage() {
 
       {/* Installation */}
       <section className="mb-12">
-        <h2 className="mb-4 text-2xl font-bold text-white">
-          Installation
-        </h2>
+        <h2 className="mb-4 text-2xl font-bold text-white">Installation</h2>
         <div className="space-y-6">
           {config.install.map((step, index) => (
             <div key={index}>
-              <h3 className="mb-3 text-lg font-semibold text-gray-200">
-                {step.title}
-              </h3>
+              <h3 className="mb-3 text-lg font-semibold text-white">{step.title}</h3>
               <CommandBlock command={step.command} />
             </div>
           ))}
@@ -199,64 +193,43 @@ export default function CLISetupPage() {
 
       {/* Verification */}
       <section className="mb-12">
-        <h2 className="mb-4 text-2xl font-bold text-white">
-          Verify Installation
-        </h2>
-        <p className="mb-4 text-gray-600 dark:text-gray-400">
-          Check that MADACE CLI is installed correctly:
-        </p>
+        <h2 className="mb-4 text-2xl font-bold text-white">Verify Installation</h2>
+        <p className="mb-4 text-gray-300">Check that MADACE CLI is installed correctly:</p>
         <CommandBlock
           command="madace --version"
           description="Should display version 3.0 or higher"
         />
-        <CommandBlock
-          command="madace --help"
-          description="Display available commands"
-        />
+        <CommandBlock command="madace --help" description="Display available commands" />
       </section>
 
       {/* Quick Start */}
       <section className="mb-12">
-        <h2 className="mb-4 text-2xl font-bold text-white">
-          Quick Start
-        </h2>
-        <p className="mb-6 text-gray-400">
-          Get started with these common commands:
-        </p>
+        <h2 className="mb-4 text-2xl font-bold text-white">Quick Start</h2>
+        <p className="mb-6 text-gray-300">Get started with these common commands:</p>
 
         <div className="space-y-4">
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Start Interactive REPL
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Start Interactive REPL</h3>
             <CommandBlock command="madace repl" />
           </div>
 
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Launch Terminal Dashboard
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Launch Terminal Dashboard</h3>
             <CommandBlock command="madace dashboard" />
           </div>
 
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Chat with AI Agents
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Chat with AI Agents</h3>
             <CommandBlock command="madace chat" />
           </div>
 
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Import Agents to Database
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Import Agents to Database</h3>
             <CommandBlock command="npm run import-madace-v3" />
           </div>
 
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Start Development Server
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Start Development Server</h3>
             <CommandBlock command="npm run dev" />
           </div>
         </div>
@@ -264,32 +237,24 @@ export default function CLISetupPage() {
 
       {/* Database Setup */}
       <section className="mb-12">
-        <h2 className="mb-4 text-2xl font-bold text-white">
-          Database Setup
-        </h2>
-        <p className="mb-6 text-gray-400">
+        <h2 className="mb-4 text-2xl font-bold text-white">Database Setup</h2>
+        <p className="mb-6 text-gray-300">
           MADACE v3.0 uses Prisma ORM with SQLite (dev) or PostgreSQL (prod):
         </p>
 
         <div className="space-y-4">
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Initialize Database
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Initialize Database</h3>
             <CommandBlock command="npm run db:push" />
           </div>
 
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Run Database Migrations
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Run Database Migrations</h3>
             <CommandBlock command="npm run db:migrate" />
           </div>
 
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Open Prisma Studio (GUI)
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Open Prisma Studio (GUI)</h3>
             <CommandBlock command="npm run db:studio" />
           </div>
         </div>
@@ -297,11 +262,11 @@ export default function CLISetupPage() {
 
       {/* Environment Variables */}
       <section className="mb-12">
-        <h2 className="mb-4 text-2xl font-bold text-white">
-          Environment Configuration
-        </h2>
-        <p className="mb-4 text-gray-600 dark:text-gray-400">
-          Create a <code className="rounded bg-gray-100 px-1.5 py-0.5 text-sm dark:bg-gray-800">.env</code> file in the project root:
+        <h2 className="mb-4 text-2xl font-bold text-white">Environment Configuration</h2>
+        <p className="mb-4 text-gray-300">
+          Create a{' '}
+          <code className="rounded bg-gray-800 px-1.5 py-0.5 text-sm text-gray-200">.env</code> file
+          in the project root:
         </p>
         <CommandBlock
           command={`# Database
@@ -324,28 +289,20 @@ NODE_ENV=development`}
 
       {/* Troubleshooting */}
       <section className="mb-12">
-        <h2 className="mb-4 text-2xl font-bold text-white">
-          Troubleshooting
-        </h2>
+        <h2 className="mb-4 text-2xl font-bold text-white">Troubleshooting</h2>
         <div className="space-y-4 rounded-lg border border-gray-700 bg-gray-800 p-6">
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Port 3000 already in use
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Port 3000 already in use</h3>
             <CommandBlock command="lsof -ti:3000 | xargs kill -9" />
           </div>
 
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Database schema out of sync
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Database schema out of sync</h3>
             <CommandBlock command="npm run db:generate" />
           </div>
 
           <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-200">
-              Clear caches and rebuild
-            </h3>
+            <h3 className="mb-2 text-base font-semibold text-white">Clear caches and rebuild</h3>
             <CommandBlock command="rm -rf .next node_modules/.cache && npm run build" />
           </div>
         </div>
@@ -353,9 +310,7 @@ NODE_ENV=development`}
 
       {/* Additional Resources */}
       <section>
-        <h2 className="mb-4 text-2xl font-bold text-white">
-          Additional Resources
-        </h2>
+        <h2 className="mb-4 text-2xl font-bold text-white">Additional Resources</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <a
             href="https://github.com/tekcin/MADACE-Method-v2"
@@ -363,48 +318,32 @@ NODE_ENV=development`}
             rel="noopener noreferrer"
             className="block rounded-lg border border-gray-700 bg-gray-800 p-6 transition-shadow hover:shadow-md"
           >
-            <h3 className="mb-2 font-semibold text-blue-400">
-              GitHub Repository
-            </h3>
-            <p className="text-sm text-gray-400">
-              Source code, issues, and contributions
-            </p>
+            <h3 className="mb-2 font-semibold text-blue-400">GitHub Repository</h3>
+            <p className="text-sm text-gray-300">Source code, issues, and contributions</p>
           </a>
 
           <Link
             href="/docs"
             className="block rounded-lg border border-gray-700 bg-gray-800 p-6 transition-shadow hover:shadow-md"
           >
-            <h3 className="mb-2 font-semibold text-blue-400">
-              Documentation
-            </h3>
-            <p className="text-sm text-gray-400">
-              Full guides and API reference
-            </p>
+            <h3 className="mb-2 font-semibold text-blue-400">Documentation</h3>
+            <p className="text-sm text-gray-300">Full guides and API reference</p>
           </Link>
 
           <Link
             href="/chat"
             className="block rounded-lg border border-gray-700 bg-gray-800 p-6 transition-shadow hover:shadow-md"
           >
-            <h3 className="mb-2 font-semibold text-blue-400">
-              AI Chat Interface
-            </h3>
-            <p className="text-sm text-gray-400">
-              Chat with MADACE agents
-            </p>
+            <h3 className="mb-2 font-semibold text-blue-400">AI Chat Interface</h3>
+            <p className="text-sm text-gray-300">Chat with MADACE agents</p>
           </Link>
 
           <Link
             href="/workflows"
             className="block rounded-lg border border-gray-700 bg-gray-800 p-6 transition-shadow hover:shadow-md"
           >
-            <h3 className="mb-2 font-semibold text-blue-400">
-              Workflows
-            </h3>
-            <p className="text-sm text-gray-400">
-              Execute guided development workflows
-            </p>
+            <h3 className="mb-2 font-semibold text-blue-400">Workflows</h3>
+            <p className="text-sm text-gray-300">Execute guided development workflows</p>
           </Link>
         </div>
       </section>

@@ -47,9 +47,9 @@ export default function LLMSelector({
 
   if (isLoading) {
     return (
-      <div className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 dark:border-gray-700 dark:bg-gray-800">
+      <div className="flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2">
         <div className="h-4 w-4 animate-spin rounded-full border-b-2 border-blue-600" />
-        <span className="text-sm text-gray-500 dark:text-gray-400">Loading...</span>
+        <span className="text-sm text-gray-400">Loading...</span>
       </div>
     );
   }
@@ -60,12 +60,12 @@ export default function LLMSelector({
         data-testid="llm-selector"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className="llm-selector flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+        className="llm-selector flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
         title="Select LLM provider"
       >
         {/* Icon */}
         <svg
-          className="h-4 w-4 text-gray-500 dark:text-gray-400"
+          className="h-4 w-4 text-gray-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -79,13 +79,13 @@ export default function LLMSelector({
         </svg>
 
         {/* Selected provider */}
-        <span className="font-medium text-gray-700 dark:text-gray-300">
+        <span className="font-medium text-gray-300">
           {selectedProviderInfo?.name || selectedProvider}
         </span>
 
         {/* Default badge */}
         {selectedProviderInfo?.isDefault && (
-          <span className="rounded bg-blue-100 px-1.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+          <span className="rounded bg-blue-900 px-1.5 py-0.5 text-xs font-medium text-blue-200">
             Default
           </span>
         )}
@@ -108,7 +108,7 @@ export default function LLMSelector({
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
 
           {/* Menu */}
-          <div className="absolute right-0 z-20 mt-2 w-80 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+          <div className="absolute right-0 z-20 mt-2 w-80 rounded-lg border border-gray-700 bg-gray-800 shadow-lg">
             <div className="p-2">
               <div className="mb-2 px-2 py-1">
                 <h3 className="text-xs font-semibold text-gray-500 uppercase dark:text-gray-400">
@@ -124,32 +124,26 @@ export default function LLMSelector({
                     setIsOpen(false);
                   }}
                   className={`w-full rounded-lg px-3 py-2 text-left transition-colors ${
-                    provider.id === selectedProvider
-                      ? 'bg-blue-50 dark:bg-blue-900/20'
-                      : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+                    provider.id === selectedProvider ? 'bg-blue-900/20' : 'hover:bg-gray-700'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-900 dark:text-gray-100">
-                          {provider.name}
-                        </span>
+                        <span className="font-medium text-gray-100">{provider.name}</span>
                         {provider.isDefault && (
-                          <span className="rounded bg-blue-100 px-1.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                          <span className="rounded bg-blue-900 px-1.5 py-0.5 text-xs font-medium text-blue-200">
                             Default
                           </span>
                         )}
                       </div>
-                      <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                        {provider.description}
-                      </p>
+                      <p className="mt-1 text-xs text-gray-400">{provider.description}</p>
                     </div>
 
                     {/* Selected indicator */}
                     {provider.id === selectedProvider && (
                       <svg
-                        className="ml-2 h-5 w-5 flex-shrink-0 text-blue-600 dark:text-blue-400"
+                        className="ml-2 h-5 w-5 flex-shrink-0 text-blue-400"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -167,7 +161,7 @@ export default function LLMSelector({
               {/* Unavailable providers */}
               {providers.filter((p) => !p.available).length > 0 && (
                 <>
-                  <div className="my-2 border-t border-gray-200 dark:border-gray-700" />
+                  <div className="my-2 border-t border-gray-700" />
                   <div className="mb-2 px-2 py-1">
                     <h3 className="text-xs font-semibold text-gray-500 uppercase dark:text-gray-400">
                       Requires API Key
@@ -196,12 +190,8 @@ export default function LLMSelector({
                             />
                           </svg>
                           <div className="flex-1">
-                            <span className="font-medium text-gray-700 dark:text-gray-300">
-                              {provider.name}
-                            </span>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                              {provider.description}
-                            </p>
+                            <span className="font-medium text-gray-300">{provider.name}</span>
+                            <p className="text-xs text-gray-400">{provider.description}</p>
                           </div>
                         </div>
                       </div>

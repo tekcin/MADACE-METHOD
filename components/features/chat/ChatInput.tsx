@@ -62,7 +62,7 @@ export default function ChatInput({
   const isOverLimit = charCount > maxLength;
 
   return (
-    <div className="border-t border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
+    <div className="border-t border-gray-700 bg-gray-900 p-4">
       <div className="flex items-end gap-2">
         {/* Textarea */}
         <div className="relative flex-1">
@@ -76,10 +76,8 @@ export default function ChatInput({
             placeholder={placeholder}
             aria-label="Chat message input"
             className={`w-full rounded-lg border ${
-              isOverLimit
-                ? 'border-red-500 dark:border-red-400'
-                : 'border-gray-300 dark:border-gray-600'
-            } resize-none overflow-hidden bg-white px-4 py-3 pr-12 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400`}
+              isOverLimit ? 'border-red-400' : 'border-gray-600'
+            } resize-none overflow-hidden bg-gray-800 px-4 py-3 pr-12 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50`}
             rows={1}
             style={{ minHeight: '52px', maxHeight: '200px' }}
           />
@@ -88,7 +86,7 @@ export default function ChatInput({
           {charCount > maxLength * 0.8 && (
             <div
               className={`absolute right-12 bottom-2 text-xs ${
-                isOverLimit ? 'text-red-500 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
+                isOverLimit ? 'text-red-400' : 'text-gray-400'
               }`}
             >
               {charCount}/{maxLength}
@@ -117,15 +115,10 @@ export default function ChatInput({
       </div>
 
       {/* Hint Text */}
-      <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-        Press{' '}
-        <kbd className="rounded border border-gray-300 bg-gray-100 px-1 py-0.5 dark:border-gray-600 dark:bg-gray-800">
-          Enter
-        </kbd>{' '}
-        to send,{' '}
-        <kbd className="rounded border border-gray-300 bg-gray-100 px-1 py-0.5 dark:border-gray-600 dark:bg-gray-800">
-          Shift+Enter
-        </kbd>{' '}
+      <p className="mt-2 text-xs text-gray-400">
+        Press <kbd className="rounded border border-gray-600 bg-gray-800 px-1 py-0.5">Enter</kbd> to
+        send,{' '}
+        <kbd className="rounded border border-gray-600 bg-gray-800 px-1 py-0.5">Shift+Enter</kbd>{' '}
         for new line
       </p>
     </div>

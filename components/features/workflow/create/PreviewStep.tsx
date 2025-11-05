@@ -95,18 +95,21 @@ export function PreviewStep({ workflowData }: PreviewStepProps) {
 
     // Check variables
     if (workflowData.variables.length > 0) {
-      results.push({ type: 'success', message: `${workflowData.variables.length} variable(s) defined` });
+      results.push({
+        type: 'success',
+        message: `${workflowData.variables.length} variable(s) defined`,
+      });
     }
 
     // If no errors, add success message
-    if (!results.some(r => r.type === 'error')) {
+    if (!results.some((r) => r.type === 'error')) {
       results.push({ type: 'success', message: 'Workflow is valid and ready to create' });
     }
 
     return results;
   }, [workflowData]);
 
-  const hasErrors = validationResults.some(r => r.type === 'error');
+  const hasErrors = validationResults.some((r) => r.type === 'error');
 
   const handleDownload = () => {
     try {
@@ -140,9 +143,7 @@ export function PreviewStep({ workflowData }: PreviewStepProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-          Preview & Finish
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Preview & Finish</h2>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Review your workflow configuration and download the YAML file
         </p>
@@ -236,9 +237,7 @@ export function PreviewStep({ workflowData }: PreviewStepProps) {
       {/* YAML Preview */}
       <div>
         <div className="mb-2 flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-            YAML Preview
-          </h3>
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">YAML Preview</h3>
           <div className="flex gap-2">
             <button
               type="button"
@@ -258,9 +257,7 @@ export function PreviewStep({ workflowData }: PreviewStepProps) {
         </div>
 
         {downloadStatus && (
-          <div className="mb-2 text-sm text-green-600 dark:text-green-400">
-            {downloadStatus}
-          </div>
+          <div className="mb-2 text-sm text-green-600 dark:text-green-400">{downloadStatus}</div>
         )}
 
         <div className="relative">
@@ -290,8 +287,8 @@ export function PreviewStep({ workflowData }: PreviewStepProps) {
                 Ready to Save
               </h4>
               <p className="mt-1 text-sm text-green-700 dark:text-green-400">
-                Your workflow configuration is valid. Click &quot;Finish&quot; below to save it,
-                or download the YAML file to use in your MADACE project.
+                Your workflow configuration is valid. Click &quot;Finish&quot; below to save it, or
+                download the YAML file to use in your MADACE project.
               </p>
             </div>
           </div>
@@ -302,11 +299,7 @@ export function PreviewStep({ workflowData }: PreviewStepProps) {
       <div className="rounded-md bg-blue-50 p-4 dark:bg-blue-900/20">
         <div className="flex">
           <div className="flex-shrink-0">
-            <svg
-              className="h-5 w-5 text-blue-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
+            <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
               <path
                 fillRule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
@@ -319,12 +312,15 @@ export function PreviewStep({ workflowData }: PreviewStepProps) {
               Using Your Workflow
             </h3>
             <div className="mt-2 text-sm text-blue-700 dark:text-blue-300">
-              <p>
-                After saving, you can use this workflow in MADACE:
-              </p>
+              <p>After saving, you can use this workflow in MADACE:</p>
               <ul className="mt-1 list-inside list-disc space-y-1">
-                <li>Place the YAML file in <code className="font-mono">madace/workflows/</code></li>
-                <li>Execute with: <code className="font-mono">madace workflow {workflowData.name}</code></li>
+                <li>
+                  Place the YAML file in <code className="font-mono">madace/workflows/</code>
+                </li>
+                <li>
+                  Execute with:{' '}
+                  <code className="font-mono">madace workflow {workflowData.name}</code>
+                </li>
                 <li>Or reference it from other workflows using the workflow action</li>
               </ul>
             </div>

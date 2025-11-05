@@ -146,7 +146,7 @@ export function Navigation() {
               <div key={item.name}>
                 {/* Section Header */}
                 {showSectionHeader && !sidebarCollapsed && (
-                  <div className="mb-2 mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                  <div className="mt-4 mb-2 px-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                     <span className={sectionInfo?.color || ''}>{sectionInfo?.label}</span>
                   </div>
                 )}
@@ -161,7 +161,9 @@ export function Navigation() {
                   } ${sidebarCollapsed ? 'lg:justify-center' : ''}`}
                   title={sidebarCollapsed ? item.name : undefined}
                 >
-                  <item.icon className={`h-5 w-5 flex-shrink-0 ${sidebarCollapsed ? '' : 'mr-3'}`} />
+                  <item.icon
+                    className={`h-5 w-5 flex-shrink-0 ${sidebarCollapsed ? '' : 'mr-3'}`}
+                  />
                   {!sidebarCollapsed && <span>{item.name}</span>}
                 </Link>
               </div>

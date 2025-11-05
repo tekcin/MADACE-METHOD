@@ -110,7 +110,7 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading agent...</p>
+          <p className="text-gray-300">Loading agent...</p>
         </div>
       </div>
     );
@@ -134,15 +134,15 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-900">
       {/* Header */}
-      <div className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+      <div className="border-b border-gray-700 bg-gray-800">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => router.push('/agents')}
-                className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
+                className="rounded-lg p-2 text-gray-300 hover:bg-gray-700"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -158,10 +158,8 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
                   {agent.icon}
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                    {agent.title}
-                  </h1>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <h1 className="text-2xl font-bold text-white">{agent.title}</h1>
+                  <p className="text-sm text-gray-300">
                     {agent.name} • {agent.module} • v{agent.version}
                   </p>
                 </div>
@@ -189,7 +187,7 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+      <div className="border-b border-gray-700 bg-gray-800">
         <div className="container mx-auto px-6">
           <div className="flex space-x-8">
             {['overview', 'persona', 'prompts', 'menu'].map((tab) => (
@@ -199,7 +197,7 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
                 className={`border-b-2 px-1 py-4 text-sm font-medium capitalize transition-colors ${
                   activeTab === tab
                     ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400'
-                    : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-900 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-200'
+                    : 'border-transparent text-gray-300 hover:border-gray-400 hover:text-white'
                 }`}
               >
                 {tab}
@@ -216,23 +214,19 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
           <div className="space-y-6">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {/* Basic Info */}
-              <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-                <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Basic Information
-                </h3>
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6">
+                <h3 className="mb-4 text-lg font-semibold text-white">Basic Information</h3>
                 <dl className="space-y-3">
                   <div>
-                    <dt className="text-sm font-medium text-gray-600 dark:text-gray-400">ID</dt>
-                    <dd className="mt-1 font-mono text-sm text-gray-900 dark:text-gray-100">
-                      {agent.id}
-                    </dd>
+                    <dt className="text-sm font-medium text-gray-300">ID</dt>
+                    <dd className="mt-1 font-mono text-sm text-white">{agent.id}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-gray-600 dark:text-gray-400">Name</dt>
-                    <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">{agent.name}</dd>
+                    <dt className="text-sm font-medium text-gray-300">Name</dt>
+                    <dd className="mt-1 text-sm text-white">{agent.name}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-gray-600 dark:text-gray-400">Module</dt>
+                    <dt className="text-sm font-medium text-gray-300">Module</dt>
                     <dd className="mt-1">
                       <span className="inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
                         {agent.module}
@@ -240,18 +234,12 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                      Version
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
-                      {agent.version}
-                    </dd>
+                    <dt className="text-sm font-medium text-gray-300">Version</dt>
+                    <dd className="mt-1 text-sm text-white">{agent.version}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                      Created
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                    <dt className="text-sm font-medium text-gray-300">Created</dt>
+                    <dd className="mt-1 text-sm text-white">
                       {new Date(agent.createdAt).toLocaleDateString()}
                     </dd>
                   </div>
@@ -259,26 +247,24 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
               </div>
 
               {/* Quick Stats */}
-              <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-                <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Capabilities
-                </h3>
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6">
+                <h3 className="mb-4 text-lg font-semibold text-white">Capabilities</h3>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Menu Actions</span>
-                    <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    <span className="text-sm text-gray-300">Menu Actions</span>
+                    <span className="text-lg font-semibold text-white">
                       {agent.menu?.length || 0}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Prompts</span>
-                    <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    <span className="text-sm text-gray-300">Prompts</span>
+                    <span className="text-lg font-semibold text-white">
                       {agent.prompts?.length || 0}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Principles</span>
-                    <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    <span className="text-sm text-gray-300">Principles</span>
+                    <span className="text-lg font-semibold text-white">
                       {agent.persona?.principles?.length || 0}
                     </span>
                   </div>
@@ -288,11 +274,9 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
 
             {/* Role Summary */}
             {agent.persona?.role && (
-              <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-                <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Role
-                </h3>
-                <p className="text-gray-700 dark:text-gray-300">{agent.persona.role}</p>
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6">
+                <h3 className="mb-4 text-lg font-semibold text-white">Role</h3>
+                <p className="text-gray-300">{agent.persona.role}</p>
               </div>
             )}
           </div>
@@ -302,35 +286,27 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
         {activeTab === 'persona' && (
           <div className="space-y-6">
             {agent.persona?.identity && (
-              <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-                <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Identity
-                </h3>
-                <p className="text-gray-700 dark:text-gray-300">{agent.persona.identity}</p>
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6">
+                <h3 className="mb-4 text-lg font-semibold text-white">Identity</h3>
+                <p className="text-gray-300">{agent.persona.identity}</p>
               </div>
             )}
 
             {agent.persona?.communication_style && (
-              <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-                <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Communication Style
-                </h3>
-                <p className="text-gray-700 dark:text-gray-300">
-                  {agent.persona.communication_style}
-                </p>
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6">
+                <h3 className="mb-4 text-lg font-semibold text-white">Communication Style</h3>
+                <p className="text-gray-300">{agent.persona.communication_style}</p>
               </div>
             )}
 
             {agent.persona?.principles && agent.persona.principles.length > 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-                <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Principles
-                </h3>
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-6">
+                <h3 className="mb-4 text-lg font-semibold text-white">Principles</h3>
                 <ul className="space-y-2">
                   {agent.persona.principles.map((principle, index) => (
                     <li key={index} className="flex items-start">
                       <svg
-                        className="mr-2 mt-0.5 h-5 w-5 flex-shrink-0 text-green-500"
+                        className="mt-0.5 mr-2 h-5 w-5 flex-shrink-0 text-green-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -340,7 +316,7 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="text-gray-700 dark:text-gray-300">{principle}</span>
+                      <span className="text-gray-300">{principle}</span>
                     </li>
                   ))}
                 </ul>
@@ -354,28 +330,23 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
           <div className="space-y-4">
             {agent.prompts && agent.prompts.length > 0 ? (
               agent.prompts.map((prompt, index) => (
-                <div
-                  key={index}
-                  className="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800"
-                >
+                <div key={index} className="rounded-lg border border-gray-700 bg-gray-800 p-6">
                   <div className="mb-3 flex items-start justify-between">
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                      {prompt.name}
-                    </h4>
+                    <h4 className="text-lg font-semibold text-white">{prompt.name}</h4>
                     {prompt.category && (
                       <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
                         {prompt.category}
                       </span>
                     )}
                   </div>
-                  <pre className="whitespace-pre-wrap rounded-lg bg-gray-50 p-4 text-sm text-gray-700 dark:bg-gray-900 dark:text-gray-300">
+                  <pre className="rounded-lg bg-gray-900 p-4 text-sm whitespace-pre-wrap text-gray-300">
                     {prompt.content}
                   </pre>
                 </div>
               ))
             ) : (
-              <div className="rounded-lg border border-gray-200 bg-white p-12 text-center dark:border-gray-700 dark:bg-gray-800">
-                <p className="text-gray-600 dark:text-gray-400">No prompts defined</p>
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-12 text-center">
+                <p className="text-gray-300">No prompts defined</p>
               </div>
             )}
           </div>
@@ -388,27 +359,21 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
               agent.menu.map((item, index) => (
                 <div
                   key={index}
-                  className="group rounded-lg border border-gray-200 bg-white p-6 transition-all hover:border-blue-500 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-400"
+                  className="group rounded-lg border border-gray-700 bg-gray-800 p-6 transition-all hover:border-blue-500 hover:shadow-lg"
                 >
-                  <h4 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    {item.title}
-                  </h4>
+                  <h4 className="mb-2 text-lg font-semibold text-white">{item.title}</h4>
                   {item.description && (
-                    <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                      {item.description}
-                    </p>
+                    <p className="mb-4 text-sm text-gray-300">{item.description}</p>
                   )}
                   <div className="flex items-center justify-between">
                     {item.workflow && (
-                      <span className="text-xs text-gray-500 dark:text-gray-500">
-                        Workflow: {item.workflow}
-                      </span>
+                      <span className="text-xs text-gray-400">Workflow: {item.workflow}</span>
                     )}
                     <button
                       onClick={() =>
                         item.workflow ? executeWorkflow(item.workflow) : alert('No workflow')
                       }
-                      className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 group-hover:bg-blue-700"
+                      className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors group-hover:bg-blue-700 hover:bg-blue-700"
                     >
                       Execute
                     </button>
@@ -416,8 +381,8 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
                 </div>
               ))
             ) : (
-              <div className="col-span-2 rounded-lg border border-gray-200 bg-white p-12 text-center dark:border-gray-700 dark:bg-gray-800">
-                <p className="text-gray-600 dark:text-gray-400">No menu actions defined</p>
+              <div className="col-span-2 rounded-lg border border-gray-700 bg-gray-800 p-12 text-center">
+                <p className="text-gray-300">No menu actions defined</p>
               </div>
             )}
           </div>

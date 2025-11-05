@@ -1,6 +1,6 @@
 /**
  * Workflow Execution Modal
- * 
+ *
  * Displays workflow execution progress with real-time updates
  */
 
@@ -32,9 +32,7 @@ function StepsSection({ steps }: { steps: WorkflowStep[] }): React.ReactElement 
 
   return (
     <div className="mb-6 space-y-3">
-      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-        Execution Steps:
-      </h3>
+      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Execution Steps:</h3>
       {steps.map((step, index) => (
         <div
           key={step.id}
@@ -49,7 +47,11 @@ function StepsSection({ steps }: { steps: WorkflowStep[] }): React.ReactElement 
           }`}
         >
           {step.status === 'completed' && (
-            <svg className="h-5 w-5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <svg
+              className="h-5 w-5 flex-shrink-0 text-green-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -61,7 +63,11 @@ function StepsSection({ steps }: { steps: WorkflowStep[] }): React.ReactElement 
             <div className="h-5 w-5 flex-shrink-0 animate-spin rounded-full border-2 border-yellow-500 border-t-transparent"></div>
           )}
           {step.status === 'failed' && (
-            <svg className="h-5 w-5 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+            <svg
+              className="h-5 w-5 flex-shrink-0 text-red-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -154,8 +160,13 @@ export function WorkflowExecutionModal({
         );
       case 'running':
         return (
-          <div className="h-12 w-12 animate-pulse rounded-full bg-yellow-500 flex items-center justify-center">
-            <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex h-12 w-12 animate-pulse items-center justify-center rounded-full bg-yellow-500">
+            <svg
+              className="h-6 w-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -167,7 +178,7 @@ export function WorkflowExecutionModal({
         );
       case 'completed':
         return (
-          <div className="h-12 w-12 rounded-full bg-green-500 flex items-center justify-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-500">
             <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
@@ -179,7 +190,7 @@ export function WorkflowExecutionModal({
         );
       case 'failed':
         return (
-          <div className="h-12 w-12 rounded-full bg-red-500 flex items-center justify-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500">
             <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
@@ -227,14 +238,13 @@ export function WorkflowExecutionModal({
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               Workflow Execution
             </h2>
-            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-              {workflowName}
-            </p>
+            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{workflowName}</p>
           </div>
           {(status === 'completed' || status === 'failed') && (
             <button
               onClick={onClose}
-              className="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">
+              className="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
+            >
               <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -252,9 +262,7 @@ export function WorkflowExecutionModal({
           {/* Status Section */}
           <div className="mb-6 flex flex-col items-center">
             {getStatusIcon()}
-            <p className={`mt-4 text-lg font-medium ${getStatusColor()}`}>
-              {getStatusText()}
-            </p>
+            <p className={`mt-4 text-lg font-medium ${getStatusColor()}`}>{getStatusText()}</p>
             {workflowDescription && status === 'initializing' && (
               <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
                 {workflowDescription}

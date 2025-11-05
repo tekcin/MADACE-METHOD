@@ -16,9 +16,7 @@ export function BasicInfoStep({ workflowData, setWorkflowData }: BasicInfoStepPr
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-          Basic Information
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Basic Information</h2>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Define the basic properties of your workflow
         </p>
@@ -39,7 +37,7 @@ export function BasicInfoStep({ workflowData, setWorkflowData }: BasicInfoStepPr
             value={workflowData.name}
             onChange={(e) => handleChange('name', e.target.value)}
             placeholder="e.g., feature-development"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             required
           />
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
@@ -61,7 +59,7 @@ export function BasicInfoStep({ workflowData, setWorkflowData }: BasicInfoStepPr
             onChange={(e) => handleChange('description', e.target.value)}
             placeholder="Brief description of what this workflow does..."
             rows={3}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             required
           />
         </div>
@@ -78,7 +76,7 @@ export function BasicInfoStep({ workflowData, setWorkflowData }: BasicInfoStepPr
             id="workflow-agent"
             value={workflowData.agent}
             onChange={(e) => handleChange('agent', e.target.value)}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             required
           >
             <option value="">Select an agent...</option>
@@ -107,7 +105,7 @@ export function BasicInfoStep({ workflowData, setWorkflowData }: BasicInfoStepPr
             id="workflow-phase"
             value={workflowData.phase}
             onChange={(e) => handleChange('phase', parseInt(e.target.value))}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             required
           >
             <option value={1}>Phase 1 - Planning & Analysis</option>
@@ -126,11 +124,7 @@ export function BasicInfoStep({ workflowData, setWorkflowData }: BasicInfoStepPr
       <div className="rounded-md bg-blue-50 p-4 dark:bg-blue-900/20">
         <div className="flex">
           <div className="flex-shrink-0">
-            <svg
-              className="h-5 w-5 text-blue-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
+            <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
               <path
                 fillRule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
@@ -143,9 +137,7 @@ export function BasicInfoStep({ workflowData, setWorkflowData }: BasicInfoStepPr
               Workflow Naming Convention
             </h3>
             <div className="mt-2 text-sm text-blue-700 dark:text-blue-300">
-              <p>
-                Use descriptive lowercase names with hyphens. Examples:
-              </p>
+              <p>Use descriptive lowercase names with hyphens. Examples:</p>
               <ul className="mt-1 list-inside list-disc space-y-1">
                 <li>feature-development</li>
                 <li>code-review-process</li>

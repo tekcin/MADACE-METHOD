@@ -20,6 +20,7 @@ This document lists the remaining API endpoints needed to complete the interacti
 **Location:** `app/api/v3/workflows/[id]/input/route.ts`
 
 **Implementation:**
+
 ```typescript
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
@@ -31,10 +32,7 @@ const InputSchema = z.object({
   value: z.unknown(),
 });
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = params;
     const body = await request.json();
@@ -42,7 +40,7 @@ export async function POST(
 
     // Store input in workflow state directory
     const inputDir = path.join(process.cwd(), '.madace', 'workflow-inputs');
-    await fs.mkdir(inputDir, { recursive: true});
+    await fs.mkdir(inputDir, { recursive: true });
 
     const inputFile = path.join(inputDir, `${id}.json`);
 
@@ -80,25 +78,20 @@ export async function POST(
 **Location:** `app/api/v3/workflows/[id]/resume/route.ts`
 
 **Implementation:**
+
 ```typescript
 import { NextRequest, NextResponse } from 'next/server';
 import { loadWorkflow, createWorkflowExecutor } from '@/lib/workflows';
 import path from 'path';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = params;
 
     // Load workflow and executor
     const workflowPath = await findWorkflowPath(id);
     if (!workflowPath) {
-      return NextResponse.json(
-        { success: false, error: 'Workflow not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'Workflow not found' }, { status: 404 });
     }
 
     const workflow = await loadWorkflow(workflowPath);
@@ -135,24 +128,20 @@ export async function POST(
 **Location:** `app/api/v3/workflows/[id]/stream/route.ts`
 
 **Implementation:**
+
 ```typescript
 import { NextRequest } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     start(controller) {
       const sendEvent = (data: unknown) => {
-        controller.enqueue(
-          encoder.encode(`data: ${JSON.stringify(data)}\n\n`)
-        );
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
       };
 
       // Poll workflow state every 500ms
@@ -217,15 +206,13 @@ export async function GET(
 **Location:** `app/api/v3/workflows/[id]/reset/route.ts`
 
 **Implementation:**
+
 ```typescript
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = params;
 
@@ -270,15 +257,13 @@ export async function POST(
 **Location:** `app/api/v3/workflows/[id]/state/route.ts`
 
 **Implementation:**
+
 ```typescript
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = params;
 
@@ -331,6 +316,7 @@ export async function GET(
 ## Testing Plan
 
 ### Unit Tests
+
 ```typescript
 // __tests__/app/api/workflows/execute.test.ts
 describe('POST /api/v3/workflows/[id]/execute', () => {
@@ -349,6 +335,7 @@ describe('POST /api/v3/workflows/[id]/execute', () => {
 ```
 
 ### Integration Tests
+
 - Test complete workflow execution with input steps
 - Verify SSE updates are sent correctly
 - Test workflow reset functionality
@@ -392,4 +379,3 @@ describe('POST /api/v3/workflows/[id]/execute', () => {
 **Status:** Ready for Implementation
 **Created:** 2025-10-31
 **Estimated Completion:** 3-4 hours of focused development
-

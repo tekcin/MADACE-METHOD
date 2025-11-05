@@ -143,9 +143,7 @@ export default function SyncStatusPage() {
     <div className="container mx-auto max-w-6xl px-4 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold text-white">
-          Sync Service Status
-        </h1>
+        <h1 className="mb-2 text-3xl font-bold text-white">Sync Service Status</h1>
         <p className="text-gray-400">
           Real-time WebSocket synchronization between Web UI and CLI tools
         </p>
@@ -212,9 +210,7 @@ export default function SyncStatusPage() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="rounded-lg bg-gray-700/50 p-4">
               <p className="text-sm text-gray-400">Connected Clients</p>
-              <p className="text-2xl font-bold text-white">
-                {status.clientCount}
-              </p>
+              <p className="text-2xl font-bold text-white">{status.clientCount}</p>
             </div>
 
             <div className="rounded-lg bg-gray-700/50 p-4">
@@ -267,17 +263,13 @@ export default function SyncStatusPage() {
                   <div className="grid grid-cols-1 gap-2 text-sm md:grid-cols-2">
                     <div>
                       <span className="text-gray-400">Connected:</span>{' '}
-                      <span className="text-white">
-                        {formatTimestamp(client.connectedAt)}
-                      </span>
+                      <span className="text-white">{formatTimestamp(client.connectedAt)}</span>
                     </div>
 
                     {client.lastPing && (
                       <div>
                         <span className="text-gray-400">Last Ping:</span>{' '}
-                        <span className="text-white">
-                          {formatUptime(client.lastPing)} ago
-                        </span>
+                        <span className="text-white">{formatUptime(client.lastPing)} ago</span>
                       </div>
                     )}
                   </div>
@@ -291,9 +283,7 @@ export default function SyncStatusPage() {
       {/* Connection Instructions */}
       {!status?.running && (
         <div className="mt-6 rounded-lg border border-blue-800 bg-blue-900/20 p-6">
-          <h3 className="mb-2 text-lg font-semibold text-blue-100">
-            How to Enable Real-Time Sync
-          </h3>
+          <h3 className="mb-2 text-lg font-semibold text-blue-100">How to Enable Real-Time Sync</h3>
           <p className="mb-4 text-blue-200">
             Click &quot;Start Service&quot; above to enable real-time synchronization between Web UI
             and CLI tools (Claude CLI, Gemini CLI).

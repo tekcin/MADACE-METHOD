@@ -151,12 +151,8 @@ export default function ChatPage() {
         <div className="mb-12">
           <div className="mb-4 flex items-start justify-between gap-4">
             <div className="flex-1 text-center">
-              <h1 className="mb-4 text-4xl font-bold text-gray-100">
-                Chat with AI Agents
-              </h1>
-              <p className="text-lg text-gray-400">
-                Select an agent to start a conversation
-              </p>
+              <h1 className="mb-4 text-4xl font-bold text-gray-100">Chat with AI Agents</h1>
+              <p className="text-lg text-gray-300">Select an agent to start a conversation</p>
             </div>
             <ProjectBadge size="sm" showDescription={false} />
           </div>
@@ -176,7 +172,7 @@ export default function ChatPage() {
           <div className="py-20 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-800">
               <svg
-                className="h-8 w-8 text-gray-400"
+                className="h-8 w-8 text-gray-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -189,12 +185,8 @@ export default function ChatPage() {
                 />
               </svg>
             </div>
-            <h3 className="mb-2 text-lg font-medium text-gray-100">
-              No Agents Available
-            </h3>
-            <p className="mb-6 text-gray-400">
-              Create your first agent to start chatting
-            </p>
+            <h3 className="mb-2 text-lg font-medium text-gray-100">No Agents Available</h3>
+            <p className="mb-6 text-gray-300">Create your first agent to start chatting</p>
             <button
               onClick={() => router.push('/agents')}
               className="rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700"
@@ -223,7 +215,7 @@ export default function ChatPage() {
                       <h3 className="mb-1 truncate text-lg font-semibold text-gray-100">
                         {agent.title}
                       </h3>
-                      <p className="mb-3 text-sm text-gray-400">{agent.name}</p>
+                      <p className="mb-3 text-sm text-gray-300">{agent.name}</p>
                       <div className="flex items-center text-sm text-blue-400 group-hover:underline">
                         <span>Start Chat</span>
                         <svg
@@ -266,10 +258,8 @@ export default function ChatPage() {
                       />
                     </svg>
                   </div>
-                  <h3 className="mb-1 text-lg font-semibold text-gray-100">
-                    Add Agent
-                  </h3>
-                  <p className="text-sm text-gray-400">Browse all agents</p>
+                  <h3 className="mb-1 text-lg font-semibold text-gray-100">Add Agent</h3>
+                  <p className="text-sm text-gray-300">Browse all agents</p>
                 </div>
               </button>
             </div>
@@ -281,10 +271,8 @@ export default function ChatPage() {
                   {/* Modal Header */}
                   <div className="flex items-center justify-between border-b border-gray-700 p-6">
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-100">
-                        Select an Agent
-                      </h2>
-                      <p className="mt-1 text-sm text-gray-400">
+                      <h2 className="text-2xl font-bold text-gray-100">Select an Agent</h2>
+                      <p className="mt-1 text-sm text-gray-300">
                         Choose from {allAgents.length} available agents
                       </p>
                     </div>
@@ -293,7 +281,7 @@ export default function ChatPage() {
                       className="rounded-lg p-2 transition-colors hover:bg-gray-700"
                     >
                       <svg
-                        className="h-6 w-6 text-gray-500"
+                        className="h-6 w-6 text-gray-300"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -315,21 +303,17 @@ export default function ChatPage() {
                         <button
                           key={agent.id}
                           onClick={() => handleAddAgent(agent)}
-                          className="group flex items-start gap-4 rounded-lg border border-gray-700 bg-gray-750 p-4 text-left transition-all hover:border-blue-400 hover:shadow-md"
+                          className="group bg-gray-750 flex items-start gap-4 rounded-lg border border-gray-700 p-4 text-left transition-all hover:border-blue-400 hover:shadow-md"
                         >
                           <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-green-500 text-sm font-medium text-white">
                             {agent.name.substring(0, 2).toUpperCase()}
                           </div>
                           <div className="min-w-0 flex-1">
-                            <h3 className="truncate font-semibold text-gray-100">
-                              {agent.title}
-                            </h3>
-                            <p className="truncate text-sm text-gray-400">
-                              {agent.name}
-                            </p>
+                            <h3 className="truncate font-semibold text-gray-100">{agent.title}</h3>
+                            <p className="truncate text-sm text-gray-300">{agent.name}</p>
                           </div>
                           <svg
-                            className="h-5 w-5 flex-shrink-0 text-gray-400 transition-transform group-hover:translate-x-1 group-hover:text-blue-400"
+                            className="h-5 w-5 flex-shrink-0 text-gray-300 transition-transform group-hover:translate-x-1 group-hover:text-blue-400"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"

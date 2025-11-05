@@ -18,6 +18,7 @@ This document describes the comprehensive end-to-end test suite created for the 
 Reusable page objects following the Page Object Model design pattern:
 
 #### `e2e-tests/page-objects/workflows.page.ts` (7.5KB, 20+ methods)
+
 - Navigate to workflows page
 - List available workflows
 - Execute workflows
@@ -25,6 +26,7 @@ Reusable page objects following the Page Object Model design pattern:
 - Interact with workflow cards
 
 **Key Methods:**
+
 ```typescript
 async goto(): Promise<void>
 async clickCreateWorkflow(): Promise<void>
@@ -34,6 +36,7 @@ async expectCompleteStatusVisible(): Promise<void>
 ```
 
 #### `e2e-tests/page-objects/workflow-creator.page.ts` (15KB, 30+ methods)
+
 - Navigate through wizard steps (Basic Info → Steps → Variables → Preview)
 - Fill basic information (name, description, agent, phase)
 - Add/edit/delete/reorder workflow steps
@@ -42,6 +45,7 @@ async expectCompleteStatusVisible(): Promise<void>
 - Copy YAML to clipboard
 
 **Key Methods:**
+
 ```typescript
 async fillBasicInfo(info: BasicInfo): Promise<void>
 async addStep(step: WorkflowStep): Promise<void>
@@ -54,6 +58,7 @@ async completeWorkflowCreation(data: CompleteWorkflowData): Promise<void>
 ```
 
 #### `e2e-tests/page-objects/workflow-execution.page.ts` (14KB, 35+ methods)
+
 - Start/pause/resume/cancel/reset workflow execution
 - Execute individual steps
 - Monitor workflow progress
@@ -61,6 +66,7 @@ async completeWorkflowCreation(data: CompleteWorkflowData): Promise<void>
 - Inspect workflow variables and state
 
 **Key Methods:**
+
 ```typescript
 async startExecution(): Promise<void>
 async executeNextStep(): Promise<void>
@@ -247,6 +253,7 @@ async executeUntilCompletion(): Promise<void>
 ### Features Tested
 
 ✅ **Workflow Creation Wizard** (36 tests)
+
 - Multi-step wizard navigation
 - Form validation and error handling
 - All 7 MADACE action types (display, reflect, elicit, template, guide, validate, route)
@@ -254,6 +261,7 @@ async executeUntilCompletion(): Promise<void>
 - YAML generation and export
 
 ✅ **Workflow Execution** (44 tests)
+
 - Step-by-step execution
 - Pause/resume/cancel/reset controls
 - Progress tracking and status badges
@@ -261,6 +269,7 @@ async executeUntilCompletion(): Promise<void>
 - Error handling
 
 ✅ **End-to-End Integration** (52 tests)
+
 - Create → Execute workflows
 - State persistence across page reloads
 - Multiple workflow management
@@ -272,11 +281,13 @@ async executeUntilCompletion(): Promise<void>
 ## Running the Tests
 
 ### Run All Workflow Tests
+
 ```bash
 npx playwright test e2e-tests/workflows-*.spec.ts
 ```
 
 ### Run Specific Test Suite
+
 ```bash
 # Creation tests only
 npx playwright test e2e-tests/workflows-creation.spec.ts
@@ -289,16 +300,19 @@ npx playwright test e2e-tests/workflows-integration.spec.ts
 ```
 
 ### Run with UI Mode (Recommended for debugging)
+
 ```bash
 npx playwright test e2e-tests/workflows-*.spec.ts --ui
 ```
 
 ### Run in Headed Mode (See browser)
+
 ```bash
 npx playwright test e2e-tests/workflows-*.spec.ts --headed
 ```
 
 ### Run Specific Browser
+
 ```bash
 npx playwright test e2e-tests/workflows-*.spec.ts --project=chromium
 npx playwright test e2e-tests/workflows-*.spec.ts --project=firefox
@@ -306,6 +320,7 @@ npx playwright test e2e-tests/workflows-*.spec.ts --project=webkit
 ```
 
 ### Generate Test Report
+
 ```bash
 npx playwright test e2e-tests/workflows-*.spec.ts --reporter=html
 npx playwright show-report
@@ -320,11 +335,13 @@ npx playwright show-report
 The test suite has been successfully created with **132 comprehensive tests**. Initial test runs reveal some implementation gaps:
 
 **Common Failures:**
+
 1. ⏰ **Timeouts** - Some UI elements not loading within 5-second timeout
 2. 🔍 **Missing Elements** - Test selectors not finding expected DOM elements
 3. 🔌 **API Endpoints** - Some workflow API endpoints may not be fully implemented
 
 **This is Expected and Valuable:**
+
 - E2E tests are designed to validate the full implementation
 - Failures indicate where the implementation needs completion
 - Tests serve as living documentation of expected behavior
@@ -365,6 +382,7 @@ Based on test failures, the following areas may need attention:
    - Verify all form fields and buttons are accessible
 
 2. **Implement API Endpoints**
+
    ```
    POST   /api/v3/workflows              Create workflow
    GET    /api/v3/workflows              List workflows
@@ -388,6 +406,7 @@ Based on test failures, the following areas may need attention:
    - Better to fix performance than increase timeouts
 
 5. **Run Tests Iteratively**
+
    ```bash
    # Run one test at a time during development
    npx playwright test --grep "should navigate to workflow creator"
@@ -413,6 +432,7 @@ To add new workflow tests:
 4. Group related tests in `describe` blocks
 
 **Example:**
+
 ```typescript
 test('should perform new workflow action', async () => {
   // Arrange
@@ -457,6 +477,7 @@ The test suite uses Chrome DevTools MCP integration (configured in `.mcp.json`) 
 - JavaScript debugging
 
 **MCP Configuration:**
+
 ```json
 {
   "mcpServers": {
@@ -500,6 +521,7 @@ Tests will pass when:
 **Test Suite Status:** ✅ **Complete**
 
 The comprehensive test suite has been successfully created with:
+
 - **132 total tests** across 3 test files
 - **3 Page Object Models** for reusable test interactions
 - **Coverage of all workflow features** (creation, execution, integration)
@@ -508,6 +530,7 @@ The comprehensive test suite has been successfully created with:
 **Next Step:** Fix implementation gaps identified by the tests to achieve 100% test pass rate.
 
 The test suite serves as:
+
 1. **Quality Assurance** - Validates workflow functionality works as expected
 2. **Documentation** - Living examples of how workflows should behave
 3. **Regression Prevention** - Ensures future changes don't break existing features

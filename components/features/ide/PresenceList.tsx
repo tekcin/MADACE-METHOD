@@ -50,8 +50,9 @@ export default function PresenceList({ visible = true, onUserCountChange }: Pres
 
     // Subscribe to user leave events
     const unsubscribeLeave = presenceManager.onUserLeave((userId) => {
-      // Find user name from current users list
-      const user = users.find((u) => u.id === userId);
+      // Get current users from presence manager instead of stale closure
+      const currentUsers = presenceManager.getOnlineUsers(true);
+      const user = currentUsers.find((u) => u.id === userId);
       const userName = user?.name || 'A user';
 
       // Show toast notification
@@ -70,7 +71,8 @@ export default function PresenceList({ visible = true, onUserCountChange }: Pres
       unsubscribeJoin();
       unsubscribeLeave();
     };
-  }, [onUserCountChange, users]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty deps: only run once on mount
 
   if (!visible || users.length === 0) {
     return null;

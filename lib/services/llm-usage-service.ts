@@ -107,8 +107,7 @@ export async function getSessionUsageStats(sessionId: string): Promise<UsageStat
   const promptTokens = usage.reduce((sum, u) => sum + u.promptTokens, 0);
   const completionTokens = usage.reduce((sum, u) => sum + u.completionTokens, 0);
   const estimatedCost = usage.reduce((sum, u) => sum + (u.estimatedCost || 0), 0);
-  const averageResponseTime =
-    usage.reduce((sum, u) => sum + u.responseTime, 0) / totalRequests;
+  const averageResponseTime = usage.reduce((sum, u) => sum + u.responseTime, 0) / totalRequests;
 
   return {
     totalRequests,
@@ -149,8 +148,7 @@ export async function getSessionProviderStats(sessionId: string): Promise<Provid
     const promptTokens = records.reduce((sum, r) => sum + r.promptTokens, 0);
     const completionTokens = records.reduce((sum, r) => sum + r.completionTokens, 0);
     const estimatedCost = records.reduce((sum, r) => sum + (r.estimatedCost || 0), 0);
-    const averageResponseTime =
-      records.reduce((sum, r) => sum + r.responseTime, 0) / totalRequests;
+    const averageResponseTime = records.reduce((sum, r) => sum + r.responseTime, 0) / totalRequests;
 
     return {
       provider,
@@ -212,8 +210,7 @@ export async function getUserUsageStats(
   const promptTokens = usage.reduce((sum, u) => sum + u.promptTokens, 0);
   const completionTokens = usage.reduce((sum, u) => sum + u.completionTokens, 0);
   const estimatedCost = usage.reduce((sum, u) => sum + (u.estimatedCost || 0), 0);
-  const averageResponseTime =
-    usage.reduce((sum, u) => sum + u.responseTime, 0) / totalRequests;
+  const averageResponseTime = usage.reduce((sum, u) => sum + u.responseTime, 0) / totalRequests;
 
   // Calculate by provider
   const byProvider = usage.reduce(
@@ -235,8 +232,7 @@ export async function getUserUsageStats(
     const promptTokens = records.reduce((sum, r) => sum + r.promptTokens, 0);
     const completionTokens = records.reduce((sum, r) => sum + r.completionTokens, 0);
     const estimatedCost = records.reduce((sum, r) => sum + (r.estimatedCost || 0), 0);
-    const averageResponseTime =
-      records.reduce((sum, r) => sum + r.responseTime, 0) / totalRequests;
+    const averageResponseTime = records.reduce((sum, r) => sum + r.responseTime, 0) / totalRequests;
 
     return {
       provider,

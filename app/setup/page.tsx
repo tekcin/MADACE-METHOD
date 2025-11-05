@@ -124,25 +124,25 @@ export default function SetupPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">MADACE Setup Wizard</h1>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">
+        <h1 className="text-3xl font-bold text-white">MADACE Setup Wizard</h1>
+        <p className="mt-2 text-sm text-gray-400">
           Methodology for AI-Driven Agile Collaboration Engine
         </p>
-        <p className="mt-1 text-gray-600 dark:text-gray-400">
+        <p className="mt-1 text-gray-300">
           Configure your MADACE installation in a few simple steps
         </p>
       </div>
 
       <StepIndicator steps={steps} currentStep={currentStep} />
 
-      <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <div className="mt-8 rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
         {currentStep === 'project' && <ProjectInfoStep config={config} setConfig={setConfig} />}
         {currentStep === 'llm' && <LLMConfigStep config={config} setConfig={setConfig} />}
         {currentStep === 'modules' && <ModuleConfigStep config={config} setConfig={setConfig} />}
         {currentStep === 'summary' && <SummaryStep config={config} />}
 
         {error && (
-          <div className="mt-6 rounded-md bg-red-50 p-4 dark:bg-red-900/20">
+          <div className="mt-6 rounded-md bg-red-900/20 p-4">
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg
@@ -159,23 +159,19 @@ export default function SetupPage() {
                 </svg>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-                  Configuration Error
-                </h3>
-                <div className="mt-2 text-sm text-red-700 dark:text-red-300 whitespace-pre-line">
-                  {error}
-                </div>
+                <h3 className="text-sm font-medium text-red-200">Configuration Error</h3>
+                <div className="mt-2 text-sm whitespace-pre-line text-red-300">{error}</div>
               </div>
             </div>
           </div>
         )}
 
-        <div className="mt-8 flex justify-between border-t border-gray-200 pt-6 dark:border-gray-800">
+        <div className="mt-8 flex justify-between border-t border-gray-700 pt-6">
           <button
             type="button"
             onClick={handlePrevious}
             disabled={isFirstStep}
-            className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700 dark:hover:bg-gray-700"
+            className="rounded-md bg-gray-800 px-4 py-2 text-sm font-medium text-gray-300 shadow-sm ring-1 ring-gray-700 ring-inset hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Previous
           </button>

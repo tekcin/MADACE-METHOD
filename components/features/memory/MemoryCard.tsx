@@ -17,10 +17,10 @@ const categoryLabels: Record<string, string> = {
 };
 
 const categoryColors: Record<string, string> = {
-  user_preference: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-  project_context: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-  conversation_summary: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
-  user_fact: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+  user_preference: 'bg-blue-900 text-blue-200',
+  project_context: 'bg-green-900 text-green-200',
+  conversation_summary: 'bg-purple-900 text-purple-200',
+  user_fact: 'bg-yellow-900 text-yellow-200',
 };
 
 const importanceColors = [
@@ -71,12 +71,12 @@ export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+    <div className="rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-sm transition-shadow hover:shadow-md">
       {/* Header */}
       <div className="mb-3 flex items-start justify-between">
         <div className="flex-1">
           <div className="mb-1 flex items-center gap-2">
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">{memory.key}</h3>
+            <h3 className="font-semibold text-gray-100">{memory.key}</h3>
             <span
               className={`rounded-full px-2 py-0.5 text-xs ${
                 categoryColors[memory.category] || 'bg-gray-100 text-gray-800'
@@ -90,13 +90,13 @@ export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
               {memory.type}
             </span>
           </div>
-          <p className="text-sm text-gray-700 dark:text-gray-300">{memory.value}</p>
+          <p className="text-sm text-gray-300">{memory.value}</p>
         </div>
 
         {/* Delete button */}
         <button
           onClick={() => onDelete(memory.id)}
-          className="ml-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+          className="ml-2 text-red-400 hover:text-red-300"
           title="Delete memory"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,9 +113,7 @@ export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
       {/* Importance Slider */}
       <div className="mb-3">
         <div className="mb-1 flex items-center justify-between">
-          <label className="text-xs font-medium text-gray-600 dark:text-gray-400">
-            Importance: {importance}/10
-          </label>
+          <label className="text-xs font-medium text-gray-400">Importance: {importance}/10</label>
           {isEditing ? (
             <div className="flex gap-2">
               <button
@@ -134,7 +132,7 @@ export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400"
+              className="text-xs text-blue-400 hover:text-blue-300"
             >
               Edit
             </button>
@@ -154,7 +152,7 @@ export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
       </div>
 
       {/* Metadata */}
-      <div className="space-y-1 text-xs text-gray-500 dark:text-gray-400">
+      <div className="space-y-1 text-xs text-gray-400">
         <div className="flex justify-between">
           <span>Created: {timeSince(memory.createdAt)}</span>
           <span>Accessed: {memory.accessCount}×</span>
@@ -163,7 +161,7 @@ export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
           <span>Last access: {timeSince(memory.lastAccessedAt)}</span>
           <button
             onClick={() => setShowDetails(!showDetails)}
-            className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
+            className="text-blue-400 hover:text-blue-300"
           >
             {showDetails ? 'Hide' : 'Show'} details
           </button>
@@ -172,27 +170,23 @@ export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
 
       {/* Details (collapsed by default) */}
       {showDetails && (
-        <div className="mt-3 space-y-1 border-t border-gray-200 pt-3 text-xs dark:border-gray-700">
+        <div className="mt-3 space-y-1 border-t border-gray-700 pt-3 text-xs">
           <div className="flex justify-between">
-            <span className="text-gray-600 dark:text-gray-400">Source:</span>
-            <span className="text-gray-900 dark:text-gray-100">{memory.source}</span>
+            <span className="text-gray-400">Source:</span>
+            <span className="text-gray-100">{memory.source}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600 dark:text-gray-400">Created at:</span>
-            <span className="text-gray-900 dark:text-gray-100">{formatDate(memory.createdAt)}</span>
+            <span className="text-gray-400">Created at:</span>
+            <span className="text-gray-100">{formatDate(memory.createdAt)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600 dark:text-gray-400">Last accessed:</span>
-            <span className="text-gray-900 dark:text-gray-100">
-              {formatDate(memory.lastAccessedAt)}
-            </span>
+            <span className="text-gray-400">Last accessed:</span>
+            <span className="text-gray-100">{formatDate(memory.lastAccessedAt)}</span>
           </div>
           {memory.expiresAt && (
             <div className="flex justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Expires:</span>
-              <span className="text-gray-900 dark:text-gray-100">
-                {formatDate(memory.expiresAt)}
-              </span>
+              <span className="text-gray-400">Expires:</span>
+              <span className="text-gray-100">{formatDate(memory.expiresAt)}</span>
             </div>
           )}
         </div>

@@ -86,8 +86,8 @@ export default function CreateAgentPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Create Custom Agent</h1>
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        <h1 className="text-3xl font-bold text-white">Create Custom Agent</h1>
+        <p className="mt-2 text-sm text-gray-300">
           Build your own AI agent with custom persona, menu actions, and prompts
         </p>
       </div>
@@ -115,7 +115,7 @@ export default function CreateAgentPage() {
                         ? 'border-blue-600 bg-blue-600 text-white'
                         : isCompleted
                           ? 'border-green-600 bg-green-600 text-white'
-                          : 'border-gray-300 bg-white text-gray-500 dark:border-gray-600 dark:bg-gray-800'
+                          : 'border-gray-600 bg-gray-800 text-gray-400'
                     }`}
                   >
                     {isCompleted ? (
@@ -132,11 +132,7 @@ export default function CreateAgentPage() {
                   </div>
                   <span
                     className={`mt-2 text-xs font-medium ${
-                      isActive
-                        ? 'text-blue-600 dark:text-blue-400'
-                        : isCompleted
-                          ? 'text-green-600 dark:text-green-400'
-                          : 'text-gray-500 dark:text-gray-400'
+                      isActive ? 'text-blue-400' : isCompleted ? 'text-green-400' : 'text-gray-400'
                     }`}
                   >
                     {stepLabels[step]}
@@ -144,9 +140,7 @@ export default function CreateAgentPage() {
                 </div>
                 {index < steps.length - 1 && (
                   <div
-                    className={`mx-2 h-0.5 flex-1 ${
-                      isCompleted ? 'bg-green-600' : 'bg-gray-300 dark:bg-gray-600'
-                    }`}
+                    className={`mx-2 h-0.5 flex-1 ${isCompleted ? 'bg-green-600' : 'bg-gray-600'}`}
                   />
                 )}
               </div>
@@ -156,7 +150,7 @@ export default function CreateAgentPage() {
       </div>
 
       {/* Form Content */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
         {currentStep === 'basic' && (
           <AgentBasicInfoStep agentData={agentData} setAgentData={setAgentData} />
         )}
@@ -173,7 +167,7 @@ export default function CreateAgentPage() {
 
         {/* Error Display */}
         {error && (
-          <div className="mt-6 rounded-md bg-red-50 p-4 dark:bg-red-900/20">
+          <div className="mt-6 rounded-md bg-red-900/20 p-4">
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg
@@ -190,22 +184,20 @@ export default function CreateAgentPage() {
                 </svg>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">Error</h3>
-                <div className="mt-2 text-sm text-red-700 dark:text-red-300 whitespace-pre-line">
-                  {error}
-                </div>
+                <h3 className="text-sm font-medium text-red-200">Error</h3>
+                <div className="mt-2 text-sm whitespace-pre-line text-red-300">{error}</div>
               </div>
             </div>
           </div>
         )}
 
         {/* Navigation Buttons */}
-        <div className="mt-8 flex justify-between border-t border-gray-200 pt-6 dark:border-gray-800">
+        <div className="mt-8 flex justify-between border-t border-gray-700 pt-6">
           <div className="flex gap-3">
             <button
               type="button"
               onClick={handleCancel}
-              className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700 dark:hover:bg-gray-700"
+              className="rounded-md bg-gray-800 px-4 py-2 text-sm font-medium text-gray-300 shadow-sm ring-1 ring-gray-700 ring-inset hover:bg-gray-700"
             >
               Cancel
             </button>
@@ -213,7 +205,7 @@ export default function CreateAgentPage() {
               type="button"
               onClick={handlePrevious}
               disabled={isFirstStep}
-              className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700 dark:hover:bg-gray-700"
+              className="rounded-md bg-gray-800 px-4 py-2 text-sm font-medium text-gray-300 shadow-sm ring-1 ring-gray-700 ring-inset hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Previous
             </button>

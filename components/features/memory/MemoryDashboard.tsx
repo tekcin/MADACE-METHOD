@@ -163,10 +163,8 @@ export function MemoryDashboard({ agentId }: MemoryDashboardProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Agent Memory</h2>
-          <p className="mt-1 text-gray-600 dark:text-gray-400">
-            Manage persistent agent memories and preferences
-          </p>
+          <h2 className="text-2xl font-bold text-gray-100">Agent Memory</h2>
+          <p className="mt-1 text-gray-400">Manage persistent agent memories and preferences</p>
         </div>
         <button
           onClick={() => setShowClearDialog(true)}
@@ -187,29 +185,21 @@ export function MemoryDashboard({ agentId }: MemoryDashboardProps) {
       {/* Stats */}
       {stats && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-          <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
-            <div className="font-semibold text-blue-900 dark:text-blue-100">Total Memories</div>
-            <div className="mt-1 text-3xl font-bold text-blue-600 dark:text-blue-400">
-              {stats.total}
-            </div>
+          <div className="rounded-lg bg-blue-900/20 p-4">
+            <div className="font-semibold text-blue-100">Total Memories</div>
+            <div className="mt-1 text-3xl font-bold text-blue-400">{stats.total}</div>
           </div>
-          <div className="rounded-lg bg-green-50 p-4 dark:bg-green-900/20">
-            <div className="font-semibold text-green-900 dark:text-green-100">Long-term</div>
-            <div className="mt-1 text-3xl font-bold text-green-600 dark:text-green-400">
-              {stats.longTerm}
-            </div>
+          <div className="rounded-lg bg-green-900/20 p-4">
+            <div className="font-semibold text-green-100">Long-term</div>
+            <div className="mt-1 text-3xl font-bold text-green-400">{stats.longTerm}</div>
           </div>
-          <div className="rounded-lg bg-purple-50 p-4 dark:bg-purple-900/20">
-            <div className="font-semibold text-purple-900 dark:text-purple-100">Short-term</div>
-            <div className="mt-1 text-3xl font-bold text-purple-600 dark:text-purple-400">
-              {stats.shortTerm}
-            </div>
+          <div className="rounded-lg bg-purple-900/20 p-4">
+            <div className="font-semibold text-purple-100">Short-term</div>
+            <div className="mt-1 text-3xl font-bold text-purple-400">{stats.shortTerm}</div>
           </div>
-          <div className="rounded-lg bg-yellow-50 p-4 dark:bg-yellow-900/20">
-            <div className="font-semibold text-yellow-900 dark:text-yellow-100">
-              Avg. Importance
-            </div>
-            <div className="mt-1 text-3xl font-bold text-yellow-600 dark:text-yellow-400">
+          <div className="rounded-lg bg-yellow-900/20 p-4">
+            <div className="font-semibold text-yellow-100">Avg. Importance</div>
+            <div className="mt-1 text-3xl font-bold text-yellow-400">
               {stats.avgImportance.toFixed(1)}
             </div>
           </div>
@@ -217,31 +207,27 @@ export function MemoryDashboard({ agentId }: MemoryDashboardProps) {
       )}
 
       {/* Filters */}
-      <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+      <div className="rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-sm">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
           {/* Search */}
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Search
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-300">Search</label>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search memories..."
-              className="w-full rounded-md border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+              className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-gray-100"
             />
           </div>
 
           {/* Type filter */}
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Type
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-300">Type</label>
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+              className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-gray-100"
             >
               <option value="all">All Types</option>
               <option value="short-term">Short-term</option>
@@ -251,13 +237,11 @@ export function MemoryDashboard({ agentId }: MemoryDashboardProps) {
 
           {/* Category filter */}
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Category
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-300">Category</label>
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+              className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-gray-100"
             >
               <option value="all">All Categories</option>
               <option value="user_preference">User Preference</option>
@@ -269,14 +253,12 @@ export function MemoryDashboard({ agentId }: MemoryDashboardProps) {
 
           {/* Sort */}
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Sort By
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-300">Sort By</label>
             <div className="flex gap-2">
               <select
                 value={sortField}
                 onChange={(e) => setSortField(e.target.value as SortField)}
-                className="flex-1 rounded-md border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+                className="flex-1 rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-gray-100"
               >
                 <option value="createdAt">Created</option>
                 <option value="lastAccessedAt">Last Accessed</option>
@@ -284,7 +266,7 @@ export function MemoryDashboard({ agentId }: MemoryDashboardProps) {
               </select>
               <button
                 onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                className="rounded-md border border-gray-300 px-3 py-2 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
+                className="rounded-md border border-gray-600 px-3 py-2 hover:bg-gray-700"
                 title={`Sort ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}
               >
                 {sortOrder === 'asc' ? '↑' : '↓'}
@@ -298,14 +280,12 @@ export function MemoryDashboard({ agentId }: MemoryDashboardProps) {
       {loading ? (
         <div className="py-12 text-center">
           <div className="inline-block h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading memories...</p>
+          <p className="mt-4 text-gray-400">Loading memories...</p>
         </div>
       ) : error ? (
-        <div className="rounded-lg bg-red-50 p-4 text-red-600 dark:bg-red-900/20 dark:text-red-400">
-          {error}
-        </div>
+        <div className="rounded-lg bg-red-900/20 p-4 text-red-400">{error}</div>
       ) : filteredMemories.length === 0 ? (
-        <div className="rounded-lg bg-gray-50 p-12 text-center dark:bg-gray-800">
+        <div className="rounded-lg bg-gray-800 p-12 text-center">
           <svg
             className="mx-auto h-12 w-12 text-gray-400"
             fill="none"
@@ -319,7 +299,7 @@ export function MemoryDashboard({ agentId }: MemoryDashboardProps) {
               d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
             />
           </svg>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-gray-400">
             {searchQuery
               ? 'No memories found matching your search'
               : 'No memories yet. The agent will start learning as you interact.'}
@@ -341,18 +321,16 @@ export function MemoryDashboard({ agentId }: MemoryDashboardProps) {
       {/* Clear All Confirmation Dialog */}
       {showClearDialog && (
         <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black p-4">
-          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800">
-            <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Clear All Memories?
-            </h3>
-            <p className="mb-6 text-gray-600 dark:text-gray-400">
+          <div className="w-full max-w-md rounded-lg bg-gray-800 p-6 shadow-xl">
+            <h3 className="mb-4 text-lg font-semibold text-gray-100">Clear All Memories?</h3>
+            <p className="mb-6 text-gray-400">
               This will permanently delete all memories for this agent. This action cannot be
               undone.
             </p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowClearDialog(false)}
-                className="rounded-md border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+                className="rounded-md border border-gray-600 px-4 py-2 text-gray-300 hover:bg-gray-700"
               >
                 Cancel
               </button>

@@ -40,7 +40,7 @@ export function ProjectSelector() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+        className="flex items-center gap-2 rounded-lg border border-gray-600 bg-gray-800 px-3 py-2 text-sm font-medium text-gray-200 shadow-sm transition-colors hover:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
         data-testid="project-selector-button"
       >
         <svg
@@ -78,13 +78,11 @@ export function ProjectSelector() {
 
           {/* Dropdown Menu */}
           <div
-            className="absolute left-0 z-20 mt-2 w-64 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800"
+            className="absolute left-0 z-20 mt-2 w-64 rounded-lg border border-gray-700 bg-gray-800 shadow-lg"
             data-testid="project-selector-dropdown"
           >
-            <div className="border-b border-gray-200 px-4 py-2 dark:border-gray-700">
-              <p className="text-xs font-semibold text-gray-500 uppercase dark:text-gray-400">
-                Your Projects
-              </p>
+            <div className="border-b border-gray-700 px-4 py-2">
+              <p className="text-xs font-semibold text-gray-400 uppercase">Your Projects</p>
             </div>
 
             <div className="max-h-64 overflow-y-auto py-1">
@@ -95,10 +93,10 @@ export function ProjectSelector() {
                   <button
                     key={project.id}
                     onClick={() => handleProjectSelect(project.id)}
-                    className={`flex w-full items-start gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-gray-50 dark:hover:bg-gray-700 ${
+                    className={`flex w-full items-start gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-gray-700 ${
                       project.id === currentProject.id
-                        ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300'
-                        : 'text-gray-700 dark:text-gray-200'
+                        ? 'bg-blue-900/20 text-blue-300'
+                        : 'text-gray-200'
                     }`}
                     data-testid={`project-option-${project.id}`}
                   >
@@ -118,9 +116,7 @@ export function ProjectSelector() {
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-medium">{project.name}</p>
                       {project.description && (
-                        <p className="truncate text-xs text-gray-500 dark:text-gray-400">
-                          {project.description}
-                        </p>
+                        <p className="truncate text-xs text-gray-400">{project.description}</p>
                       )}
                       <div className="mt-1 flex gap-3 text-xs text-gray-500">
                         <span>{project._count.agents} agents</span>
@@ -130,7 +126,7 @@ export function ProjectSelector() {
                     </div>
                     {project.id === currentProject.id && (
                       <svg
-                        className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-600 dark:text-blue-400"
+                        className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-400"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -146,14 +142,14 @@ export function ProjectSelector() {
               )}
             </div>
 
-            <div className="border-t border-gray-200 p-2 dark:border-gray-700">
+            <div className="border-t border-gray-700 p-2">
               <button
                 onClick={() => {
                   setIsOpen(false);
                   // Trigger create project modal (handled by parent)
                   window.dispatchEvent(new CustomEvent('open-create-project-modal'));
                 }}
-                className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20"
+                className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-blue-400 transition-colors hover:bg-blue-900/20"
                 data-testid="create-project-button"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

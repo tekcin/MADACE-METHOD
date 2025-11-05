@@ -84,8 +84,12 @@ export class WorkflowCreatorPage {
     this.validationResults = page.locator('div.space-y-2').filter({ has: page.locator('svg') });
 
     // Status messages
-    this.errorMessage = page.locator('div.bg-red-50, div.bg-red-900\\/20').filter({ hasText: 'Error' });
-    this.successMessage = page.locator('div.bg-green-50, div.bg-green-900\\/20').filter({ hasText: 'success' });
+    this.errorMessage = page
+      .locator('div.bg-red-50, div.bg-red-900\\/20')
+      .filter({ hasText: 'Error' });
+    this.successMessage = page
+      .locator('div.bg-green-50, div.bg-green-900\\/20')
+      .filter({ hasText: 'success' });
   }
 
   /**
@@ -100,12 +104,7 @@ export class WorkflowCreatorPage {
    * Fill basic info step (Step 1)
    * @param data Basic workflow information
    */
-  async fillBasicInfo(data: {
-    name: string;
-    description: string;
-    agent: string;
-    phase?: number;
-  }) {
+  async fillBasicInfo(data: { name: string; description: string; agent: string; phase?: number }) {
     await this.nameInput.fill(data.name);
     await this.descriptionInput.fill(data.description);
     await this.agentSelect.selectOption(data.agent);
@@ -239,7 +238,9 @@ export class WorkflowCreatorPage {
   async deleteStep(index: number) {
     const stepForms = this.page.locator('[data-testid^="step-form-"]');
     const stepForm = stepForms.nth(index);
-    const deleteButton = stepForm.locator('button:has-text("Delete"), button[aria-label="Delete step"]');
+    const deleteButton = stepForm.locator(
+      'button:has-text("Delete"), button[aria-label="Delete step"]'
+    );
 
     await deleteButton.click();
     await this.page.waitForTimeout(200);
@@ -296,7 +297,9 @@ export class WorkflowCreatorPage {
   async deleteVariable(index: number) {
     const variableForms = this.page.locator('[data-testid^="variable-form-"]');
     const variableForm = variableForms.nth(index);
-    const deleteButton = variableForm.locator('button:has-text("Delete"), button[aria-label="Delete variable"]');
+    const deleteButton = variableForm.locator(
+      'button:has-text("Delete"), button[aria-label="Delete variable"]'
+    );
 
     await deleteButton.click();
     await this.page.waitForTimeout(200);
@@ -346,7 +349,9 @@ export class WorkflowCreatorPage {
    */
   async expectCurrentStep(stepNumber: 1 | 2 | 3 | 4) {
     // Check step indicator
-    const stepIndicator = this.page.locator(`div.flex.items-center.justify-center:has-text("${stepNumber}")`).first();
+    const stepIndicator = this.page
+      .locator(`div.flex.items-center.justify-center:has-text("${stepNumber}")`)
+      .first();
     await expect(stepIndicator).toHaveClass(/bg-blue-600|bg-blue-500/);
   }
 
@@ -489,21 +494,27 @@ export class WorkflowCreatorPage {
   }) {
     if (expectedResults.errors) {
       for (const error of expectedResults.errors) {
-        const errorLocator = this.page.locator('div.bg-red-50, div.bg-red-900\\/20').filter({ hasText: error });
+        const errorLocator = this.page
+          .locator('div.bg-red-50, div.bg-red-900\\/20')
+          .filter({ hasText: error });
         await expect(errorLocator).toBeVisible();
       }
     }
 
     if (expectedResults.warnings) {
       for (const warning of expectedResults.warnings) {
-        const warningLocator = this.page.locator('div.bg-yellow-50, div.bg-yellow-900\\/20').filter({ hasText: warning });
+        const warningLocator = this.page
+          .locator('div.bg-yellow-50, div.bg-yellow-900\\/20')
+          .filter({ hasText: warning });
         await expect(warningLocator).toBeVisible();
       }
     }
 
     if (expectedResults.successes) {
       for (const success of expectedResults.successes) {
-        const successLocator = this.page.locator('div.bg-green-50, div.bg-green-900\\/20').filter({ hasText: success });
+        const successLocator = this.page
+          .locator('div.bg-green-50, div.bg-green-900\\/20')
+          .filter({ hasText: success });
         await expect(successLocator).toBeVisible();
       }
     }

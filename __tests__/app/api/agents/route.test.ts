@@ -1,7 +1,9 @@
 import { GET } from '@/app/api/agents/route';
+import { NextRequest } from 'next/server';
 
 // Mock NextResponse first
 jest.mock('next/server', () => ({
+  ...jest.requireActual('next/server'),
   NextResponse: {
     json: jest.fn(),
   },
@@ -9,21 +11,21 @@ jest.mock('next/server', () => ({
 
 // Mock the agents loader
 jest.mock('@/lib/agents', () => ({
-  loadMAMAgents: jest.fn(),
+  loadAllAgents: jest.fn(),
 }));
 
-const { loadMAMAgents } = require('@/lib/agents');
+const { loadAllAgents } = require('@/lib/agents');
 const { NextResponse } = require('next/server');
 
 describe('/api/agents', () => {
-  let mockRequest: Partial<Request>;
+  let mockRequest: NextRequest;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockRequest = {
       url: 'http://localhost:3000/api/agents',
       headers: new Headers(),
-    };
+    } as NextRequest;
   });
 
   it('should return list of all agents', async () => {
@@ -66,7 +68,7 @@ describe('/api/agents', () => {
       },
     ];
 
-    loadMAMAgents.mockResolvedValue(mockAgents);
+    loadAllAgents.mockResolvedValue(mockAgents);
     (NextResponse.json as jest.Mock).mockImplementation((data, options) => {
       return {
         status: options?.status || 200,
@@ -74,7 +76,7 @@ describe('/api/agents', () => {
       } as any;
     });
 
-    const response = await GET();
+    const response = await GET(mockRequest);
     const data = await response.json();
 
     expect(response.status).toBe(200);
@@ -97,7 +99,7 @@ describe('/api/agents', () => {
 
   it('should handle agents loading errors gracefully', async () => {
     const error = new Error('Failed to load agents');
-    loadMAMAgents.mockRejectedValue(error);
+    loadAllAgents.mockRejectedValue(error);
 
     (NextResponse.json as jest.Mock).mockImplementation((data, options) => {
       return {
@@ -106,16 +108,16 @@ describe('/api/agents', () => {
       } as any;
     });
 
-    const response = await GET();
+    const response = await GET(mockRequest);
     const data = await response.json();
 
     expect(response.status).toBe(500);
     expect(data.error).toBe('Failed to load agents');
-    expect(loadMAMAgents).toHaveBeenCalled();
+    expect(loadAllAgents).toHaveBeenCalled();
   });
 
   it('should handle unknown errors gracefully', async () => {
-    loadMAMAgents.mockRejectedValue('String error');
+    loadAllAgents.mockRejectedValue('String error');
 
     (NextResponse.json as jest.Mock).mockImplementation((data, options) => {
       return {
@@ -124,7 +126,7 @@ describe('/api/agents', () => {
       } as any;
     });
 
-    const response = await GET();
+    const response = await GET(mockRequest);
     const data = await response.json();
 
     expect(response.status).toBe(500);
@@ -155,7 +157,7 @@ describe('/api/agents', () => {
       ],
     };
 
-    loadMAMAgents.mockResolvedValue([mockAgent]);
+    loadAllAgents.mockResolvedValue([mockAgent]);
     (NextResponse.json as jest.Mock).mockImplementation((data, options) => {
       return {
         status: options?.status || 200,
@@ -163,7 +165,7 @@ describe('/api/agents', () => {
       } as any;
     });
 
-    const response = await GET();
+    const response = await GET(mockRequest);
     const data = await response.json();
 
     expect(response.status).toBe(200);

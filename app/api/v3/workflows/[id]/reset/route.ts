@@ -6,10 +6,7 @@ import path from 'path';
  * POST /api/v3/workflows/[id]/reset
  * Reset workflow state to beginning
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
 

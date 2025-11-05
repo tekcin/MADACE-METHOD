@@ -86,7 +86,7 @@ export function AgentPromptsStep({ agentData, setAgentData }: AgentPromptsStepPr
               value={prompt.id}
               onChange={(e) => setPrompt({ ...prompt, id: e.target.value })}
               placeholder="e.g., system-prompt"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
           </div>
 
@@ -104,7 +104,7 @@ export function AgentPromptsStep({ agentData, setAgentData }: AgentPromptsStepPr
               value={prompt.label}
               onChange={(e) => setPrompt({ ...prompt, label: e.target.value })}
               placeholder="e.g., System Instructions"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
           </div>
 
@@ -125,7 +125,7 @@ export function AgentPromptsStep({ agentData, setAgentData }: AgentPromptsStepPr
                   type: e.target.value as 'system' | 'user' | 'assistant',
                 })
               }
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             >
               <option value="system">System</option>
               <option value="user">User</option>
@@ -148,9 +148,9 @@ export function AgentPromptsStep({ agentData, setAgentData }: AgentPromptsStepPr
               id="prompt-content"
               value={prompt.prompt}
               onChange={(e) => setPrompt({ ...prompt, prompt: e.target.value })}
-              placeholder="Enter the prompt text that guides the agent&apos;s behavior..."
+              placeholder="Enter the prompt text that guides the agent's behavior..."
               rows={6}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               Use variables like {'{user_name}'} or {'{project_name}'} for dynamic content
@@ -197,7 +197,7 @@ export function AgentPromptsStep({ agentData, setAgentData }: AgentPromptsStepPr
                       <span className="text-sm font-semibold text-gray-900 dark:text-white">
                         {item.label}
                       </span>
-                      <span className="rounded bg-gray-200 px-2 py-0.5 text-xs font-mono text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+                      <span className="rounded bg-gray-200 px-2 py-0.5 font-mono text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300">
                         {item.id}
                       </span>
                       {item.type && (
@@ -206,7 +206,7 @@ export function AgentPromptsStep({ agentData, setAgentData }: AgentPromptsStepPr
                         </span>
                       )}
                     </div>
-                    <pre className="mt-2 whitespace-pre-wrap rounded bg-gray-50 p-2 text-xs font-mono text-gray-700 dark:bg-gray-900 dark:text-gray-300">
+                    <pre className="mt-2 rounded bg-gray-50 p-2 font-mono text-xs whitespace-pre-wrap text-gray-700 dark:bg-gray-900 dark:text-gray-300">
                       {item.prompt}
                     </pre>
                   </div>

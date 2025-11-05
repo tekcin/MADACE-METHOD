@@ -24,42 +24,36 @@ export function AgentPersona({ agent, onActionClick }: AgentPersonaProps) {
   return (
     <div className="space-y-6">
       {/* Header with icon and title */}
-      <div className="flex items-start space-x-4 border-b border-gray-200 pb-6 dark:border-gray-700">
-        <div className="flex size-20 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-5xl dark:bg-blue-900">
+      <div className="flex items-start space-x-4 border-b border-gray-700 pb-6">
+        <div className="flex size-20 flex-shrink-0 items-center justify-center rounded-full bg-blue-900 text-5xl">
           {agent.metadata.icon}
         </div>
         <div className="flex-1">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            {agent.metadata.title}
-          </h2>
-          <p className="mt-1 text-lg text-gray-600 dark:text-gray-400">{agent.persona.role}</p>
+          <h2 className="text-2xl font-bold text-white">{agent.metadata.title}</h2>
+          <p className="mt-1 text-lg text-gray-400">{agent.persona.role}</p>
           <div className="mt-2 flex items-center space-x-3">
-            <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800 uppercase dark:bg-blue-900 dark:text-blue-200">
+            <span className="rounded-full bg-blue-900 px-3 py-1 text-xs font-medium text-blue-200 uppercase">
               {agent.metadata.module}
             </span>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              v{agent.metadata.version}
-            </span>
+            <span className="text-xs text-gray-400">v{agent.metadata.version}</span>
           </div>
         </div>
       </div>
 
       {/* Identity */}
       {agent.persona.identity && (
-        <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
-          <h3 className="mb-2 font-semibold text-gray-900 dark:text-white">About</h3>
-          <p className="text-sm whitespace-pre-line text-gray-700 dark:text-gray-300">
-            {agent.persona.identity}
-          </p>
+        <div className="rounded-lg bg-gray-800 p-4">
+          <h3 className="mb-2 font-semibold text-white">About</h3>
+          <p className="text-sm whitespace-pre-line text-gray-300">{agent.persona.identity}</p>
         </div>
       )}
 
       {/* Communication Style */}
       {agent.persona.communication_style && (
         <div>
-          <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">Communication Style</h3>
-          <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-            <p className="text-sm whitespace-pre-line text-gray-700 dark:text-gray-300">
+          <h3 className="mb-3 font-semibold text-white">Communication Style</h3>
+          <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+            <p className="text-sm whitespace-pre-line text-gray-300">
               {agent.persona.communication_style}
             </p>
           </div>
@@ -69,12 +63,12 @@ export function AgentPersona({ agent, onActionClick }: AgentPersonaProps) {
       {/* Principles */}
       {agent.persona.principles && agent.persona.principles.length > 0 && (
         <div>
-          <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">Core Principles</h3>
+          <h3 className="mb-3 font-semibold text-white">Core Principles</h3>
           <ul className="space-y-2">
             {agent.persona.principles.map((principle, index) => (
               <li key={index} className="flex items-start">
                 <svg
-                  className="mt-0.5 mr-2 size-5 flex-shrink-0 text-blue-500 dark:text-blue-400"
+                  className="mt-0.5 mr-2 size-5 flex-shrink-0 text-blue-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -84,7 +78,7 @@ export function AgentPersona({ agent, onActionClick }: AgentPersonaProps) {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-sm text-gray-700 dark:text-gray-300">{principle}</span>
+                <span className="text-sm text-gray-300">{principle}</span>
               </li>
             ))}
           </ul>
@@ -94,12 +88,12 @@ export function AgentPersona({ agent, onActionClick }: AgentPersonaProps) {
       {/* Critical Actions */}
       {agent.critical_actions && agent.critical_actions.length > 0 && (
         <div>
-          <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">Critical Actions</h3>
+          <h3 className="mb-3 font-semibold text-white">Critical Actions</h3>
           <div className="flex flex-wrap gap-2">
             {agent.critical_actions.map((action, index) => (
               <span
                 key={index}
-                className="inline-flex items-center rounded-md bg-red-100 px-3 py-1 text-sm font-medium text-red-800 dark:bg-red-900 dark:text-red-200"
+                className="inline-flex items-center rounded-md bg-red-900 px-3 py-1 text-sm font-medium text-red-200"
               >
                 <svg
                   className="mr-1.5 size-4"
@@ -123,7 +117,7 @@ export function AgentPersona({ agent, onActionClick }: AgentPersonaProps) {
       {/* Menu Actions */}
       {agent.menu && agent.menu.length > 0 && (
         <div>
-          <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">Available Actions</h3>
+          <h3 className="mb-3 font-semibold text-white">Available Actions</h3>
           <div className="space-y-2">
             {agent.menu.map((menuItem, index) => (
               <button
@@ -131,20 +125,18 @@ export function AgentPersona({ agent, onActionClick }: AgentPersonaProps) {
                 onClick={() =>
                   handleActionClick(menuItem.action || menuItem.workflow || menuItem.exec || '')
                 }
-                className="flex w-full items-start rounded-lg border border-gray-200 bg-white p-4 text-left transition-colors hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-600 dark:hover:bg-blue-900/20"
+                className="flex w-full items-start rounded-lg border border-gray-700 bg-gray-800 p-4 text-left transition-colors hover:border-blue-600 hover:bg-blue-900/20"
               >
                 <div className="flex-1">
                   <div className="flex items-center space-x-2">
-                    <code className="rounded bg-gray-100 px-2 py-1 font-mono text-sm text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                    <code className="rounded bg-gray-700 px-2 py-1 font-mono text-sm text-gray-200">
                       {menuItem.trigger}
                     </code>
                   </div>
-                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                    {menuItem.description}
-                  </p>
+                  <p className="mt-2 text-sm text-gray-400">{menuItem.description}</p>
                 </div>
                 <svg
-                  className="ml-3 size-5 flex-shrink-0 text-gray-400 dark:text-gray-500"
+                  className="ml-3 size-5 flex-shrink-0 text-gray-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -165,21 +157,14 @@ export function AgentPersona({ agent, onActionClick }: AgentPersonaProps) {
       {/* Prompts */}
       {agent.prompts && agent.prompts.length > 0 && (
         <div>
-          <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">Available Prompts</h3>
+          <h3 className="mb-3 font-semibold text-white">Available Prompts</h3>
           <div className="space-y-3">
             {agent.prompts.map((prompt, index) => (
-              <details
-                key={index}
-                className="group rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
-              >
-                <summary className="flex cursor-pointer items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-700">
+              <details key={index} className="group rounded-lg border border-gray-700 bg-gray-800">
+                <summary className="flex cursor-pointer items-center justify-between p-4 hover:bg-gray-700">
                   <div>
-                    <code className="font-mono text-sm text-blue-600 dark:text-blue-400">
-                      {prompt.trigger}
-                    </code>
-                    <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-                      {prompt.name}
-                    </p>
+                    <code className="font-mono text-sm text-blue-400">{prompt.trigger}</code>
+                    <p className="mt-1 text-sm font-medium text-white">{prompt.name}</p>
                   </div>
                   <svg
                     className="size-5 flex-shrink-0 text-gray-400 transition-transform group-open:rotate-90"
@@ -195,10 +180,8 @@ export function AgentPersona({ agent, onActionClick }: AgentPersonaProps) {
                     />
                   </svg>
                 </summary>
-                <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900">
-                  <pre className="text-xs whitespace-pre-wrap text-gray-700 dark:text-gray-300">
-                    {prompt.content}
-                  </pre>
+                <div className="border-t border-gray-700 bg-gray-900 p-4">
+                  <pre className="text-xs whitespace-pre-wrap text-gray-300">{prompt.content}</pre>
                 </div>
               </details>
             ))}
@@ -208,16 +191,11 @@ export function AgentPersona({ agent, onActionClick }: AgentPersonaProps) {
 
       {/* Load Always */}
       {agent.load_always && agent.load_always.length > 0 && (
-        <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
-          <h3 className="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-            Auto-loaded Files
-          </h3>
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+          <h3 className="mb-2 text-sm font-semibold text-white">Auto-loaded Files</h3>
           <ul className="space-y-1">
             {agent.load_always.map((file, index) => (
-              <li
-                key={index}
-                className="flex items-center text-xs text-gray-600 dark:text-gray-400"
-              >
+              <li key={index} className="flex items-center text-xs text-gray-400">
                 <svg
                   className="mr-2 size-4 text-gray-400"
                   fill="none"

@@ -40,41 +40,44 @@ export default function ChatInterface({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  const loadMessages = useCallback(async (before?: Date) => {
-    try {
-      if (before) {
-        setIsLoadingMore(true);
-      } else {
-        setIsLoading(true);
+  const loadMessages = useCallback(
+    async (before?: Date) => {
+      try {
+        if (before) {
+          setIsLoadingMore(true);
+        } else {
+          setIsLoading(true);
+        }
+
+        const params = new URLSearchParams({
+          limit: '50',
+          ...(before && { before: before.toISOString() }),
+        });
+
+        const response = await fetch(`/api/v3/chat/sessions/${sessionId}/messages?${params}`);
+        if (!response.ok) throw new Error('Failed to load messages');
+
+        const data = await response.json();
+        const newMessages = data.messages || [];
+
+        if (before) {
+          // Prepend older messages for infinite scroll
+          setMessages((prev) => [...newMessages, ...prev]);
+          setHasMore(newMessages.length === 50);
+        } else {
+          // Initial load
+          setMessages(newMessages);
+          setHasMore(newMessages.length === 50);
+        }
+      } catch (error) {
+        console.error('Error loading messages:', error);
+      } finally {
+        setIsLoading(false);
+        setIsLoadingMore(false);
       }
-
-      const params = new URLSearchParams({
-        limit: '50',
-        ...(before && { before: before.toISOString() }),
-      });
-
-      const response = await fetch(`/api/v3/chat/sessions/${sessionId}/messages?${params}`);
-      if (!response.ok) throw new Error('Failed to load messages');
-
-      const data = await response.json();
-      const newMessages = data.messages || [];
-
-      if (before) {
-        // Prepend older messages for infinite scroll
-        setMessages((prev) => [...newMessages, ...prev]);
-        setHasMore(newMessages.length === 50);
-      } else {
-        // Initial load
-        setMessages(newMessages);
-        setHasMore(newMessages.length === 50);
-      }
-    } catch (error) {
-      console.error('Error loading messages:', error);
-    } finally {
-      setIsLoading(false);
-      setIsLoadingMore(false);
-    }
-  }, [sessionId]);
+    },
+    [sessionId]
+  );
 
   // Load messages on mount
   useEffect(() => {
@@ -251,20 +254,20 @@ export default function ChatInterface({
   };
 
   return (
-    <div data-testid="chat-interface" className="flex h-full flex-col bg-gray-50 dark:bg-gray-900">
+    <div data-testid="chat-interface" className="flex h-full flex-col bg-gray-900">
       {/* Header */}
       <div
         data-testid="chat-header"
-        className="flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800"
+        className="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-3"
       >
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 font-medium text-white">
             {agentName.substring(0, 2).toUpperCase()}
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{agentName}</h2>
+            <h2 className="text-lg font-semibold text-gray-100">{agentName}</h2>
             <p
-              className="text-sm text-gray-500 dark:text-gray-400"
+              className="text-sm text-gray-400"
               data-testid={isStreaming ? 'typing-indicator' : undefined}
             >
               {isStreaming ? 'Typing...' : 'Online'}
@@ -283,11 +286,11 @@ export default function ChatInterface({
           {onClose && (
             <button
               onClick={onClose}
-              className="rounded-lg p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="rounded-lg p-2 transition-colors hover:bg-gray-700"
               title="Close chat"
             >
               <svg
-                className="h-5 w-5 text-gray-500 dark:text-gray-400"
+                className="h-5 w-5 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -312,9 +315,9 @@ export default function ChatInterface({
           </div>
         ) : messages.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center text-center">
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-900/20">
               <svg
-                className="h-8 w-8 text-green-600 dark:text-green-400"
+                className="h-8 w-8 text-green-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -327,12 +330,10 @@ export default function ChatInterface({
                 />
               </svg>
             </div>
-            <h3 className="mb-2 text-lg font-medium text-gray-900 dark:text-gray-100">
+            <h3 className="mb-2 text-lg font-medium text-gray-100">
               Start a conversation with {agentName}
             </h3>
-            <p className="text-gray-500 dark:text-gray-400">
-              Send a message to begin chatting with your AI agent
-            </p>
+            <p className="text-gray-400">Send a message to begin chatting with your AI agent</p>
           </div>
         ) : (
           <div>
@@ -369,7 +370,7 @@ export default function ChatInterface({
 
       {/* Reply indicator */}
       {replyingTo && (
-        <div className="flex items-center justify-between border-t border-blue-200 bg-blue-50 px-4 py-2 dark:border-blue-800 dark:bg-blue-900/20">
+        <div className="flex items-center justify-between border-t border-blue-800 bg-blue-900/20 px-4 py-2">
           <div className="flex items-center gap-2">
             <svg
               className="h-4 w-4 text-blue-600"
@@ -384,13 +385,13 @@ export default function ChatInterface({
                 d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
               />
             </svg>
-            <span className="text-sm text-gray-700 dark:text-gray-300">
+            <span className="text-sm text-gray-300">
               Replying to: {replyingTo.content.substring(0, 50)}...
             </span>
           </div>
           <button
             onClick={() => setReplyingTo(null)}
-            className="rounded p-1 transition-colors hover:bg-blue-100 dark:hover:bg-blue-800"
+            className="rounded p-1 transition-colors hover:bg-blue-800"
           >
             <svg
               className="h-4 w-4 text-gray-500"

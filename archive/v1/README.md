@@ -9,6 +9,7 @@ MADACE v1.0 was the **original Node.js command-line interface (CLI)** implementa
 ## Architecture
 
 **v1.0 Stack:**
+
 - **Runtime**: Node.js (pure JavaScript/Node.js CLI)
 - **Interface**: Terminal/Command-line only
 - **Storage**: File-based (YAML, Markdown)
@@ -17,6 +18,7 @@ MADACE v1.0 was the **original Node.js command-line interface (CLI)** implementa
 - **Agent System**: YAML-defined agents with file-based prompts
 
 **Key Characteristics:**
+
 - ✅ Lightweight CLI tool
 - ✅ File-based configuration
 - ✅ Markdown workflow status tracking
@@ -34,6 +36,7 @@ The **official MADACE v1.0 (Node.js CLI)** is maintained in a separate repositor
 **Repository**: [https://github.com/tekcin/MADACE-METHOD](https://github.com/tekcin/MADACE-METHOD)
 
 This repository contains the original implementation with:
+
 - Pure Node.js CLI architecture
 - File-based agent and workflow management
 - Terminal-based interactive workflows
@@ -72,12 +75,14 @@ v3.0 (Production Full-Stack) ← CURRENT
 The current **MADACE v3.0** represents a complete architectural evolution:
 
 ### What v1.0 Offered:
+
 - ✅ Simple, lightweight CLI tool
 - ✅ Easy to install and run (`npm install -g`)
 - ✅ File-based configuration (no database setup)
 - ✅ Immediate terminal workflows
 
 ### What v3.0 Adds:
+
 - ✅ **Database-backed persistence** - No data loss, robust storage
 - ✅ **Web UI** - Visual workflow execution, agent management
 - ✅ **REST API** - Integration with external tools
@@ -90,6 +95,7 @@ The current **MADACE v3.0** represents a complete architectural evolution:
 ## When to Use v1.0 vs v3.0
 
 ### Use MADACE v1.0 (Node.js CLI) if you need:
+
 - A lightweight, terminal-only tool
 - No database or infrastructure setup
 - Simple file-based workflows
@@ -99,6 +105,7 @@ The current **MADACE v3.0** represents a complete architectural evolution:
 **Install**: `npm install -g madace-method` (from official repo)
 
 ### Use MADACE v3.0 (This Repository) if you need:
+
 - Full-stack web application
 - Database-backed persistence
 - Team collaboration features
@@ -121,27 +128,29 @@ If you're migrating from v1.0 to v3.0:
 
 ## Key Differences
 
-| Feature | v1.0 (CLI) | v3.0 (Full-Stack) |
-|---------|------------|-------------------|
-| **Interface** | Terminal only | Web UI + API |
-| **Storage** | Files (YAML/MD) | Database (Prisma) |
-| **Agents** | YAML files | Database + YAML import |
-| **Workflows** | Markdown status | Database + visual UI |
-| **LLM** | Direct API calls | Multi-provider client |
-| **Collaboration** | Single user | Multi-user + real-time |
-| **Deployment** | npm install -g | Docker + cloud |
-| **Testing** | Manual | E2E + unit tests |
-| **API** | None | Full REST API |
-| **Memory** | None | Persistent agent memory |
+| Feature           | v1.0 (CLI)       | v3.0 (Full-Stack)       |
+| ----------------- | ---------------- | ----------------------- |
+| **Interface**     | Terminal only    | Web UI + API            |
+| **Storage**       | Files (YAML/MD)  | Database (Prisma)       |
+| **Agents**        | YAML files       | Database + YAML import  |
+| **Workflows**     | Markdown status  | Database + visual UI    |
+| **LLM**           | Direct API calls | Multi-provider client   |
+| **Collaboration** | Single user      | Multi-user + real-time  |
+| **Deployment**    | npm install -g   | Docker + cloud          |
+| **Testing**       | Manual           | E2E + unit tests        |
+| **API**           | None             | Full REST API           |
+| **Memory**        | None             | Persistent agent memory |
 
 ## Documentation
 
 For v1.0 documentation, see:
+
 - Official repository: [https://github.com/tekcin/MADACE-METHOD](https://github.com/tekcin/MADACE-METHOD)
 - v1.0 README and installation guide
 - v1.0 CLI command reference
 
 For v3.0 documentation, see:
+
 - [Main README](../../README.md)
 - [PRD](../../PRD.md) - Product requirements
 - [ARCHITECTURE](../../ARCHITECTURE.md) - System architecture
@@ -154,6 +163,7 @@ Both v1.0 and v3.0 follow the same open-source license. See the main repository 
 ## Contact
 
 For questions about:
+
 - **v1.0 (Original CLI)**: See [https://github.com/tekcin/MADACE-METHOD](https://github.com/tekcin/MADACE-METHOD)
 - **v3.0 (This implementation)**: Open an issue in this repository
 

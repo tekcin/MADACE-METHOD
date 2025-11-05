@@ -2016,12 +2016,13 @@ await createMessage({
   sessionId,
   role: 'agent',
   content: fullResponse,
-  provider: usedProvider,  // Tracks which provider was used
-  model: usedModel,        // Tracks specific model name
+  provider: usedProvider, // Tracks which provider was used
+  model: usedModel, // Tracks specific model name
 });
 ```
 
 **Benefits:**
+
 - **Fallback Tracking**: Records actual provider used (may differ from requested due to automatic fallback)
 - **Model Transparency**: Shows specific model variant used (e.g., "gemma3" vs "gemini-2.0-flash-exp")
 - **Usage Analytics**: Enables per-provider usage tracking and cost analysis
@@ -2071,6 +2072,7 @@ function getProviderInfo(provider?: string | null) {
 ```
 
 **Visual Design:**
+
 - **Color Coding**: Each provider has a distinct color theme for instant recognition
 - **Badge Placement**: Appears next to timestamp in message header (non-intrusive)
 - **Tooltip**: Hover shows full provider name and specific model variant
@@ -2085,7 +2087,7 @@ function getProviderInfo(provider?: string | null) {
 export const CreateMessageSchema = z.object({
   // ... existing fields
   provider: z.string().optional(), // LLM provider
-  model: z.string().optional(),    // LLM model name
+  model: z.string().optional(), // LLM model name
 });
 
 export async function createMessage(input: CreateMessageInput): Promise<ChatMessage> {
@@ -2102,6 +2104,7 @@ export async function createMessage(input: CreateMessageInput): Promise<ChatMess
 ```
 
 **Validation:**
+
 - Optional fields maintain backward compatibility
 - Zod schema ensures type safety
 - Prisma ORM handles database storage
@@ -2113,13 +2116,14 @@ Provider information enhances LLM usage analytics:
 ```typescript
 // lib/services/llm-usage-service.ts
 await logLLMUsage({
-  provider: usedProvider,  // Matches message.provider
-  model: usedModel,        // Matches message.model
+  provider: usedProvider, // Matches message.provider
+  model: usedModel, // Matches message.model
   // ... token counts, response time, etc.
 });
 ```
 
 **Analytics Benefits:**
+
 - **Per-Provider Metrics**: Track response times, token usage, and costs by provider
 - **Model Comparison**: Compare performance across different models
 - **Fallback Analysis**: Identify how often automatic fallback is triggered
@@ -2128,12 +2132,14 @@ await logLLMUsage({
 #### User Experience Benefits
 
 **Transparency:**
+
 - **Visibility**: Users immediately see which AI powered their response
 - **Education**: Helps users understand multi-provider architecture
 - **Trust**: Builds confidence through transparency
 - **Choice**: Informs provider selection preferences
 
 **Debugging:**
+
 - **Troubleshooting**: Quickly identify provider-specific issues
 - **Performance**: Correlate response quality with specific providers/models
 - **Configuration**: Verify desired provider is being used
@@ -2156,11 +2162,13 @@ await logLLMUsage({
 4. `components/features/chat/Message.tsx` - Added provider badge UI component
 
 **Migration:**
+
 - Fields are optional for backward compatibility
 - Existing messages without provider info display normally
 - New messages automatically include provider tracking
 
 **Performance:**
+
 - No additional database queries (data fetched with message)
 - Minimal UI overhead (simple badge component)
 - No impact on streaming performance
@@ -5066,9 +5074,11 @@ const switchProject = useCallback(
       localStorage.setItem('madace-current-project', projectId);
 
       // Dispatch custom event for all listeners
-      window.dispatchEvent(new CustomEvent('project-switched', {
-        detail: { projectId }
-      }));
+      window.dispatchEvent(
+        new CustomEvent('project-switched', {
+          detail: { projectId },
+        })
+      );
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to switch project';
       setError(errorMessage);
@@ -5080,6 +5090,7 @@ const switchProject = useCallback(
 ```
 
 **Benefits:**
+
 - **Centralized**: Single point of truth for project changes
 - **Decoupled**: No tight coupling between ProjectContext and consuming components
 - **Flexible**: New components can easily add event listeners
@@ -5091,8 +5102,8 @@ const switchProject = useCallback(
 // Listen for project switch events and reload agents
 useEffect(() => {
   const handleProjectSwitch = () => {
-    loadAgents();      // Reload agent list for new project
-    loadAllAgents();   // Reload full agent catalog
+    loadAgents(); // Reload agent list for new project
+    loadAllAgents(); // Reload full agent catalog
   };
 
   window.addEventListener('project-switched', handleProjectSwitch);
@@ -5106,7 +5117,7 @@ useEffect(() => {
 // Listen for project switch events and reload workflow status
 useEffect(() => {
   const handleProjectSwitch = () => {
-    loadWorkflowStatus();  // Reload stories and Kanban board
+    loadWorkflowStatus(); // Reload stories and Kanban board
   };
 
   window.addEventListener('project-switched', handleProjectSwitch);
@@ -5119,9 +5130,10 @@ useEffect(() => {
 ```typescript
 // Listen for project switch events and reload agents
 useEffect(() => {
-  if (!providedAgents) {  // Only listen if fetching from API
+  if (!providedAgents) {
+    // Only listen if fetching from API
     const handleProjectSwitch = () => {
-      fetchAgents();  // Reload agents from API for new project
+      fetchAgents(); // Reload agents from API for new project
     };
 
     window.addEventListener('project-switched', handleProjectSwitch);
@@ -5133,6 +5145,7 @@ useEffect(() => {
 #### User Experience
 
 **Before Implementation:**
+
 1. User switches from "Project A" to "Project B"
 2. Chat page still shows Project A's agents
 3. Kanban shows Project A's stories
@@ -5140,6 +5153,7 @@ useEffect(() => {
 5. **Problem**: Confusing, error-prone, poor UX
 
 **After Implementation:**
+
 1. User switches from "Project A" to "Project B"
 2. Project selector updates immediately
 3. **Automatic**: All pages reload their data automatically
@@ -5150,22 +5164,26 @@ useEffect(() => {
 #### Technical Characteristics
 
 **Event Cleanup:**
+
 - Each `useEffect` returns cleanup function
 - Prevents memory leaks when components unmount
 - Automatically removes event listeners
 
 **Performance:**
+
 - Events are synchronous (no network latency for event dispatch)
 - Data reload happens asynchronously (doesn't block UI)
 - Only components currently mounted will reload
 - No polling or periodic checks needed
 
 **Error Handling:**
+
 - Project switch errors caught in ProjectContext
 - Component-level error handling for failed data reloads
 - User sees error messages if reload fails
 
 **Backward Compatibility:**
+
 - Pages still load data on initial mount (existing behavior)
 - Event listener is additive feature
 - No breaking changes to existing functionality
@@ -5173,9 +5191,11 @@ useEffect(() => {
 #### Files Modified
 
 **Project Context:**
+
 - `lib/context/ProjectContext.tsx` - Dispatch `project-switched` event
 
 **Event Listeners Added:**
+
 - `app/chat/page.tsx` - Reload agents on project switch
 - `app/kanban/page.tsx` - Reload workflow status on project switch
 - `components/features/AgentSelector.tsx` - Reload agent list on project switch
@@ -5195,6 +5215,7 @@ useEffect(() => {
 7. **Check**: No browser refresh needed
 
 **Expected Behavior:**
+
 - ✅ Data reloads within 100-500ms
 - ✅ No visual glitches or flash of old data
 - ✅ Loading states shown during reload
@@ -5203,20 +5224,24 @@ useEffect(() => {
 #### Alternative Patterns Considered
 
 **1. Prop Drilling**
+
 - ❌ Would require passing reload functions through multiple component layers
 - ❌ Tight coupling between ProjectContext and all consumers
 - ❌ Difficult to maintain as component tree grows
 
 **2. Global State Management (Redux/Zustand)**
+
 - ❌ Overkill for this specific use case
 - ❌ Adds dependency and complexity
 - ✅ May be needed in future for more complex state
 
 **3. React Context Subscriptions**
+
 - ❌ Would require wrapping more components in context providers
 - ❌ More React-specific boilerplate
 
 **4. Browser Events** (Chosen Approach)
+
 - ✅ Simple, standard browser API
 - ✅ Decoupled, flexible architecture
 - ✅ Easy to add new listeners
@@ -7720,6 +7745,7 @@ All existing functionality maintained:
 - **Date**: October 31, 2025
 
 ---
+
 ## 15. Enhanced Workflow System - 100% Complete ✅
 
 **Last Updated:** 2025-10-31
@@ -7731,6 +7757,7 @@ All existing functionality maintained:
 The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-ready solution for creating, managing, and executing AI-driven workflows. The system achieves **100% feature completion** with all 8 planned features fully implemented and operational.
 
 **Key Capabilities:**
+
 - YAML workflow loading and validation
 - Real-time LLM integration with multi-provider support
 - Template rendering with Handlebars
@@ -7743,6 +7770,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 ### 15.2 Implementation Summary
 
 **Total Delivered:**
+
 - 8/8 Features Complete (100%)
 - 7 New Files (2,073 lines) for Workflow Creator
 - 6 API Endpoints
@@ -7750,6 +7778,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 - 7 Workflow Action Types
 
 **Documentation:**
+
 - `docs/WORKFLOW-FEATURES-STATUS.md` - Complete feature tracking (100% status)
 - `docs/workflow-features-implementation-plan.md` - Implementation guide (30 pages)
 - `docs/WORKFLOW-IMPLEMENTATION-SUMMARY.md` - Summary and examples
@@ -7761,12 +7790,14 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 #### 15.3.1 Core Workflow Engine
 
 **Files:**
+
 - `lib/workflows/loader.ts` - YAML workflow loader with Zod validation
 - `lib/workflows/executor.ts` - Workflow execution engine with state management
 - `lib/workflows/schema.ts` - Zod validation schemas for all action types
 - `lib/workflows/types.ts` - TypeScript type definitions
 
 **Features:**
+
 - Load workflows from YAML files
 - Validate workflow structure
 - Execute steps sequentially
@@ -7779,6 +7810,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 **Implementation:** Enhanced `handleReflect()` in executor.ts
 
 **Capabilities:**
+
 - Real-time LLM responses during workflow execution
 - Multi-provider support: local (Ollama/Gemma3), Gemini, Claude, OpenAI
 - Configurable per-step: model, max_tokens, temperature
@@ -7786,6 +7818,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 - Token usage and performance tracking
 
 **Example Workflow Step:**
+
 ```yaml
 - name: 'Analyze Requirements'
   action: reflect
@@ -7801,6 +7834,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 **Implementation:** Enhanced `handleTemplate()` in executor.ts, integrated with `lib/templates/engine.ts`
 
 **Capabilities:**
+
 - Full Handlebars template support
 - Variable substitution from workflow state
 - File-based and inline templates
@@ -7808,6 +7842,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 - Template metadata tracking
 
 **Supported Template Patterns:**
+
 - Handlebars: `{{variable}}`
 - Legacy: `{variable}`, `${variable}`, `%VAR%`
 
@@ -7816,6 +7851,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 **Implementation:** File-based state management in `.madace/workflow-states/`
 
 **Capabilities:**
+
 - Automatic state saving after each step
 - Resume from any step
 - Sub-workflow state tracking
@@ -7823,6 +7859,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 - Reset capability
 
 **State File Structure:**
+
 ```json
 {
   "workflowId": "workflow-name",
@@ -7836,10 +7873,12 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 #### 15.3.5 Interactive Input Forms (Feature 5)
 
 **Implementation:**
+
 - `components/features/workflow/WorkflowInputForm.tsx` - React input component
 - `app/api/v3/workflows/[id]/input/route.ts` - Input submission endpoint
 
 **Features:**
+
 - Visual input forms for elicit steps
 - Multi-line textarea input
 - Real-time validation with regex support
@@ -7848,12 +7887,13 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 - Dark mode support and accessibility
 
 **Example Workflow Step:**
+
 ```yaml
 - name: 'Get Project Name'
   action: elicit
   prompt: 'Enter the project name'
   variable: 'project_name'
-  validation: '[a-zA-Z0-9-_]+'  # Optional regex validation
+  validation: '[a-zA-Z0-9-_]+' # Optional regex validation
 ```
 
 #### 15.3.6 Visual Workflow Creation Wizard (Feature 6) ✅ NEW
@@ -7863,6 +7903,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
 **Implementation:** 7 New Files (2,073 lines)
 
 **Files:**
+
 1. **`lib/types/workflow-create.ts`** (106 lines)
    - TypeScript type definitions
    - `WorkflowActionType` union (7 types)
@@ -7906,6 +7947,7 @@ The MADACE v3.0 Enhanced Workflow System provides a comprehensive, production-re
    - Conditional rendering
 
 **Wizard Flow:**
+
 ```
 Step 1: Basic Information
   ├─ Workflow name
@@ -7971,10 +8013,13 @@ const yamlData = {
     description: workflowData.description,
     agent: workflowData.agent,
     phase: workflowData.phase,
-    variables: workflowData.variables.reduce((acc, v) => ({
-      ...acc,
-      [v.name]: v.value,
-    }), {}),
+    variables: workflowData.variables.reduce(
+      (acc, v) => ({
+        ...acc,
+        [v.name]: v.value,
+      }),
+      {}
+    ),
     steps: workflowData.steps.map(({ id, ...step }) => {
       // Remove React-specific fields, include only defined workflow fields
       return cleanStep;
@@ -8003,11 +8048,13 @@ const handleDownload = () => {
 #### 15.3.7 Visual Workflow Execution UI (Feature 7)
 
 **Implementation:**
+
 - `components/features/workflow/WorkflowRunner.tsx` - Main execution component (433 lines)
 - `app/api/v3/workflows/[id]/stream/route.ts` - Server-Sent Events endpoint
 - `app/api/v3/workflows/[id]/execute/route.ts` - Start workflow endpoint
 
 **Features:**
+
 - Start/Reset workflow controls
 - Step-by-step progress visualization
 - Live execution logs with color coding
@@ -8020,6 +8067,7 @@ const handleDownload = () => {
 - Auto-start option
 
 **Architecture:**
+
 - SSE stream polls `.madace/workflow-states/.{id}.state.json` every 500ms
 - Sends updates only when state changes (efficient)
 - Detects `completed` flag and `_WAITING_FOR_INPUT` variable
@@ -8029,6 +8077,7 @@ const handleDownload = () => {
 #### 15.3.8 Complete API Endpoints (Feature 8)
 
 **Endpoints:**
+
 ```
 ✅ POST   /api/v3/workflows/[id]/execute  - Start/resume workflow execution
 ✅ GET    /api/v3/workflows/[id]/state    - Get current execution state
@@ -8039,6 +8088,7 @@ const handleDownload = () => {
 ```
 
 **Features:**
+
 - Next.js 15 async params support
 - Proper TypeScript typing
 - Zod validation where applicable
@@ -8129,12 +8179,12 @@ const eventSource = new EventSource('/api/v3/workflows/my-workflow/stream');
 eventSource.onmessage = (event) => {
   const state = JSON.parse(event.data);
   console.log(`Step ${state.currentStep}/${state.totalSteps}`);
-  
+
   if (state.completed) {
     console.log('Workflow completed!');
     eventSource.close();
   }
-  
+
   if (state.variables._WAITING_FOR_INPUT) {
     // Show input form
   }
@@ -8144,9 +8194,9 @@ eventSource.onmessage = (event) => {
 await fetch('/api/v3/workflows/my-workflow/input', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ 
+  body: JSON.stringify({
     variable: 'user_input',
-    value: 'My input value'
+    value: 'My input value',
   }),
 });
 
@@ -8163,6 +8213,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 **Decision:** Use file-based state (`.madace/workflow-states/`)
 
 **Rationale:**
+
 - Simple deployment (no additional database tables)
 - Easy debugging (human-readable JSON)
 - Git-friendly (can version control workflow state)
@@ -8176,6 +8227,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 **Decision:** Use YAML for human readability
 
 **Rationale:**
+
 - More readable than JSON for config files
 - Comments supported
 - Less verbose (no quotes for strings, no trailing commas)
@@ -8188,6 +8240,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 **Decision:** Asynchronous execution with SSE monitoring
 
 **Rationale:**
+
 - Non-blocking API requests
 - Better UX (user sees progress in real-time)
 - Can execute long-running workflows
@@ -8200,6 +8253,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 **Decision:** Form-based wizard (Phase 1), drag-and-drop in future
 
 **Rationale:**
+
 - Faster implementation (2 days vs 2 weeks)
 - Better for keyboard users
 - Easier validation and error handling
@@ -8210,21 +8264,25 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 ### 15.6 Performance Optimizations
 
 **Workflow Loading:**
+
 - Cache parsed YAML workflows in memory
 - Lazy load sub-workflows (only when needed)
 - Zod validation only on first load
 
 **State Management:**
+
 - Write state files atomically (prevent corruption)
 - Debounce state writes (max 1 write per 100ms)
 - Only write when state actually changes
 
 **SSE Streaming:**
+
 - Poll state files every 500ms (configurable)
 - Only send SSE events when state changes
 - Automatic cleanup on client disconnect
 
 **YAML Generation:**
+
 - Memoize YAML generation in preview step
 - Only regenerate when workflow data changes
 - Use `js-yaml` fast mode
@@ -8232,23 +8290,27 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 ### 15.7 Testing
 
 **Unit Tests:**
+
 - `__tests__/lib/workflows/loader.test.ts` - Workflow loading and validation
 - `__tests__/lib/workflows/executor.test.ts` - Workflow execution
 - `__tests__/lib/templates/engine.test.ts` - Template rendering
 
 **Integration Tests:**
+
 - Sub-workflow execution
 - State persistence and resume
 - Input collection flow
 - API endpoint responses
 
 **E2E Tests (Recommended):**
+
 - Complete workflow creation via wizard
 - Workflow execution with all action types
 - Interactive input submission
 - Error handling and recovery
 
 **Manual Testing:**
+
 - Create workflow via wizard → Download YAML → Execute → Verify output
 - Test all 7 action types
 - Test validation (missing required fields, invalid regex)
@@ -8267,6 +8329,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 ### 15.9 Future Enhancements (v3.1+)
 
 **Planned Features:**
+
 - Workflow templates library (pre-built workflows)
 - Visual drag-and-drop workflow editor
 - Workflow scheduling (cron jobs)
@@ -8281,6 +8344,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 ### 15.10 Integration Benefits
 
 **For Developers:**
+
 - Visual workflow creation (no YAML editing)
 - Type-safe variable management
 - Real-time LLM integration
@@ -8288,6 +8352,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 - Complete API for programmatic access
 
 **For Teams:**
+
 - Shareable workflow YAML files (Git-friendly)
 - Consistent workflow execution
 - Interactive input collection
@@ -8295,6 +8360,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 - Complete audit trail (state files)
 
 **For MADACE Platform:**
+
 - Foundation for advanced automation
 - Extensible action type system
 - Scalable state management
@@ -8303,6 +8369,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 ### 15.11 Success Metrics
 
 **Quantitative:**
+
 - ✅ 100% Feature Completion (8/8 features)
 - ✅ 2,073 lines of code for workflow creator
 - ✅ 6 API endpoints fully operational
@@ -8310,6 +8377,7 @@ await fetch('/api/v3/workflows/my-workflow/resume', {
 - ✅ 0 known limitations
 
 **Qualitative:**
+
 - ✅ Production-ready implementation
 - ✅ Type-safe throughout
 - ✅ Comprehensive documentation

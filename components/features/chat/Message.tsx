@@ -60,23 +60,23 @@ function getProviderInfo(provider?: string | null) {
   const providers: Record<string, { label: string; color: string; bg: string }> = {
     gemini: {
       label: 'Gemini',
-      color: 'text-blue-700 dark:text-blue-300',
-      bg: 'bg-blue-100 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800',
+      color: 'text-blue-300',
+      bg: 'bg-blue-900/30 border-blue-800',
     },
     claude: {
       label: 'Claude',
-      color: 'text-purple-700 dark:text-purple-300',
-      bg: 'bg-purple-100 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800',
+      color: 'text-purple-300',
+      bg: 'bg-purple-900/30 border-purple-800',
     },
     openai: {
       label: 'OpenAI',
-      color: 'text-green-700 dark:text-green-300',
-      bg: 'bg-green-100 dark:bg-green-900/30 border-green-200 dark:border-green-800',
+      color: 'text-green-300',
+      bg: 'bg-green-900/30 border-green-800',
     },
     local: {
       label: 'Local',
-      color: 'text-gray-700 dark:text-gray-300',
-      bg: 'bg-gray-100 dark:bg-gray-900/30 border-gray-200 dark:border-gray-700',
+      color: 'text-gray-300',
+      bg: 'bg-gray-900/30 border-gray-700',
     },
   };
 
@@ -101,16 +101,12 @@ export default function Message({
 
   // Color schemes
   const avatarBg = isUser ? 'bg-blue-500' : isSystem ? 'bg-gray-500' : 'bg-green-500';
-  const bubbleBg = isUser
-    ? 'bg-blue-50 dark:bg-blue-900/20'
-    : isSystem
-      ? 'bg-gray-50 dark:bg-gray-800'
-      : 'bg-white dark:bg-gray-900';
+  const bubbleBg = isUser ? 'bg-blue-900/20' : isSystem ? 'bg-gray-800' : 'bg-gray-900';
   const bubbleBorder = isUser
-    ? 'border-blue-200 dark:border-blue-700'
+    ? 'border-blue-700'
     : isSystem
-      ? 'border-gray-200 dark:border-gray-700'
-      : 'border-gray-200 dark:border-gray-700';
+      ? 'border-gray-700'
+      : 'border-gray-700';
 
   return (
     <div
@@ -129,10 +125,8 @@ export default function Message({
       <div className={`max-w-[70%] flex-1 ${isUser ? 'items-end' : 'items-start'} flex flex-col`}>
         {/* Name and Timestamp */}
         <div className={`mb-1 flex items-center gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
-          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-            {displayName}
-          </span>
-          <span className="text-xs text-gray-500 dark:text-gray-400">{relativeTime}</span>
+          <span className="text-sm font-medium text-gray-100">{displayName}</span>
+          <span className="text-xs text-gray-400">{relativeTime}</span>
 
           {/* Provider Badge (only for agent messages) */}
           {!isUser && providerInfo && (
@@ -163,7 +157,7 @@ export default function Message({
           {isStreaming && (
             <div className="mt-2 flex items-center gap-1">
               <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
-              <span className="text-xs text-gray-500 dark:text-gray-400">Typing...</span>
+              <span className="text-xs text-gray-400">Typing...</span>
             </div>
           )}
 
@@ -171,11 +165,11 @@ export default function Message({
           {onReply && !isStreaming && (
             <button
               onClick={onReply}
-              className="absolute right-2 -bottom-2 rounded-full border border-gray-300 bg-white p-1.5 opacity-0 shadow-sm transition-opacity group-hover:opacity-100 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700"
+              className="absolute right-2 -bottom-2 rounded-full border border-gray-600 bg-gray-800 p-1.5 opacity-0 shadow-sm transition-opacity group-hover:opacity-100 hover:bg-gray-700"
               title="Reply to this message"
             >
               <svg
-                className="h-4 w-4 text-gray-600 dark:text-gray-400"
+                className="h-4 w-4 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

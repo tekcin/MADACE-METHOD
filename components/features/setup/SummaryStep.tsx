@@ -16,39 +16,29 @@ export function SummaryStep({ config }: Props) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Configuration Summary</h2>
-      <p className="text-sm text-gray-600 dark:text-gray-400">
-        Review your configuration before finishing setup
-      </p>
+      <h2 className="text-xl font-semibold text-white">Configuration Summary</h2>
+      <p className="text-sm text-gray-300">Review your configuration before finishing setup</p>
 
       <div className="space-y-6">
         {/* Project Information */}
-        <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
-          <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-            Project Information
-          </h3>
+        <div className="rounded-lg border border-gray-700 p-4">
+          <h3 className="mb-3 text-sm font-semibold text-white">Project Information</h3>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-gray-600 dark:text-gray-400">Project Name:</dt>
-              <dd className="font-medium text-gray-900 dark:text-white">
-                {projectInfo.projectName}
-              </dd>
+              <dt className="text-gray-300">Project Name:</dt>
+              <dd className="font-medium text-white">{projectInfo.projectName}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600 dark:text-gray-400">Output Folder:</dt>
-              <dd className="font-medium text-gray-900 dark:text-white">
-                {projectInfo.outputFolder}
-              </dd>
+              <dt className="text-gray-300">Output Folder:</dt>
+              <dd className="font-medium text-white">{projectInfo.outputFolder}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600 dark:text-gray-400">Your Name:</dt>
-              <dd className="font-medium text-gray-900 dark:text-white">
-                {projectInfo.userName || '(Not provided)'}
-              </dd>
+              <dt className="text-gray-300">Your Name:</dt>
+              <dd className="font-medium text-white">{projectInfo.userName || '(Not provided)'}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600 dark:text-gray-400">Language:</dt>
-              <dd className="font-medium text-gray-900 dark:text-white">
+              <dt className="text-gray-300">Language:</dt>
+              <dd className="font-medium text-white">
                 {projectInfo.communicationLanguage.toUpperCase()}
               </dd>
             </div>
@@ -56,38 +46,32 @@ export function SummaryStep({ config }: Props) {
         </div>
 
         {/* LLM Configuration */}
-        <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
-          <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-            LLM Configuration
-          </h3>
+        <div className="rounded-lg border border-gray-700 p-4">
+          <h3 className="mb-3 text-sm font-semibold text-white">LLM Configuration</h3>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-gray-600 dark:text-gray-400">Provider:</dt>
-              <dd className="font-medium text-gray-900 dark:text-white">
-                {providerNames[llmConfig.provider]}
-              </dd>
+              <dt className="text-gray-300">Provider:</dt>
+              <dd className="font-medium text-white">{providerNames[llmConfig.provider]}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600 dark:text-gray-400">API Key:</dt>
-              <dd className="font-medium text-gray-900 dark:text-white">
+              <dt className="text-gray-300">API Key:</dt>
+              <dd className="font-medium text-white">
                 {llmConfig.apiKey ? `${llmConfig.apiKey.substring(0, 8)}...` : '(Not provided)'}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600 dark:text-gray-400">Model:</dt>
-              <dd className="font-medium text-gray-900 dark:text-white">{llmConfig.model}</dd>
+              <dt className="text-gray-300">Model:</dt>
+              <dd className="font-medium text-white">{llmConfig.model}</dd>
             </div>
           </dl>
         </div>
 
         {/* Module Configuration */}
-        <div className="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
-          <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-            Enabled Modules
-          </h3>
+        <div className="rounded-lg border border-gray-700 p-4">
+          <h3 className="mb-3 text-sm font-semibold text-white">Enabled Modules</h3>
           <ul className="space-y-2 text-sm">
             {moduleConfig.mamEnabled && (
-              <li className="flex items-center text-gray-900 dark:text-white">
+              <li className="flex items-center text-white">
                 <svg
                   className="mr-2 h-5 w-5 text-green-500"
                   viewBox="0 0 20 20"
@@ -104,7 +88,7 @@ export function SummaryStep({ config }: Props) {
               </li>
             )}
             {moduleConfig.mabEnabled && (
-              <li className="flex items-center text-gray-900 dark:text-white">
+              <li className="flex items-center text-white">
                 <svg
                   className="mr-2 h-5 w-5 text-green-500"
                   viewBox="0 0 20 20"
@@ -121,7 +105,7 @@ export function SummaryStep({ config }: Props) {
               </li>
             )}
             {moduleConfig.cisEnabled && (
-              <li className="flex items-center text-gray-900 dark:text-white">
+              <li className="flex items-center text-white">
                 <svg
                   className="mr-2 h-5 w-5 text-green-500"
                   viewBox="0 0 20 20"
@@ -139,12 +123,12 @@ export function SummaryStep({ config }: Props) {
             )}
           </ul>
           {!moduleConfig.mamEnabled && !moduleConfig.mabEnabled && !moduleConfig.cisEnabled && (
-            <p className="text-sm text-gray-500 dark:text-gray-400">No modules enabled</p>
+            <p className="text-sm text-gray-300">No modules enabled</p>
           )}
         </div>
       </div>
 
-      <div className="rounded-lg bg-yellow-50 p-4 dark:bg-yellow-900/20">
+      <div className="rounded-lg bg-yellow-900/20 p-4">
         <div className="flex">
           <div className="flex-shrink-0">
             <svg
@@ -161,7 +145,7 @@ export function SummaryStep({ config }: Props) {
             </svg>
           </div>
           <div className="ml-3">
-            <p className="text-sm text-yellow-700 dark:text-yellow-300">
+            <p className="text-sm text-yellow-300">
               Click &quot;Finish Setup&quot; to save your configuration. You can change these
               settings later in the Settings page.
             </p>

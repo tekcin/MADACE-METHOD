@@ -7,10 +7,7 @@ import fs from 'fs/promises';
  * POST /api/v3/workflows/[id]/execute
  * Start or resume workflow execution
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
 

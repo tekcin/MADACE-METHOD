@@ -230,7 +230,8 @@ export class WorkflowExecutor {
       const messages = [
         {
           role: 'system' as const,
-          content: 'You are a helpful AI assistant helping with workflow execution. Provide concise, actionable responses.',
+          content:
+            'You are a helpful AI assistant helping with workflow execution. Provide concise, actionable responses.',
         },
         {
           role: 'user' as const,
@@ -265,10 +266,16 @@ export class WorkflowExecutor {
 
       console.warn(`   ✅ Reflection complete (${duration}ms, ${result.tokensUsed} tokens)`);
       console.warn(`   📊 Model: ${result.model}`);
-      console.warn(`   💬 Response: ${response.content.substring(0, 150)}${response.content.length > 150 ? '...' : ''}`);
+      console.warn(
+        `   💬 Response: ${response.content.substring(0, 150)}${response.content.length > 150 ? '...' : ''}`
+      );
     } catch (error) {
-      console.warn(`   ❌ Reflection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
-      throw new Error(`LLM reflection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.warn(
+        `   ❌ Reflection failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+      throw new Error(
+        `LLM reflection failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -358,7 +365,9 @@ export class WorkflowExecutor {
       this.state!.variables['last_template_output'] = outputPath;
       this.state!.variables['last_template_size'] = rendered.length;
     } catch (error) {
-      throw new Error(`Template rendering failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Template rendering failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 

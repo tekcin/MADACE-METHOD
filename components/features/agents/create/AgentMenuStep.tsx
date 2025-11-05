@@ -86,7 +86,7 @@ export function AgentMenuStep({ agentData, setAgentData }: AgentMenuStepProps) {
               value={menuItem.id}
               onChange={(e) => setMenuItem({ ...menuItem, id: e.target.value })}
               placeholder="e.g., review-code"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
           </div>
 
@@ -104,7 +104,7 @@ export function AgentMenuStep({ agentData, setAgentData }: AgentMenuStepProps) {
               value={menuItem.label}
               onChange={(e) => setMenuItem({ ...menuItem, label: e.target.value })}
               placeholder="e.g., Review Code"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
           </div>
 
@@ -122,7 +122,7 @@ export function AgentMenuStep({ agentData, setAgentData }: AgentMenuStepProps) {
               value={menuItem.action}
               onChange={(e) => setMenuItem({ ...menuItem, action: e.target.value })}
               placeholder="e.g., workflow:review-code or prompt:code-review"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               Format: workflow:name, prompt:name, or exec:command
@@ -143,7 +143,7 @@ export function AgentMenuStep({ agentData, setAgentData }: AgentMenuStepProps) {
               onChange={(e) => setMenuItem({ ...menuItem, description: e.target.value })}
               placeholder="Brief description of what this action does..."
               rows={2}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
           </div>
 
@@ -186,7 +186,7 @@ export function AgentMenuStep({ agentData, setAgentData }: AgentMenuStepProps) {
                     <span className="text-sm font-semibold text-gray-900 dark:text-white">
                       {item.label}
                     </span>
-                    <span className="rounded bg-gray-200 px-2 py-0.5 text-xs font-mono text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+                    <span className="rounded bg-gray-200 px-2 py-0.5 font-mono text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300">
                       {item.id}
                     </span>
                   </div>

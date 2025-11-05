@@ -19,7 +19,10 @@ export function AgentBasicInfoStep({ agentData, setAgentData }: AgentBasicInfoSt
 
       {/* Name Field */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           Agent Name <span className="text-red-500">*</span>
         </label>
         <input
@@ -28,7 +31,7 @@ export function AgentBasicInfoStep({ agentData, setAgentData }: AgentBasicInfoSt
           value={agentData.name}
           onChange={(e) => setAgentData({ ...agentData, name: e.target.value })}
           placeholder="e.g., custom-dev"
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white sm:text-sm"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           maxLength={50}
           required
         />
@@ -51,7 +54,7 @@ export function AgentBasicInfoStep({ agentData, setAgentData }: AgentBasicInfoSt
           value={agentData.title}
           onChange={(e) => setAgentData({ ...agentData, title: e.target.value })}
           placeholder="e.g., Custom Developer"
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white sm:text-sm"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           maxLength={100}
           required
         />
@@ -87,7 +90,7 @@ export function AgentBasicInfoStep({ agentData, setAgentData }: AgentBasicInfoSt
             value={agentData.icon}
             onChange={(e) => setAgentData({ ...agentData, icon: e.target.value })}
             placeholder="Or enter custom emoji"
-            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
             maxLength={10}
           />
         </div>
@@ -110,7 +113,7 @@ export function AgentBasicInfoStep({ agentData, setAgentData }: AgentBasicInfoSt
               module: e.target.value as 'mam' | 'mab' | 'cis' | 'core',
             })
           }
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white sm:text-sm"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         >
           <option value="mab">MAB - MADACE Agent Builder</option>
           <option value="mam">MAM - MADACE Agile Method</option>
@@ -137,7 +140,7 @@ export function AgentBasicInfoStep({ agentData, setAgentData }: AgentBasicInfoSt
           onChange={(e) => setAgentData({ ...agentData, version: e.target.value })}
           placeholder="1.0.0"
           pattern="^\d+\.\d+\.\d+$"
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white sm:text-sm"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           required
         />
         <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">

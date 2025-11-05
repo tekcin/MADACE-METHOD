@@ -108,9 +108,7 @@ export function VariablesStep({ workflowData, setWorkflowData }: VariablesStepPr
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-          Workflow Variables
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Workflow Variables</h2>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Define variables that can be used throughout the workflow
         </p>
@@ -137,7 +135,7 @@ export function VariablesStep({ workflowData, setWorkflowData }: VariablesStepPr
               value={variable.name}
               onChange={(e) => setVariable({ ...variable, name: e.target.value })}
               placeholder="e.g., project_name"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 font-mono shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               Use snake_case for variable names (e.g., user_name, max_retries)
@@ -164,7 +162,7 @@ export function VariablesStep({ workflowData, setWorkflowData }: VariablesStepPr
                   setVariable({ ...variable, value: '' });
                 }
               }}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             >
               <option value="string">String</option>
               <option value="number">Number</option>
@@ -185,7 +183,7 @@ export function VariablesStep({ workflowData, setWorkflowData }: VariablesStepPr
                 id="var-value"
                 value={getValueDisplay(variable.value)}
                 onChange={(e) => setVariable({ ...variable, value: e.target.value })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               >
                 <option value="false">false</option>
                 <option value="true">true</option>
@@ -196,10 +194,8 @@ export function VariablesStep({ workflowData, setWorkflowData }: VariablesStepPr
                 id="var-value"
                 value={getValueDisplay(variable.value)}
                 onChange={(e) => setVariable({ ...variable, value: e.target.value })}
-                placeholder={
-                  valueType === 'number' ? 'e.g., 42' : 'e.g., My Project'
-                }
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+                placeholder={valueType === 'number' ? 'e.g., 42' : 'e.g., My Project'}
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             )}
           </div>
@@ -218,7 +214,7 @@ export function VariablesStep({ workflowData, setWorkflowData }: VariablesStepPr
               onChange={(e) => setVariable({ ...variable, description: e.target.value })}
               placeholder="Brief description of what this variable is used for..."
               rows={2}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
           </div>
 
@@ -323,11 +319,7 @@ export function VariablesStep({ workflowData, setWorkflowData }: VariablesStepPr
       <div className="rounded-md bg-blue-50 p-4 dark:bg-blue-900/20">
         <div className="flex">
           <div className="flex-shrink-0">
-            <svg
-              className="h-5 w-5 text-blue-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
+            <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
               <path
                 fillRule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
@@ -340,12 +332,14 @@ export function VariablesStep({ workflowData, setWorkflowData }: VariablesStepPr
               Using Variables
             </h3>
             <div className="mt-2 text-sm text-blue-700 dark:text-blue-300">
-              <p>
-                Variables can be referenced in workflow steps using the syntax:
-              </p>
+              <p>Variables can be referenced in workflow steps using the syntax:</p>
               <ul className="mt-1 list-inside list-disc space-y-1">
-                <li>Handlebars: <code className="font-mono">{'{{variable_name}}'}</code></li>
-                <li>JavaScript: <code className="font-mono">$&#123;variable_name&#125;</code></li>
+                <li>
+                  Handlebars: <code className="font-mono">{'{{variable_name}}'}</code>
+                </li>
+                <li>
+                  JavaScript: <code className="font-mono">$&#123;variable_name&#125;</code>
+                </li>
               </ul>
             </div>
           </div>

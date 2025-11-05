@@ -4,8 +4,8 @@
  * Tests for NLU entity resolution with fuzzy matching
  */
 
-import { EntityResolver } from '@/lib/nlu/entity-resolver';
-import type { NLUEntity, EntitySynonym } from '@/lib/nlu/types';
+import { EntityResolver, type EntitySynonym } from '@/lib/nlu/entity-resolver';
+import type { NLUEntity } from '@/lib/nlu/types';
 import * as agentService from '@/lib/services/agent-service';
 import { createStateMachine } from '@/lib/state/machine';
 

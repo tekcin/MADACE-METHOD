@@ -6,10 +6,7 @@ import path from 'path';
  * GET /api/v3/workflows/[id]/state
  * Get current workflow execution state
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
 

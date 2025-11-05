@@ -31,6 +31,7 @@ This release delivers **ALL 4 major milestones** (222 points across 42 stories) 
 ### 1. Database Migration & Persistence (Milestone 3.1 - 48 points)
 
 **What's New:**
+
 - **Prisma ORM Integration** with PostgreSQL (production) and SQLite (development)
 - **8 Database Models:** Agent, AgentMemory, Workflow, Config, StateMachine, Project, User, ProjectMember
 - **Full CRUD APIs** for all entities with RESTful design
@@ -38,12 +39,14 @@ This release delivers **ALL 4 major milestones** (222 points across 42 stories) 
 - **Unified Settings Page** for system configuration
 
 **Key Benefits:**
+
 - Data persists across sessions
 - Multi-user support with projects and teams
 - Type-safe database access with Prisma
 - Production-grade data integrity
 
 **API Endpoints:**
+
 - `GET/POST /api/v3/agents` - Agent management
 - `GET/PUT/DELETE /api/v3/agents/[id]` - Agent CRUD
 - `POST /api/v3/agents/[id]/duplicate` - Clone agents
@@ -56,6 +59,7 @@ This release delivers **ALL 4 major milestones** (222 points across 42 stories) 
 ### 2. CLI Enhancements (Milestone 3.2 - 35 points)
 
 **What's New:**
+
 - **Interactive REPL Mode** with autocomplete and command history
 - **Terminal Dashboard (TUI)** with 4-pane layout
 - **24 CLI Commands** across 5 categories
@@ -64,6 +68,7 @@ This release delivers **ALL 4 major milestones** (222 points across 42 stories) 
 - **Table/JSON Output** formats
 
 **Commands Available:**
+
 - **Agents** (7): list, show, create, update, delete, export, import
 - **Config** (4): get, set, list, validate
 - **Project** (3): init, status, stats
@@ -71,6 +76,7 @@ This release delivers **ALL 4 major milestones** (222 points across 42 stories) 
 - **Workflows** (7): list, show, run, status, pause, resume, reset
 
 **Usage:**
+
 ```bash
 npm run madace repl              # Interactive REPL mode
 npm run madace dashboard         # Terminal dashboard
@@ -79,6 +85,7 @@ npm run madace chat pm           # Chat with PM agent
 ```
 
 **Key Benefits:**
+
 - Professional CLI experience matching industry tools
 - Persistent command history (~/.madace_history)
 - Context-aware autocomplete
@@ -89,6 +96,7 @@ npm run madace chat pm           # Chat with PM agent
 ### 3. Conversational AI & NLU (Milestone 3.3 - 55 points)
 
 **What's New:**
+
 - **Natural Language Understanding** with Dialogflow CX
 - **Conversational Chat Interface** (Web + CLI)
 - **Agent Memory System** with 3-tier pruning
@@ -97,6 +105,7 @@ npm run madace chat pm           # Chat with PM agent
 - **Message Threading** and search
 
 **Chat Features:**
+
 - **Web UI:** `/chat` - Full chat interface with agent selection
 - **CLI:** `npm run madace chat [agent]` - Terminal chat mode
 - **Streaming Responses:** Real-time LLM output
@@ -105,6 +114,7 @@ npm run madace chat pm           # Chat with PM agent
 - **Code Highlighting:** 180+ languages via highlight.js
 
 **Memory System:**
+
 - **Persistent Memory:** Long-term and short-term storage
 - **Importance Scoring:** 1-10 scale with automatic decay
 - **Access Tracking:** Usage-based memory importance adjustment
@@ -116,6 +126,7 @@ npm run madace chat pm           # Chat with PM agent
 - **LLM Integration:** Top 20 memories injected into agent context
 
 **API Endpoints:**
+
 - `POST /api/v3/chat/sessions` - Create chat session
 - `GET /api/v3/chat/sessions/[id]/messages` - Message history
 - `POST /api/v3/chat/stream` - Streaming responses
@@ -127,6 +138,7 @@ npm run madace chat pm           # Chat with PM agent
 ### 4. Web IDE & Real-time Collaboration (Milestone 3.4 - 71 points)
 
 **What's New:**
+
 - **Monaco Editor** (VS Code engine) with 20+ language support
 - **Multi-file Tabs** with keyboard shortcuts
 - **IntelliSense & Auto-completion** for TypeScript/JavaScript
@@ -137,6 +149,7 @@ npm run madace chat pm           # Chat with PM agent
 - **Integrated Terminal** with command execution
 
 **IDE Features:**
+
 - **Editor:**
   - 20+ programming languages (TypeScript, Python, Rust, Go, Java, etc.)
   - 4 themes (Dark, Light, High Contrast Dark/Light)
@@ -167,6 +180,7 @@ npm run madace chat pm           # Chat with PM agent
   - Security: Command whitelist + directory sandboxing
 
 **Keyboard Shortcuts:**
+
 - `Ctrl/Cmd+S` - Save file
 - `Ctrl/Cmd+Tab` - Next tab
 - `Ctrl/Cmd+Shift+Tab` - Previous tab
@@ -177,6 +191,7 @@ npm run madace chat pm           # Chat with PM agent
 - `Ctrl/Cmd+Shift+Space` - Parameter hints
 
 **Usage:**
+
 ```
 http://localhost:3000/ide
 ```
@@ -186,12 +201,14 @@ http://localhost:3000/ide
 ### 5. BONUS: Custom Agent Creation (MAB Module)
 
 **What's New:**
+
 - **5-Step Wizard** for creating custom agents
 - **Visual Form Builder** with validation
 - **Agent Templates** with preset configurations
 - **Database Integration** via existing Agent API
 
 **Wizard Steps:**
+
 1. **Basic Information**
    - Name, title, icon (12 presets + custom)
    - Module selection (MAM, MAB, CIS, Core)
@@ -219,11 +236,13 @@ http://localhost:3000/ide
    - Auto-redirect to agent detail page
 
 **Usage:**
+
 ```
 http://localhost:3000/agents/create
 ```
 
 **Key Benefits:**
+
 - No YAML editing required
 - Visual feedback at every step
 - Validation prevents errors
@@ -235,53 +254,53 @@ http://localhost:3000/agents/create
 
 ### Web UI Pages
 
-| Route | Feature | Status |
-|-------|---------|--------|
-| `/` | Home dashboard | ✅ |
-| `/agents` | Agent selector with grid view | ✅ |
-| `/agents/create` | **NEW:** Custom agent wizard | ✅ |
-| `/agents/[id]` | Agent detail with persona/prompts/menu | ✅ |
-| `/agents/[id]/memory` | Memory management UI | ✅ |
-| `/chat` | Conversational chat interface | ✅ |
-| `/workflows` | Workflow list and execution | ✅ |
-| `/kanban` | Visual Kanban board | ✅ |
-| `/status` | State machine status | ✅ |
-| `/settings` | Unified settings page | ✅ |
-| `/setup` | Initial setup wizard | ✅ |
-| `/ide` | **NEW:** Web IDE with Monaco Editor | ✅ |
-| `/import` | Agent/workflow import | ✅ |
-| `/assessment` | Complexity assessment | ✅ |
+| Route                 | Feature                                | Status |
+| --------------------- | -------------------------------------- | ------ |
+| `/`                   | Home dashboard                         | ✅     |
+| `/agents`             | Agent selector with grid view          | ✅     |
+| `/agents/create`      | **NEW:** Custom agent wizard           | ✅     |
+| `/agents/[id]`        | Agent detail with persona/prompts/menu | ✅     |
+| `/agents/[id]/memory` | Memory management UI                   | ✅     |
+| `/chat`               | Conversational chat interface          | ✅     |
+| `/workflows`          | Workflow list and execution            | ✅     |
+| `/kanban`             | Visual Kanban board                    | ✅     |
+| `/status`             | State machine status                   | ✅     |
+| `/settings`           | Unified settings page                  | ✅     |
+| `/setup`              | Initial setup wizard                   | ✅     |
+| `/ide`                | **NEW:** Web IDE with Monaco Editor    | ✅     |
+| `/import`             | Agent/workflow import                  | ✅     |
+| `/assessment`         | Complexity assessment                  | ✅     |
 
 ### CLI Commands
 
-| Category | Commands | Count |
-|----------|----------|-------|
-| Agents | list, show, create, update, delete, export, import | 7 |
-| Config | get, set, list, validate | 4 |
-| Project | init, status, stats | 3 |
-| State | show, transition, stats | 3 |
-| Workflows | list, show, run, status, pause, resume, reset | 7 |
-| **Total** | | **24** |
+| Category  | Commands                                           | Count  |
+| --------- | -------------------------------------------------- | ------ |
+| Agents    | list, show, create, update, delete, export, import | 7      |
+| Config    | get, set, list, validate                           | 4      |
+| Project   | init, status, stats                                | 3      |
+| State     | show, transition, stats                            | 3      |
+| Workflows | list, show, run, status, pause, resume, reset      | 7      |
+| **Total** |                                                    | **24** |
 
 ### API Endpoints (v3)
 
-| Endpoint | Methods | Feature |
-|----------|---------|---------|
-| `/api/v3/agents` | GET, POST | Agent CRUD |
-| `/api/v3/agents/[id]` | GET, PUT, DELETE | Agent operations |
-| `/api/v3/agents/[id]/duplicate` | POST | Clone agent |
-| `/api/v3/agents/[id]/export` | GET | Export as JSON |
-| `/api/v3/agents/import` | POST | Import from JSON |
-| `/api/v3/agents/[id]/memory` | GET, POST, DELETE | Memory management |
-| `/api/v3/chat/sessions` | GET, POST | Chat session CRUD |
-| `/api/v3/chat/sessions/[id]/messages` | GET, POST | Message history |
-| `/api/v3/chat/stream` | POST | SSE streaming |
-| `/api/v3/nlu/parse` | POST, GET | Intent classification |
-| `/api/v3/files/[...path]` | GET, PUT, POST | File operations |
-| `/api/v3/terminal/exec` | POST | Command execution |
-| `/api/config` | GET, POST, PUT, DELETE | Configuration |
-| `/api/workflows` | GET | Workflow list |
-| `/api/state` | GET, PATCH | State machine |
+| Endpoint                              | Methods                | Feature               |
+| ------------------------------------- | ---------------------- | --------------------- |
+| `/api/v3/agents`                      | GET, POST              | Agent CRUD            |
+| `/api/v3/agents/[id]`                 | GET, PUT, DELETE       | Agent operations      |
+| `/api/v3/agents/[id]/duplicate`       | POST                   | Clone agent           |
+| `/api/v3/agents/[id]/export`          | GET                    | Export as JSON        |
+| `/api/v3/agents/import`               | POST                   | Import from JSON      |
+| `/api/v3/agents/[id]/memory`          | GET, POST, DELETE      | Memory management     |
+| `/api/v3/chat/sessions`               | GET, POST              | Chat session CRUD     |
+| `/api/v3/chat/sessions/[id]/messages` | GET, POST              | Message history       |
+| `/api/v3/chat/stream`                 | POST                   | SSE streaming         |
+| `/api/v3/nlu/parse`                   | POST, GET              | Intent classification |
+| `/api/v3/files/[...path]`             | GET, PUT, POST         | File operations       |
+| `/api/v3/terminal/exec`               | POST                   | Command execution     |
+| `/api/config`                         | GET, POST, PUT, DELETE | Configuration         |
+| `/api/workflows`                      | GET                    | Workflow list         |
+| `/api/state`                          | GET, PATCH             | State machine         |
 
 ---
 
@@ -423,12 +442,14 @@ npm run dev
 ### Production (Docker)
 
 **HTTP (Simple):**
+
 ```bash
 mkdir madace-data
 docker-compose up -d
 ```
 
 **HTTPS (with Caddy):**
+
 ```bash
 mkdir -p madace-data logs/caddy
 export DOMAIN=madace.yourdomain.com
@@ -445,18 +466,18 @@ docker-compose -f docker-compose.https.yml up -d
 
 ### Key Differences
 
-| Feature | v2.0 | v3.0 |
-|---------|------|------|
-| Architecture | File-based CLI | Full-stack app |
-| Database | YAML files | PostgreSQL/SQLite |
-| UI | Terminal only | Web + Terminal |
-| Configuration | `.env` only | Database + UI |
-| Agents | Static YAML | Dynamic DB + UI builder |
-| State | Markdown file | Database model |
-| Collaboration | None | Real-time WebSocket |
-| IDE | External | Integrated Monaco |
-| Chat | None | Web + CLI |
-| Memory | None | Persistent with pruning |
+| Feature       | v2.0           | v3.0                    |
+| ------------- | -------------- | ----------------------- |
+| Architecture  | File-based CLI | Full-stack app          |
+| Database      | YAML files     | PostgreSQL/SQLite       |
+| UI            | Terminal only  | Web + Terminal          |
+| Configuration | `.env` only    | Database + UI           |
+| Agents        | Static YAML    | Dynamic DB + UI builder |
+| State         | Markdown file  | Database model          |
+| Collaboration | None           | Real-time WebSocket     |
+| IDE           | External       | Integrated Monaco       |
+| Chat          | None           | Web + CLI               |
+| Memory        | None           | Persistent with pruning |
 
 ### Migration Path
 
@@ -535,12 +556,14 @@ docker-compose -f docker-compose.https.yml up -d
 ### Planned Features
 
 **v3.0.1 (Patch):**
+
 - Fix TypeScript errors in test files
 - Improve test coverage to 100%
 - Performance optimizations
 - Bug fixes from user feedback
 
 **v3.1 (Minor):**
+
 - **AI-Assisted Coding** in IDE
   - Code completion with LLM
   - Refactoring suggestions
@@ -554,6 +577,7 @@ docker-compose -f docker-compose.https.yml up -d
   - Industry-specific setups
 
 **v3.2 (Minor):**
+
 - **Multi-user Teams**
   - Role-based permissions
   - Team management UI
@@ -564,6 +588,7 @@ docker-compose -f docker-compose.https.yml up -d
   - Agent extensions
 
 **v4.0 (Major):**
+
 - **Cloud Deployment**
   - One-click deploy to AWS/GCP/Azure
   - Managed hosting service

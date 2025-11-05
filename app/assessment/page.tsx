@@ -229,10 +229,8 @@ export default function AssessPage() {
         <div className="mb-8">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-white">
-                Project Complexity Assessment
-              </h1>
-              <p className="mt-2 text-gray-400">
+              <h1 className="text-4xl font-bold text-white">Project Complexity Assessment</h1>
+              <p className="mt-2 text-gray-300">
                 Determine the recommended planning level for your project by answering 8 key
                 questions
               </p>
@@ -283,9 +281,9 @@ export default function AssessPage() {
           {/* Empty State */}
           {!assessment && Object.keys(input).length > 0 && (
             <div className="rounded-lg border border-gray-700 bg-gray-800 p-8 text-center shadow-sm">
-              <div className="text-gray-400">
+              <div className="text-gray-300">
                 <svg
-                  className="mx-auto h-12 w-12 text-gray-400"
+                  className="mx-auto h-12 w-12 text-gray-300"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

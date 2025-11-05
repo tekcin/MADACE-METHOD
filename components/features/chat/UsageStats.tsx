@@ -101,10 +101,10 @@ export function UsageStats({ sessionId }: UsageStatsProps) {
 
   if (loading) {
     return (
-      <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+      <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
         <div className="animate-pulse">
-          <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700"></div>
-          <div className="mt-2 h-8 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+          <div className="h-4 w-24 rounded bg-gray-700"></div>
+          <div className="mt-2 h-8 w-full rounded bg-gray-700"></div>
         </div>
       </div>
     );
@@ -112,39 +112,37 @@ export function UsageStats({ sessionId }: UsageStatsProps) {
 
   if (error || !usage) {
     return (
-      <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+      <div className="rounded-lg border border-red-800 bg-red-900/20 p-4 text-sm text-red-400">
         {error || 'No usage data available'}
       </div>
     );
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+    <div className="rounded-lg border border-gray-700 bg-gray-800 shadow-sm">
       {/* Compact Header View */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex w-full items-center justify-between p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-750"
+        className="hover:bg-gray-750 flex w-full items-center justify-between p-4 text-left"
       >
         <div className="flex items-center gap-4">
           <ChartBarIcon className="h-5 w-5 text-gray-500" />
           <div className="flex gap-6 text-sm">
             <div>
-              <span className="font-medium text-gray-700 dark:text-gray-300">
+              <span className="font-medium text-gray-300">
                 {formatTokens(usage.total.totalTokens)}
               </span>
-              <span className="ml-1 text-gray-500 dark:text-gray-400">tokens</span>
+              <span className="ml-1 text-gray-400">tokens</span>
             </div>
             <div>
-              <span className="font-medium text-gray-700 dark:text-gray-300">
+              <span className="font-medium text-gray-300">
                 {formatCost(usage.total.estimatedCost)}
               </span>
-              <span className="ml-1 text-gray-500 dark:text-gray-400">cost</span>
+              <span className="ml-1 text-gray-400">cost</span>
             </div>
             <div>
-              <span className="font-medium text-gray-700 dark:text-gray-300">
-                {usage.total.totalRequests}
-              </span>
-              <span className="ml-1 text-gray-500 dark:text-gray-400">requests</span>
+              <span className="font-medium text-gray-300">{usage.total.totalRequests}</span>
+              <span className="ml-1 text-gray-400">requests</span>
             </div>
           </div>
         </div>
@@ -160,55 +158,54 @@ export function UsageStats({ sessionId }: UsageStatsProps) {
 
       {/* Expanded Details */}
       {isExpanded && (
-        <div className="border-t border-gray-200 p-4 dark:border-gray-700">
+        <div className="border-t border-gray-700 p-4">
           {/* Total Stats Grid */}
           <div className="mb-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-600 dark:bg-gray-750">
-              <div className="mb-1 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+            <div className="bg-gray-750 rounded-lg border border-gray-600 p-3">
+              <div className="mb-1 flex items-center gap-1 text-xs text-gray-400">
                 <ChartBarIcon className="h-3 w-3" />
                 Total Tokens
               </div>
-              <div className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <div className="text-lg font-semibold text-gray-100">
                 {formatTokens(usage.total.totalTokens)}
               </div>
-              <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {formatTokens(usage.total.promptTokens)} + {formatTokens(usage.total.completionTokens)}
+              <div className="mt-1 text-xs text-gray-400">
+                {formatTokens(usage.total.promptTokens)} +{' '}
+                {formatTokens(usage.total.completionTokens)}
               </div>
             </div>
 
-            <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-600 dark:bg-gray-750">
-              <div className="mb-1 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+            <div className="bg-gray-750 rounded-lg border border-gray-600 p-3">
+              <div className="mb-1 flex items-center gap-1 text-xs text-gray-400">
                 <CurrencyDollarIcon className="h-3 w-3" />
                 Estimated Cost
               </div>
-              <div className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <div className="text-lg font-semibold text-gray-100">
                 {formatCost(usage.total.estimatedCost)}
               </div>
-              <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {usage.total.totalRequests} requests
-              </div>
+              <div className="mt-1 text-xs text-gray-400">{usage.total.totalRequests} requests</div>
             </div>
 
-            <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-600 dark:bg-gray-750">
-              <div className="mb-1 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+            <div className="bg-gray-750 rounded-lg border border-gray-600 p-3">
+              <div className="mb-1 flex items-center gap-1 text-xs text-gray-400">
                 <ClockIcon className="h-3 w-3" />
                 Avg Response
               </div>
-              <div className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <div className="text-lg font-semibold text-gray-100">
                 {formatTime(usage.total.averageResponseTime)}
               </div>
-              <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">per request</div>
+              <div className="mt-1 text-xs text-gray-400">per request</div>
             </div>
 
-            <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-600 dark:bg-gray-750">
-              <div className="mb-1 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+            <div className="bg-gray-750 rounded-lg border border-gray-600 p-3">
+              <div className="mb-1 flex items-center gap-1 text-xs text-gray-400">
                 <CheckCircleIcon className="h-3 w-3" />
                 Success Rate
               </div>
-              <div className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <div className="text-lg font-semibold text-gray-100">
                 {((usage.total.successfulRequests / usage.total.totalRequests) * 100).toFixed(0)}%
               </div>
-              <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              <div className="mt-1 text-xs text-gray-400">
                 {usage.total.successfulRequests}/{usage.total.totalRequests}
               </div>
             </div>
@@ -217,9 +214,7 @@ export function UsageStats({ sessionId }: UsageStatsProps) {
           {/* Provider Breakdown */}
           {usage.byProvider.length > 0 && (
             <div>
-              <h4 className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                By Provider
-              </h4>
+              <h4 className="mb-2 text-sm font-medium text-gray-300">By Provider</h4>
               <div className="space-y-2">
                 {usage.byProvider.map((provider) => (
                   <div
@@ -233,7 +228,7 @@ export function UsageStats({ sessionId }: UsageStatsProps) {
                             {provider.provider}
                           </span>
                           {provider.failedRequests > 0 && (
-                            <span className="flex items-center gap-1 text-xs text-red-600 dark:text-red-400">
+                            <span className="flex items-center gap-1 text-xs text-red-400">
                               <XCircleIcon className="h-3 w-3" />
                               {provider.failedRequests} failed
                             </span>
@@ -247,7 +242,7 @@ export function UsageStats({ sessionId }: UsageStatsProps) {
                           <span>{formatTime(provider.averageResponseTime)}</span>
                         </div>
                       </div>
-                      <div className="text-right text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-right text-xs text-gray-400">
                         {provider.totalRequests} requests
                       </div>
                     </div>

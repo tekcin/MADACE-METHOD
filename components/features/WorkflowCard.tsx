@@ -49,16 +49,16 @@ export function WorkflowCard({ workflow, onExecute, onClick }: WorkflowCardProps
       tabIndex={0}
       role="button"
       data-testid={`workflow-card-${workflow.name}`}
-      className="group cursor-pointer rounded-lg border-2 border-gray-200 bg-white p-6 transition-all hover:border-blue-400 hover:shadow-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-500 dark:focus:ring-offset-gray-900"
+      className="group cursor-pointer rounded-lg border-2 border-gray-700 bg-gray-800 p-6 transition-all hover:border-blue-500 hover:shadow-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 focus:outline-none"
     >
       {/* Header */}
       <div className="mb-3 flex items-start justify-between">
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white" data-testid="workflow-name">
+        <h3 className="text-lg font-bold text-white" data-testid="workflow-name">
           {workflow.name}
         </h3>
         {workflow.phase !== undefined && (
           <span
-            className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+            className="rounded-full bg-blue-900 px-3 py-1 text-xs font-medium text-blue-200"
             data-testid="workflow-phase-badge"
           >
             Phase {workflow.phase}
@@ -67,13 +67,13 @@ export function WorkflowCard({ workflow, onExecute, onClick }: WorkflowCardProps
       </div>
 
       {/* Description */}
-      <p className="mb-4 text-sm text-gray-600 dark:text-gray-400" data-testid="workflow-description">
+      <p className="mb-4 text-sm text-gray-400" data-testid="workflow-description">
         {workflow.description}
       </p>
 
       {/* Meta information */}
       <div
-        className="mb-4 flex flex-wrap gap-3 text-xs text-gray-500 dark:text-gray-400"
+        className="mb-4 flex flex-wrap gap-3 text-xs text-gray-400"
         data-testid="workflow-metadata"
       >
         {workflow.agent && (
@@ -109,7 +109,7 @@ export function WorkflowCard({ workflow, onExecute, onClick }: WorkflowCardProps
         <button
           onClick={handleExecuteClick}
           data-testid="workflow-execute-button"
-          className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-offset-gray-800"
+          className="inline-flex items-center rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none"
         >
           <svg className="mr-2 size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -128,7 +128,7 @@ export function WorkflowCard({ workflow, onExecute, onClick }: WorkflowCardProps
           Execute Workflow
         </button>
         <span
-          className="text-sm text-gray-400 group-hover:text-blue-600 dark:text-gray-500 dark:group-hover:text-blue-400"
+          className="text-sm text-gray-500 group-hover:text-blue-400"
           data-testid="workflow-details-link"
         >
           Click for details →

@@ -19,9 +19,7 @@ export default function Home() {
 
       {/* Quick Actions Bar */}
       <div className="mb-8 rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-sm">
-        <h2 className="mb-3 text-sm font-semibold text-gray-200">
-          Quick Actions
-        </h2>
+        <h2 className="mb-3 text-sm font-semibold text-gray-200">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/kanban?action=new"
@@ -125,9 +123,7 @@ export default function Home() {
           <div className="text-sm text-gray-400">System Status</div>
           <div className="mt-1 flex items-center">
             <div className="size-3 rounded-full bg-green-500"></div>
-            <span className="ml-2 text-lg font-bold text-white">
-              Operational
-            </span>
+            <span className="ml-2 text-lg font-bold text-white">Operational</span>
           </div>
           <div className="mt-1 text-xs text-gray-500">All systems running</div>
         </div>
@@ -160,9 +156,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="font-semibold text-white">Setup Wizard</h3>
-                <p className="text-sm text-gray-400">
-                  Configure your installation
-                </p>
+                <p className="text-sm text-gray-400">Configure your installation</p>
               </div>
             </div>
           </Link>

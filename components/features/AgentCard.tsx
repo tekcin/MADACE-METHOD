@@ -45,16 +45,16 @@ export function AgentCard({ agent, selected = false, onSelect, onClick }: AgentC
       onKeyDown={handleKeyDown}
       className={`group relative flex flex-col items-center rounded-lg border-2 p-6 transition-all ${
         selected
-          ? 'border-blue-500 bg-blue-50 shadow-lg dark:border-blue-400 dark:bg-blue-900/20'
-          : 'border-gray-300 bg-white hover:border-blue-400 hover:shadow-md dark:border-gray-600 dark:bg-gray-800 dark:hover:border-blue-500'
-      } focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-gray-900`}
+          ? 'border-blue-400 bg-blue-900/20 shadow-lg'
+          : 'border-gray-600 bg-gray-800 hover:border-blue-500 hover:shadow-md'
+      } focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 focus:outline-none`}
       aria-pressed={selected}
       aria-label={`Select ${agent.title} agent`}
     >
       {/* Selection indicator */}
       {selected && (
         <div className="absolute top-3 right-3">
-          <div className="flex size-6 items-center justify-center rounded-full bg-blue-500 text-white dark:bg-blue-400">
+          <div className="flex size-6 items-center justify-center rounded-full bg-blue-400 text-white">
             <svg className="size-4" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
@@ -68,31 +68,25 @@ export function AgentCard({ agent, selected = false, onSelect, onClick }: AgentC
 
       {/* Agent icon */}
       <div
-        className={`mb-4 flex size-16 items-center justify-center rounded-full text-4xl ${selected ? 'bg-blue-100 dark:bg-blue-800' : 'bg-gray-100 dark:bg-gray-700'} `}
+        className={`mb-4 flex size-16 items-center justify-center rounded-full text-4xl ${selected ? 'bg-blue-800' : 'bg-gray-700'} `}
       >
         {agent.icon}
       </div>
 
       {/* Agent name */}
-      <h3
-        className={`text-lg font-bold ${selected ? 'text-blue-900 dark:text-blue-100' : 'text-gray-900 dark:text-white'} `}
-      >
+      <h3 className={`text-lg font-bold ${selected ? 'text-blue-100' : 'text-white'} `}>
         {agent.name}
       </h3>
 
       {/* Agent title */}
-      <p
-        className={`mt-1 text-sm ${selected ? 'text-blue-700 dark:text-blue-300' : 'text-gray-600 dark:text-gray-400'} `}
-      >
+      <p className={`mt-1 text-sm ${selected ? 'text-blue-300' : 'text-gray-400'} `}>
         {agent.title}
       </p>
 
       {/* Module badge */}
       <div
         className={`mt-3 rounded-full px-3 py-1 text-xs font-medium uppercase ${
-          selected
-            ? 'bg-blue-200 text-blue-800 dark:bg-blue-700 dark:text-blue-200'
-            : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+          selected ? 'bg-blue-700 text-blue-200' : 'bg-gray-700 text-gray-300'
         } `}
       >
         {agent.module}

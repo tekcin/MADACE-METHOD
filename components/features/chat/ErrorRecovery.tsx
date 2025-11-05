@@ -76,9 +76,9 @@ export function ErrorRecovery({
 
   // Determine error severity and styling
   const getSeverityColor = () => {
-    if (isAuthError) return 'border-red-500 bg-red-50 dark:bg-red-900/20';
-    if (isOverloaded || isRateLimit) return 'border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20';
-    return 'border-orange-500 bg-orange-50 dark:bg-orange-900/20';
+    if (isAuthError) return 'border-red-500 bg-red-900/20';
+    if (isOverloaded || isRateLimit) return 'border-yellow-500 bg-yellow-900/20';
+    return 'border-orange-500 bg-orange-900/20';
   };
 
   // Get error-specific message
@@ -136,7 +136,7 @@ export function ErrorRecovery({
       {/* Close button */}
       <button
         onClick={onDismiss}
-        className="absolute top-2 right-2 rounded-md p-1 hover:bg-black/10 dark:hover:bg-white/10"
+        className="absolute top-2 right-2 rounded-md p-1 hover:bg-white/10"
         aria-label="Dismiss error"
       >
         <XMarkIcon className="h-5 w-5" />
@@ -146,8 +146,8 @@ export function ErrorRecovery({
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0">{icon}</div>
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
-          <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">{description}</p>
+          <h3 className="text-lg font-semibold text-gray-100">{title}</h3>
+          <p className="mt-1 text-sm text-gray-300">{description}</p>
 
           {/* Recovery options */}
           <div className="mt-4 space-y-3">
@@ -161,16 +161,14 @@ export function ErrorRecovery({
                   <ArrowPathIcon className="h-4 w-4" />
                   Retry with {currentProvider.charAt(0).toUpperCase() + currentProvider.slice(1)}
                 </button>
-                <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">
-                  Wait 30-60 seconds before retrying
-                </p>
+                <p className="mt-1 text-xs text-gray-400">Wait 30-60 seconds before retrying</p>
               </div>
             )}
 
             {/* Provider switcher */}
             {!isAuthError && providers.length > 0 && (
               <div>
-                <p className="mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                <p className="mb-2 text-sm font-medium text-gray-100">
                   Switch to a different provider:
                 </p>
                 <div className="grid gap-2 sm:grid-cols-2">
@@ -182,22 +180,18 @@ export function ErrorRecovery({
                         onSwitchProvider(provider.id);
                       }}
                       disabled={!provider.available}
-                      className={`rounded-md border border-gray-300 p-3 text-left transition-colors ${
+                      className={`rounded-md border border-gray-600 p-3 text-left transition-colors ${
                         provider.available
-                          ? 'hover:border-blue-500 hover:bg-white dark:hover:bg-gray-800'
+                          ? 'hover:border-blue-500 hover:bg-gray-800'
                           : 'cursor-not-allowed opacity-50'
                       } ${
                         selectedProvider === provider.id
-                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                          : 'bg-white dark:bg-gray-800'
+                          ? 'border-blue-500 bg-blue-900/20'
+                          : 'bg-gray-800'
                       }`}
                     >
-                      <div className="font-medium text-gray-900 dark:text-gray-100">
-                        {provider.name}
-                      </div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">
-                        {provider.description}
-                      </div>
+                      <div className="font-medium text-gray-100">{provider.name}</div>
+                      <div className="text-xs text-gray-400">{provider.description}</div>
                     </button>
                   ))}
                 </div>
@@ -205,16 +199,14 @@ export function ErrorRecovery({
             )}
 
             {/* Status links */}
-            <div className="mt-4 border-t border-gray-300 pt-3 dark:border-gray-600">
-              <p className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                Check provider status:
-              </p>
+            <div className="mt-4 border-t border-gray-600 pt-3 dark:border-gray-600">
+              <p className="text-xs font-medium text-gray-300">Check provider status:</p>
               <div className="mt-1 flex flex-wrap gap-3 text-xs">
                 <a
                   href="https://status.anthropic.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline dark:text-blue-400"
+                  className="text-blue-400 hover:underline"
                 >
                   Claude Status
                 </a>
@@ -222,7 +214,7 @@ export function ErrorRecovery({
                   href="https://status.cloud.google.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline dark:text-blue-400"
+                  className="text-blue-400 hover:underline"
                 >
                   Google Cloud Status
                 </a>
@@ -230,7 +222,7 @@ export function ErrorRecovery({
                   href="https://status.openai.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline dark:text-blue-400"
+                  className="text-blue-400 hover:underline"
                 >
                   OpenAI Status
                 </a>
@@ -238,11 +230,11 @@ export function ErrorRecovery({
             </div>
 
             {/* Technical details (collapsible) */}
-            <details className="mt-4 rounded-md bg-black/5 p-3 dark:bg-white/5">
-              <summary className="cursor-pointer text-xs font-medium text-gray-700 dark:text-gray-300">
+            <details className="mt-4 rounded-md bg-white/5 p-3">
+              <summary className="cursor-pointer text-xs font-medium text-gray-300">
                 Technical Details
               </summary>
-              <pre className="mt-2 overflow-x-auto text-xs text-gray-600 dark:text-gray-400">
+              <pre className="mt-2 overflow-x-auto text-xs text-gray-400">
                 {error.stack || error.message}
               </pre>
             </details>

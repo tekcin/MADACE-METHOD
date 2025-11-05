@@ -93,10 +93,7 @@ export function WorkflowRunner({ workflow, workflowId, autoStart = false }: Work
           case 'waiting_input':
             setWaitingForInput(true);
             setCurrentStep(data.step);
-            addLog(
-              `⏸️  Workflow paused for input: ${data.step.name}`,
-              'warning'
-            );
+            addLog(`⏸️  Workflow paused for input: ${data.step.name}`, 'warning');
             break;
 
           case 'input_received':
@@ -266,21 +263,15 @@ export function WorkflowRunner({ workflow, workflowId, autoStart = false }: Work
     }
   };
 
-  const progressPercentage = state
-    ? ((state.currentStep + 1) / totalSteps) * 100
-    : 0;
+  const progressPercentage = state ? ((state.currentStep + 1) / totalSteps) * 100 : 0;
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            {workflow.name}
-          </h2>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {workflow.description}
-          </p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{workflow.name}</h2>
+          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{workflow.description}</p>
           {workflow.workflow?.agent && (
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-500">
               Agent: {workflow.workflow.agent} | Phase: {workflow.workflow.phase || 1}
@@ -314,11 +305,7 @@ export function WorkflowRunner({ workflow, workflowId, autoStart = false }: Work
         <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/20">
           <div className="flex">
             <div className="flex-shrink-0">
-              <svg
-                className="h-5 w-5 text-red-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
                 <path
                   fillRule="evenodd"
                   d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -327,9 +314,7 @@ export function WorkflowRunner({ workflow, workflowId, autoStart = false }: Work
               </svg>
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-                Workflow Error
-              </h3>
+              <h3 className="text-sm font-medium text-red-800 dark:text-red-200">Workflow Error</h3>
               <p className="mt-1 text-sm text-red-700 dark:text-red-300">{error}</p>
             </div>
           </div>
@@ -340,9 +325,7 @@ export function WorkflowRunner({ workflow, workflowId, autoStart = false }: Work
       {state && (
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
-            <span className="font-medium text-gray-700 dark:text-gray-300">
-              Progress
-            </span>
+            <span className="font-medium text-gray-700 dark:text-gray-300">Progress</span>
             <span className="text-gray-500 dark:text-gray-400">
               Step {Math.min(state.currentStep + 1, totalSteps)} of {totalSteps}
             </span>
@@ -406,9 +389,7 @@ export function WorkflowRunner({ workflow, workflowId, autoStart = false }: Work
       {/* Execution Logs */}
       <div className="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <div className="border-b border-gray-200 px-4 py-3 dark:border-gray-700">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-            Execution Log
-          </h3>
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Execution Log</h3>
         </div>
         <div className="max-h-96 overflow-y-auto p-4">
           {logs.length === 0 ? (

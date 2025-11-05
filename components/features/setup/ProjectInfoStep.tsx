@@ -91,17 +91,12 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Project Information</h2>
-      <p className="text-sm text-gray-600 dark:text-gray-400">
-        Basic information about your MADACE project
-      </p>
+      <h2 className="text-xl font-semibold text-white">Project Information</h2>
+      <p className="text-sm text-gray-300">Basic information about your MADACE project</p>
 
       <div className="space-y-4">
         <div>
-          <label
-            htmlFor="projectName"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
+          <label htmlFor="projectName" className="block text-sm font-medium text-gray-300">
             Project Name
           </label>
           <input
@@ -109,19 +104,16 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
             id="projectName"
             value={config.projectInfo.projectName}
             onChange={(e) => updateProjectInfo('projectName', e.target.value)}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+            className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
             placeholder="My MADACE Project"
           />
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-300 text-gray-400">
             The name of your project for documentation headers
           </p>
         </div>
 
         <div>
-          <label
-            htmlFor="outputFolder"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
+          <label htmlFor="outputFolder" className="block text-sm font-medium text-gray-300">
             Output Folder
           </label>
           <input
@@ -129,19 +121,16 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
             id="outputFolder"
             value={config.projectInfo.outputFolder}
             onChange={(e) => updateProjectInfo('outputFolder', e.target.value)}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+            className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
             placeholder="docs"
           />
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-300 text-gray-400">
             Directory where generated documents will be stored
           </p>
         </div>
 
         <div>
-          <label
-            htmlFor="userName"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
+          <label htmlFor="userName" className="block text-sm font-medium text-gray-300">
             Your Name
           </label>
           <input
@@ -149,10 +138,10 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
             id="userName"
             value={config.projectInfo.userName}
             onChange={(e) => updateProjectInfo('userName', e.target.value)}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+            className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
             placeholder="Your Name"
           />
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-300 text-gray-400">
             Your name for document headers and attribution
           </p>
         </div>
@@ -160,7 +149,7 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
         <div>
           <label
             htmlFor="communicationLanguage"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            className="block text-sm font-medium text-gray-300"
           >
             Communication Language
           </label>
@@ -168,7 +157,7 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
             id="communicationLanguage"
             value={config.projectInfo.communicationLanguage}
             onChange={(e) => updateProjectInfo('communicationLanguage', e.target.value)}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+            className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
           >
             <option value="en">English</option>
             <option value="es">Spanish</option>
@@ -179,34 +168,29 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
             <option value="zh">Chinese</option>
             <option value="ja">Japanese</option>
           </select>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-300 text-gray-400">
             Language for LLM interactions and generated documents
           </p>
         </div>
 
         {/* Complexity Assessment Fields */}
-        <div className="mt-8 border-t border-gray-300 pt-6 dark:border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            Project Complexity Assessment
-          </h3>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <div className="mt-8 border-t border-gray-600 border-gray-700 pt-6">
+          <h3 className="text-lg font-semibold text-white">Project Complexity Assessment</h3>
+          <p className="mt-1 text-sm text-gray-300">
             Answer these questions to determine the recommended planning level
           </p>
 
           <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Project Size */}
             <div>
-              <label
-                htmlFor="projectSize"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >
+              <label htmlFor="projectSize" className="block text-sm font-medium text-gray-300">
                 Project Size
               </label>
               <select
                 id="projectSize"
                 value={config.projectInfo.projectSize ?? ''}
                 onChange={(e) => updateProjectInfo('projectSize', Number(e.target.value))}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">Select size...</option>
                 <option value="0">Tiny (&lt; 1K LOC)</option>
@@ -220,17 +204,14 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
 
             {/* Team Size */}
             <div>
-              <label
-                htmlFor="teamSize"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >
+              <label htmlFor="teamSize" className="block text-sm font-medium text-gray-300">
                 Team Size
               </label>
               <select
                 id="teamSize"
                 value={config.projectInfo.teamSize ?? ''}
                 onChange={(e) => updateProjectInfo('teamSize', Number(e.target.value))}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">Select team size...</option>
                 <option value="0">Solo (1 developer)</option>
@@ -246,7 +227,7 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
             <div>
               <label
                 htmlFor="codebaseComplexity"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-gray-300"
               >
                 Codebase Complexity
               </label>
@@ -254,7 +235,7 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
                 id="codebaseComplexity"
                 value={config.projectInfo.codebaseComplexity ?? ''}
                 onChange={(e) => updateProjectInfo('codebaseComplexity', Number(e.target.value))}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">Select complexity...</option>
                 <option value="0">Trivial (simple scripts)</option>
@@ -268,17 +249,14 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
 
             {/* Integrations */}
             <div>
-              <label
-                htmlFor="integrations"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >
+              <label htmlFor="integrations" className="block text-sm font-medium text-gray-300">
                 External Integrations
               </label>
               <select
                 id="integrations"
                 value={config.projectInfo.integrations ?? ''}
                 onChange={(e) => updateProjectInfo('integrations', Number(e.target.value))}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">Select integration count...</option>
                 <option value="0">None (standalone)</option>
@@ -292,17 +270,14 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
 
             {/* User Base */}
             <div>
-              <label
-                htmlFor="userBase"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >
+              <label htmlFor="userBase" className="block text-sm font-medium text-gray-300">
                 Expected User Base
               </label>
               <select
                 id="userBase"
                 value={config.projectInfo.userBase ?? ''}
                 onChange={(e) => updateProjectInfo('userBase', Number(e.target.value))}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">Select user base...</option>
                 <option value="0">Personal (&lt; 10 users)</option>
@@ -316,17 +291,14 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
 
             {/* Security */}
             <div>
-              <label
-                htmlFor="security"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >
+              <label htmlFor="security" className="block text-sm font-medium text-gray-300">
                 Security Requirements
               </label>
               <select
                 id="security"
                 value={config.projectInfo.security ?? ''}
                 onChange={(e) => updateProjectInfo('security', Number(e.target.value))}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">Select security level...</option>
                 <option value="0">None (no sensitive data)</option>
@@ -340,17 +312,14 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
 
             {/* Duration */}
             <div>
-              <label
-                htmlFor="duration"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >
+              <label htmlFor="duration" className="block text-sm font-medium text-gray-300">
                 Project Duration
               </label>
               <select
                 id="duration"
                 value={config.projectInfo.duration ?? ''}
                 onChange={(e) => updateProjectInfo('duration', Number(e.target.value))}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">Select duration...</option>
                 <option value="0">Very Short (&lt; 1 week)</option>
@@ -364,17 +333,14 @@ export function ProjectInfoStep({ config, setConfig }: Props) {
 
             {/* Existing Code */}
             <div>
-              <label
-                htmlFor="existingCode"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >
+              <label htmlFor="existingCode" className="block text-sm font-medium text-gray-300">
                 Existing Codebase
               </label>
               <select
                 id="existingCode"
                 value={config.projectInfo.existingCode ?? ''}
                 onChange={(e) => updateProjectInfo('existingCode', Number(e.target.value))}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">Select...</option>
                 <option value="0">Greenfield (brand new)</option>

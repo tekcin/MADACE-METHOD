@@ -20,34 +20,34 @@ interface TechStackReportProps {
 
 const categoryColors = {
   language: {
-    bg: 'bg-blue-100 dark:bg-blue-900',
-    text: 'text-blue-800 dark:text-blue-200',
-    border: 'border-blue-300 dark:border-blue-700',
+    bg: 'bg-blue-900',
+    text: 'text-blue-200',
+    border: 'border-blue-700',
   },
   framework: {
-    bg: 'bg-purple-100 dark:bg-purple-900',
-    text: 'text-purple-800 dark:text-purple-200',
-    border: 'border-purple-300 dark:border-purple-700',
+    bg: 'bg-purple-900',
+    text: 'text-purple-200',
+    border: 'border-purple-700',
   },
   database: {
-    bg: 'bg-green-100 dark:bg-green-900',
-    text: 'text-green-800 dark:text-green-200',
-    border: 'border-green-300 dark:border-green-700',
+    bg: 'bg-green-900',
+    text: 'text-green-200',
+    border: 'border-green-700',
   },
   tool: {
-    bg: 'bg-orange-100 dark:bg-orange-900',
-    text: 'text-orange-800 dark:text-orange-200',
-    border: 'border-orange-300 dark:border-orange-700',
+    bg: 'bg-orange-900',
+    text: 'text-orange-200',
+    border: 'border-orange-700',
   },
   infrastructure: {
-    bg: 'bg-gray-100 dark:bg-gray-700',
-    text: 'text-gray-800 dark:text-gray-200',
-    border: 'border-gray-300 dark:border-gray-600',
+    bg: 'bg-gray-700',
+    text: 'text-gray-200',
+    border: 'border-gray-600',
   },
   other: {
-    bg: 'bg-yellow-100 dark:bg-yellow-900',
-    text: 'text-yellow-800 dark:text-yellow-200',
-    border: 'border-yellow-300 dark:border-yellow-700',
+    bg: 'bg-yellow-900',
+    text: 'text-yellow-200',
+    border: 'border-yellow-700',
   },
 };
 
@@ -169,7 +169,7 @@ export function TechStackReport({
 
   if (technologies.length === 0) {
     return (
-      <div className="rounded-lg border border-gray-200 bg-white p-6 text-center dark:border-gray-800 dark:bg-gray-800">
+      <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 text-center">
         <div className="mx-auto h-12 w-12 text-gray-400">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -180,10 +180,8 @@ export function TechStackReport({
             />
           </svg>
         </div>
-        <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">
-          No technologies detected
-        </h3>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <h3 className="mt-2 text-sm font-medium text-white">No technologies detected</h3>
+        <p className="mt-1 text-sm text-gray-400">
           Unable to detect technologies from the repository
         </p>
       </div>
@@ -195,28 +193,22 @@ export function TechStackReport({
       {/* Summary Stats */}
       {!compact && (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-800">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">
-              {technologies.length}
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Technologies</div>
+          <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+            <div className="text-2xl font-bold text-white">{technologies.length}</div>
+            <div className="text-sm text-gray-400">Technologies</div>
           </div>
-          <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-800">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">
-              {sortedCategories.length}
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
+          <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+            <div className="text-2xl font-bold text-white">{sortedCategories.length}</div>
+            <div className="text-sm text-gray-400">Categories</div>
           </div>
           {totalFiles && (
             <>
-              <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-800">
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {totalFiles.toLocaleString()}
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Total Files</div>
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+                <div className="text-2xl font-bold text-white">{totalFiles.toLocaleString()}</div>
+                <div className="text-sm text-gray-400">Total Files</div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-800">
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+                <div className="text-2xl font-bold text-white">
                   {Math.round(
                     (technologies.filter((t) => t.confidence && t.confidence > 80).length /
                       technologies.length) *
@@ -224,7 +216,7 @@ export function TechStackReport({
                   )}
                   %
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">High Confidence</div>
+                <div className="text-sm text-gray-400">High Confidence</div>
               </div>
             </>
           )}
@@ -239,23 +231,18 @@ export function TechStackReport({
           const colors = categoryColors[category];
 
           return (
-            <div
-              key={category}
-              className="rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-800"
-            >
+            <div key={category} className="rounded-lg border border-gray-700 bg-gray-800">
               {/* Category Header */}
               <button
                 type="button"
                 onClick={() => toggleCategory(category)}
-                className="flex w-full items-center justify-between p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                className="flex w-full items-center justify-between p-4 text-left hover:bg-gray-700/50"
               >
                 <div className="flex items-center gap-3">
                   <div className={`rounded-lg p-2 ${colors.bg}`}>{categoryIcons[category]}</div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      {categoryLabels[category]}
-                    </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <h3 className="text-lg font-semibold text-white">{categoryLabels[category]}</h3>
+                    <p className="text-sm text-gray-400">
                       {techs.length} {techs.length === 1 ? 'technology' : 'technologies'}
                     </p>
                   </div>
@@ -279,7 +266,7 @@ export function TechStackReport({
 
               {/* Category Content */}
               {isExpanded && (
-                <div className="border-t border-gray-200 p-4 dark:border-gray-700">
+                <div className="border-t border-gray-700 p-4">
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     {techs.map((tech, idx) => (
                       <div
@@ -299,9 +286,7 @@ export function TechStackReport({
                               )}
                             </div>
                             {tech.description && (
-                              <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">
-                                {tech.description}
-                              </p>
+                              <p className="mt-1 text-xs text-gray-400">{tech.description}</p>
                             )}
                             <div className="mt-2 flex flex-wrap gap-2 text-xs">
                               {tech.confidence !== undefined && (
@@ -367,7 +352,7 @@ export function TechStackReport({
                 alert('✅ Tech stack report copied to clipboard!');
               });
             }}
-            className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+            className="flex items-center gap-2 rounded-lg border border-gray-600 bg-gray-800 px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700"
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

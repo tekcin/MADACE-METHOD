@@ -15,6 +15,99 @@ export class AgentLoadError extends Error {
   }
 }
 
+/**
+ * Module name aliases for BMAD-MADACE compatibility
+ */
+const MODULE_ALIASES: Record<string, string> = {
+  // BMAD → MADACE
+  bmm: 'mam',
+  bmb: 'mab',
+  // MADACE → BMAD
+  mam: 'bmm',
+  mab: 'bmb',
+};
+
+/**
+ * Framework name aliases
+ */
+const FRAMEWORK_ALIASES: Record<string, string> = {
+  bmad: 'madace',
+  madace: 'bmad',
+};
+
+/**
+ * Resolve module name alias (e.g., BMM → MAM, MAM → BMM)
+ */
+export function resolveModuleAlias(module: string): string {
+  const normalized = module.toLowerCase();
+  return MODULE_ALIASES[normalized] || normalized;
+}
+
+/**
+ * Get all possible module names (including aliases)
+ */
+export function getModuleVariants(module: string): string[] {
+  const normalized = module.toLowerCase();
+  const alias = MODULE_ALIASES[normalized];
+  return alias ? [normalized, alias] : [normalized];
+}
+
+/**
+ * Get all possible framework names (bmad/madace)
+ */
+export function getFrameworkVariants(framework: string): string[] {
+  const normalized = framework.toLowerCase();
+  const alias = FRAMEWORK_ALIASES[normalized];
+  return alias ? [normalized, alias] : [normalized];
+}
+
+/**
+ * Resolve agent directory path with fallback to alias
+ * Checks both madace/mam and bmad/bmm directories
+ */
+export async function resolveAgentDirectory(module: string): Promise<string | null> {
+  const cwd = process.cwd();
+  const moduleVariants = getModuleVariants(module);
+  const frameworkVariants = ['madace', 'bmad'];
+
+  for (const framework of frameworkVariants) {
+    for (const mod of moduleVariants) {
+      const dirPath = path.join(cwd, framework, mod, 'agents');
+      try {
+        await fs.access(dirPath);
+        return dirPath;
+      } catch {
+        // Directory doesn't exist, try next variant
+      }
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Resolve workflow directory path with fallback to alias
+ */
+export async function resolveWorkflowDirectory(module: string): Promise<string | null> {
+  const cwd = process.cwd();
+  const moduleVariants = getModuleVariants(module);
+  const frameworkVariants = ['madace', 'bmad'];
+
+  for (const framework of frameworkVariants) {
+    for (const mod of moduleVariants) {
+      const dirPath = path.join(cwd, framework, mod, 'workflows');
+      try {
+        await fs.access(dirPath);
+        return dirPath;
+      } catch {
+        // Directory doesn't exist, try next variant
+      }
+    }
+  }
+
+  return null;
+}
+
 export class AgentLoader {
   private cache = new Map<string, Agent>();
 
@@ -102,11 +195,32 @@ export async function loadAgent(filePath: string): Promise<Agent> {
 }
 
 /**
- * Load all agents from MAM directory
+ * Load all agents from a module (with alias support)
+ * Checks both MADACE and BMAD directories
+ */
+export async function loadAgentsByModule(module: string): Promise<Agent[]> {
+  const agentDir = await resolveAgentDirectory(module);
+  if (!agentDir) {
+    throw new AgentLoadError(
+      `No agent directory found for module: ${module} (checked both madace/${module} and bmad/${resolveModuleAlias(module)})`,
+      module
+    );
+  }
+  return defaultLoader.loadAgentsFromDirectory(agentDir);
+}
+
+/**
+ * Load all agents from MAM directory (with BMM alias support)
  */
 export async function loadMAMAgents(): Promise<Agent[]> {
-  const mamAgentsPath = path.join(process.cwd(), 'madace', 'mam', 'agents');
-  return defaultLoader.loadAgentsFromDirectory(mamAgentsPath);
+  return loadAgentsByModule('mam');
+}
+
+/**
+ * Load all agents from MAB directory (with BMB alias support)
+ */
+export async function loadMABAgents(): Promise<Agent[]> {
+  return loadAgentsByModule('mab');
 }
 
 /**
@@ -117,10 +231,22 @@ export async function loadMADACEAgents(): Promise<Agent[]> {
 }
 
 /**
- * Load all agents from all modules (currently just MADACE/MAM)
+ * Load all agents from all modules (MAM, MAB, CIS)
  */
 export async function loadAllAgents(): Promise<Agent[]> {
-  return loadMADACEAgents();
+  const modules = ['mam', 'mab', 'cis'];
+  const allAgents: Agent[] = [];
+
+  for (const moduleName of modules) {
+    try {
+      const agents = await loadAgentsByModule(moduleName);
+      allAgents.push(...agents);
+    } catch {
+      // Module directory doesn't exist - skip silently
+    }
+  }
+
+  return allAgents;
 }
 
 /**

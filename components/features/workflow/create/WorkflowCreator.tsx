@@ -135,9 +135,7 @@ export function WorkflowCreator({ onComplete, onCancel }: WorkflowCreatorProps) 
   };
 
   const handleCancel = () => {
-    const confirmed = confirm(
-      'Are you sure you want to cancel? All progress will be lost.'
-    );
+    const confirmed = confirm('Are you sure you want to cancel? All progress will be lost.');
     if (confirmed) {
       if (onCancel) {
         onCancel();
@@ -160,7 +158,10 @@ export function WorkflowCreator({ onComplete, onCancel }: WorkflowCreatorProps) 
     <div className="mx-auto max-w-5xl" data-testid="workflow-creator">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white" data-testid="creator-title">
+        <h1
+          className="text-3xl font-bold text-gray-900 dark:text-white"
+          data-testid="creator-title"
+        >
           Create New Workflow
         </h1>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
@@ -176,7 +177,11 @@ export function WorkflowCreator({ onComplete, onCancel }: WorkflowCreatorProps) 
             const isCompleted = index < currentStepIndex;
 
             return (
-              <div key={step.id} className="flex flex-1 items-center" data-testid={`step-${step.id}`}>
+              <div
+                key={step.id}
+                className="flex flex-1 items-center"
+                data-testid={`step-${step.id}`}
+              >
                 <div className="flex flex-col items-center">
                   <div
                     data-testid={`step-indicator-${step.id}`}
@@ -210,9 +215,7 @@ export function WorkflowCreator({ onComplete, onCancel }: WorkflowCreatorProps) 
                     >
                       {step.label}
                     </p>
-                    <p className="text-xs text-gray-400 dark:text-gray-500">
-                      {step.description}
-                    </p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">{step.description}</p>
                   </div>
                 </div>
                 {index < STEPS.length - 1 && (
@@ -249,13 +252,12 @@ export function WorkflowCreator({ onComplete, onCancel }: WorkflowCreatorProps) 
 
       {/* Error Message */}
       {submitError && (
-        <div className="mt-4 rounded-md bg-red-50 p-4 dark:bg-red-900/20" data-testid="error-message">
+        <div
+          className="mt-4 rounded-md bg-red-50 p-4 dark:bg-red-900/20"
+          data-testid="error-message"
+        >
           <div className="flex">
-            <svg
-              className="h-5 w-5 text-red-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
+            <svg className="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -269,13 +271,12 @@ export function WorkflowCreator({ onComplete, onCancel }: WorkflowCreatorProps) 
 
       {/* Success Message */}
       {submitSuccess && (
-        <div className="mt-4 rounded-md bg-green-50 p-4 dark:bg-green-900/20" data-testid="success-message">
+        <div
+          className="mt-4 rounded-md bg-green-50 p-4 dark:bg-green-900/20"
+          data-testid="success-message"
+        >
           <div className="flex">
-            <svg
-              className="h-5 w-5 text-green-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
+            <svg className="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"

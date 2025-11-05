@@ -152,8 +152,8 @@ export function AgentSelector({
     return (
       <div className="flex items-center justify-center py-12">
         <div className="flex flex-col items-center space-y-4">
-          <div className="size-12 animate-spin rounded-full border-4 border-gray-300 border-t-blue-500 dark:border-gray-600 dark:border-t-blue-400"></div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">Loading agents...</p>
+          <div className="size-12 animate-spin rounded-full border-4 border-gray-600 border-t-blue-400"></div>
+          <p className="text-sm text-gray-400">Loading agents...</p>
         </div>
       </div>
     );
@@ -161,10 +161,10 @@ export function AgentSelector({
 
   if (error) {
     return (
-      <div className="rounded-lg border-2 border-red-300 bg-red-50 p-6 dark:border-red-700 dark:bg-red-900/20">
+      <div className="rounded-lg border-2 border-red-700 bg-red-900/20 p-6">
         <div className="flex items-start">
           <svg
-            className="mt-0.5 mr-3 size-6 flex-shrink-0 text-red-600 dark:text-red-400"
+            className="mt-0.5 mr-3 size-6 flex-shrink-0 text-red-400"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -175,11 +175,11 @@ export function AgentSelector({
             />
           </svg>
           <div>
-            <h3 className="font-bold text-red-900 dark:text-red-100">Error Loading Agents</h3>
-            <p className="mt-1 text-sm text-red-700 dark:text-red-300">{error}</p>
+            <h3 className="font-bold text-red-100">Error Loading Agents</h3>
+            <p className="mt-1 text-sm text-red-300">{error}</p>
             <button
               onClick={fetchAgents}
-              className="mt-3 rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-offset-gray-900"
+              className="mt-3 rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900 focus:outline-none"
             >
               Retry
             </button>
@@ -191,8 +191,8 @@ export function AgentSelector({
 
   if (filteredAgents.length === 0) {
     return (
-      <div className="rounded-lg border-2 border-gray-300 bg-gray-50 p-6 text-center dark:border-gray-600 dark:bg-gray-800">
-        <p className="text-gray-600 dark:text-gray-400">
+      <div className="rounded-lg border-2 border-gray-600 bg-gray-800 p-6 text-center">
+        <p className="text-gray-400">
           {moduleFilter === 'all'
             ? 'No agents available'
             : `No agents found in ${moduleFilter} module`}

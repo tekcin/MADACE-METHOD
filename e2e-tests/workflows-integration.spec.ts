@@ -210,9 +210,7 @@ test.describe('Workflow State Persistence Integration', () => {
         { name: 'Step 2', action: 'display', message: 'Second' },
         { name: 'Step 3', action: 'display', message: 'Third' },
       ],
-      variables: [
-        { name: 'test_var', type: 'string', value: 'test_value' },
-      ],
+      variables: [{ name: 'test_var', type: 'string', value: 'test_value' }],
     });
 
     // Execute first step
@@ -319,9 +317,7 @@ test.describe('Multiple Workflows Integration', () => {
       description: 'First workflow',
       agent: 'PM',
       phase: 1,
-      steps: [
-        { name: 'Alpha Step', action: 'display', message: 'Alpha workflow' },
-      ],
+      steps: [{ name: 'Alpha Step', action: 'display', message: 'Alpha workflow' }],
     });
 
     // Create second workflow
@@ -331,17 +327,15 @@ test.describe('Multiple Workflows Integration', () => {
       description: 'Second workflow',
       agent: 'Analyst',
       phase: 2,
-      steps: [
-        { name: 'Beta Step', action: 'display', message: 'Beta workflow' },
-      ],
+      steps: [{ name: 'Beta Step', action: 'display', message: 'Beta workflow' }],
     });
 
     // Verify both workflows exist
     await workflowsPage.goto();
     const workflows = await workflowsPage.getAvailableWorkflows();
 
-    const alphaWorkflow = workflows.find(w => w.name === 'workflow-alpha');
-    const betaWorkflow = workflows.find(w => w.name === 'workflow-beta');
+    const alphaWorkflow = workflows.find((w) => w.name === 'workflow-alpha');
+    const betaWorkflow = workflows.find((w) => w.name === 'workflow-beta');
 
     expect(alphaWorkflow).toBeDefined();
     expect(betaWorkflow).toBeDefined();
@@ -357,9 +351,7 @@ test.describe('Multiple Workflows Integration', () => {
       description: 'First sequential workflow',
       agent: 'PM',
       phase: 1,
-      steps: [
-        { name: 'Step 1', action: 'display', message: 'Workflow 1' },
-      ],
+      steps: [{ name: 'Step 1', action: 'display', message: 'Workflow 1' }],
     });
 
     await creatorPage.goto();
@@ -368,9 +360,7 @@ test.describe('Multiple Workflows Integration', () => {
       description: 'Second sequential workflow',
       agent: 'Developer',
       phase: 3,
-      steps: [
-        { name: 'Step 1', action: 'display', message: 'Workflow 2' },
-      ],
+      steps: [{ name: 'Step 1', action: 'display', message: 'Workflow 2' }],
     });
 
     // Execute first workflow
@@ -491,9 +481,7 @@ test.describe('Complex Workflow Scenarios', () => {
           ],
         },
       ],
-      variables: [
-        { name: 'complexity', type: 'string', value: 'simple' },
-      ],
+      variables: [{ name: 'complexity', type: 'string', value: 'simple' }],
     });
 
     // Verify YAML contains all action types
@@ -700,9 +688,7 @@ test.describe('Error Recovery and Edge Cases', () => {
       description: 'First workflow',
       agent: 'PM',
       phase: 1,
-      steps: [
-        { name: 'Step 1', action: 'display', message: 'First' },
-      ],
+      steps: [{ name: 'Step 1', action: 'display', message: 'First' }],
     });
 
     // Try to create second workflow with same name
@@ -729,12 +715,8 @@ test.describe('Workflow YAML Export and Import', () => {
       description: 'Test YAML export',
       agent: 'PM',
       phase: 1,
-      steps: [
-        { name: 'Step 1', action: 'display', message: 'Export test' },
-      ],
-      variables: [
-        { name: 'test_var', type: 'string', value: 'test_value' },
-      ],
+      steps: [{ name: 'Step 1', action: 'display', message: 'Export test' }],
+      variables: [{ name: 'test_var', type: 'string', value: 'test_value' }],
     });
 
     // Download YAML
@@ -757,9 +739,7 @@ test.describe('Workflow YAML Export and Import', () => {
       description: 'Test clipboard copy',
       agent: 'Developer',
       phase: 3,
-      steps: [
-        { name: 'Step 1', action: 'display', message: 'Clipboard test' },
-      ],
+      steps: [{ name: 'Step 1', action: 'display', message: 'Clipboard test' }],
     });
 
     // Copy to clipboard
@@ -779,9 +759,7 @@ test.describe('Workflow YAML Export and Import', () => {
       description: 'Test YAML structure',
       agent: 'Architect',
       phase: 2,
-      steps: [
-        { name: 'Step 1', action: 'display', message: 'Structure test' },
-      ],
+      steps: [{ name: 'Step 1', action: 'display', message: 'Structure test' }],
       variables: [
         { name: 'var1', type: 'string', value: 'value1' },
         { name: 'var2', type: 'number', value: 42 },

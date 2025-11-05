@@ -32,7 +32,7 @@ export default function AgentsPage() {
       <div className="mb-8 flex items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white">MADACE Agents</h1>
-          <p className="mt-2 text-gray-400">
+          <p className="mt-2 text-gray-300">
             Select and interact with AI agents for your project workflow.
           </p>
         </div>
@@ -59,14 +59,14 @@ export default function AgentsPage() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-medium text-white">Available Agents</h2>
-            <p className="mt-1 text-sm text-gray-400">
+            <p className="mt-1 text-sm text-gray-300">
               {viewMode === 'single'
                 ? 'Click an agent to select it'
                 : 'Click agents to add or remove from selection'}
             </p>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-400">Selection mode:</span>
+            <span className="text-sm text-gray-300">Selection mode:</span>
             <button
               onClick={() => setViewMode('single')}
               className={`rounded-l-md border px-3 py-1.5 text-sm font-medium transition-colors ${
@@ -91,10 +91,7 @@ export default function AgentsPage() {
         </div>
         {/* Module filter */}
         <div className="mt-4 flex items-center space-x-2">
-          <label
-            htmlFor="moduleFilter"
-            className="text-sm font-medium text-gray-300"
-          >
+          <label htmlFor="moduleFilter" className="text-sm font-medium text-gray-300">
             Filter by module:
           </label>
           <select
@@ -124,16 +121,12 @@ export default function AgentsPage() {
       <div className="mt-8 space-y-6">
         {/* MADACE Agents Section */}
         <div className="rounded-lg border-2 border-blue-600 bg-blue-900/20 p-6">
-          <h2 className="mb-4 text-xl font-bold text-blue-100">
-            🎯 MADACE Agents (5 agents)
-          </h2>
+          <h2 className="mb-4 text-xl font-bold text-blue-100">🎯 MADACE Agents (5 agents)</h2>
           <div className="space-y-4">
             {/* MAM Module */}
             <div className="rounded-lg border border-blue-700 bg-blue-950 p-4">
-              <h3 className="mb-2 text-lg font-semibold text-white">
-                MAM - MADACE Agile Method
-              </h3>
-              <div className="text-sm text-gray-400">
+              <h3 className="mb-2 text-lg font-semibold text-white">MAM - MADACE Agile Method</h3>
+              <div className="text-sm text-gray-300">
                 <p className="mb-2">
                   Native MADACE agents for complete agile development workflow.
                 </p>

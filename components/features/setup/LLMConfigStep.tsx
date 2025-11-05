@@ -59,16 +59,14 @@ export function LLMConfigStep({ config, setConfig }: Props) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">LLM Configuration</h2>
-      <p className="text-sm text-gray-600 dark:text-gray-400">
+      <h2 className="text-xl font-semibold text-white">LLM Configuration</h2>
+      <p className="text-sm text-gray-300">
         Select and configure your LLM provider for planning and architecture
       </p>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            LLM Provider
-          </label>
+          <label className="block text-sm font-medium text-gray-300">LLM Provider</label>
           <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {(Object.keys(providerInfo) as Array<keyof typeof providerInfo>).map((provider) => (
               <button
@@ -77,14 +75,14 @@ export function LLMConfigStep({ config, setConfig }: Props) {
                 onClick={() => handleProviderChange(provider)}
                 className={`flex flex-col rounded-lg border-2 p-4 text-left transition-colors ${
                   currentProvider === provider
-                    ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'
-                    : 'border-gray-300 hover:border-gray-400 dark:border-gray-700 dark:hover:border-gray-600'
+                    ? 'border-blue-600 bg-blue-900/20'
+                    : 'border-gray-600 border-gray-700 hover:border-gray-400 hover:border-gray-600'
                 }`}
               >
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                <span className="text-sm font-semibold text-white">
                   {providerInfo[provider].name}
                 </span>
-                <span className="mt-1 text-xs text-gray-600 dark:text-gray-400">
+                <span className="mt-1 text-xs text-gray-300">
                   {providerInfo[provider].description}
                 </span>
               </button>
@@ -93,10 +91,7 @@ export function LLMConfigStep({ config, setConfig }: Props) {
         </div>
 
         <div>
-          <label
-            htmlFor="apiKey"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
+          <label htmlFor="apiKey" className="block text-sm font-medium text-gray-300">
             API Key {currentProvider === 'local' ? '(Optional)' : ''}
           </label>
           <input
@@ -104,18 +99,18 @@ export function LLMConfigStep({ config, setConfig }: Props) {
             id="apiKey"
             value={config.llmConfig.apiKey}
             onChange={(e) => updateLLMConfig('apiKey', e.target.value)}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+            className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
             placeholder={
               currentProvider === 'local' ? 'Not required for local models' : 'Enter your API key'
             }
           />
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-300 text-gray-400">
             Get your API key from{' '}
             <a
               href={info.apiKeyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline dark:text-blue-400"
+              className="text-blue-400 text-blue-600 hover:underline"
             >
               {info.name}
             </a>
@@ -123,10 +118,7 @@ export function LLMConfigStep({ config, setConfig }: Props) {
         </div>
 
         <div>
-          <label
-            htmlFor="model"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
+          <label htmlFor="model" className="block text-sm font-medium text-gray-300">
             Model
           </label>
           <input
@@ -134,12 +126,10 @@ export function LLMConfigStep({ config, setConfig }: Props) {
             id="model"
             value={config.llmConfig.model}
             onChange={(e) => updateLLMConfig('model', e.target.value)}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+            className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
             placeholder={info.defaultModel}
           />
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Default: {info.defaultModel}
-          </p>
+          <p className="mt-1 text-sm text-gray-300 text-gray-400">Default: {info.defaultModel}</p>
         </div>
       </div>
     </div>

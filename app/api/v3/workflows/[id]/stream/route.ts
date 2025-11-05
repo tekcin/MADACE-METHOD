@@ -6,10 +6,7 @@ import path from 'path';
  * GET /api/v3/workflows/[id]/stream
  * Server-Sent Events endpoint for live workflow updates
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   const encoder = new TextEncoder();

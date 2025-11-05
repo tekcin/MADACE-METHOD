@@ -59,14 +59,13 @@ describe('Table Formatter', () => {
       expect(output).toContain('Total: 1 items');
     });
 
-    it('should show total count when showCount is true', () => {
+    it('should show total count by default', () => {
       const data = [{ name: 'Alice' }, { name: 'Bob' }];
 
       const output = formatTable({
         columns: [{ key: 'name', label: 'Name', width: 10 }],
         data,
         title: 'Names',
-        showCount: true,
       });
 
       expect(output).toContain('Total: 2 items');

@@ -32,29 +32,21 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
                       isCompleted
                         ? 'bg-blue-600'
                         : isCurrent
-                          ? 'border-2 border-blue-600 bg-white dark:bg-gray-900'
-                          : 'border-2 border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-900'
+                          ? 'border-2 border-blue-600 bg-gray-900'
+                          : 'border-2 border-gray-700 bg-gray-900'
                     }`}
                   >
                     {isCompleted ? (
                       <CheckIcon className="h-6 w-6 text-white" aria-hidden="true" />
                     ) : (
-                      <span
-                        className={`${
-                          isCurrent ? 'text-blue-600' : 'text-gray-500 dark:text-gray-400'
-                        }`}
-                      >
+                      <span className={`${isCurrent ? 'text-blue-600' : 'text-gray-400'}`}>
                         {index + 1}
                       </span>
                     )}
                   </span>
                   <span
                     className={`ml-4 text-sm font-medium ${
-                      isCurrent
-                        ? 'text-blue-600'
-                        : isCompleted
-                          ? 'text-gray-900 dark:text-white'
-                          : 'text-gray-500 dark:text-gray-400'
+                      isCurrent ? 'text-blue-600' : isCompleted ? 'text-white' : 'text-gray-400'
                     }`}
                   >
                     {stepLabels[step]}
@@ -64,7 +56,7 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
               {index < steps.length - 1 && (
                 <div
                   className={`absolute top-1/2 right-0 h-0.5 w-full -translate-y-1/2 ${
-                    isCompleted ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-700'
+                    isCompleted ? 'bg-blue-600' : 'bg-gray-700'
                   }`}
                   aria-hidden="true"
                 />

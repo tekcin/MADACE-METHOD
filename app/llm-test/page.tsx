@@ -311,7 +311,7 @@ export default function LLMTestPage() {
             {!result.success && result.error && (
               <div className="space-y-4">
                 <div className="bg-background/50 rounded-md p-4">
-                  <p className="text-red-600 dark:text-red-400">{result.error}</p>
+                  <p className="text-red-400">{result.error}</p>
                 </div>
 
                 <div className="bg-background/50 rounded-md p-4">

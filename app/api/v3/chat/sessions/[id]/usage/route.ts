@@ -8,15 +8,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSessionUsageStats, getSessionProviderStats } from '@/lib/services/llm-usage-service';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id: sessionId } = await params;
 
     if (!sessionId) {
-      return NextResponse.json({ success: false, error: 'Session ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: 'Session ID is required' },
+        { status: 400 }
+      );
     }
 
     // Get usage stats

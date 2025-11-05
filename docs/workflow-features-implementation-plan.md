@@ -11,6 +11,7 @@
 This document outlines the implementation plan for enhancing MADACE v3.0's workflow system with interactive features, LLM integration, and user-friendly creation tools.
 
 **Current State:**
+
 - ✅ YAML workflow loader implemented
 - ✅ Workflow state persistence working
 - ✅ Handlebars template engine available
@@ -20,6 +21,7 @@ This document outlines the implementation plan for enhancing MADACE v3.0's workf
 - ❌ No workflow creation UI
 
 **Target State:**
+
 - ✅ Full template rendering in workflows
 - ✅ Real-time LLM responses for reflect steps
 - ✅ Interactive forms for elicit steps
@@ -44,6 +46,7 @@ YAML Files (madace/*/workflows/*.yaml)
 ```
 
 **Supported Actions:**
+
 - `guide` - Display guidance message
 - `elicit` - Collect user input (placeholder)
 - `reflect` - LLM reflection (placeholder)
@@ -101,6 +104,7 @@ YAML Files (madace/*/workflows/*.yaml)
 **Goal:** Replace placeholder template rendering with full Handlebars integration
 
 **Files to Modify:**
+
 - `lib/workflows/executor.ts` - Update `handleTemplate()` method
 
 **Implementation:**
@@ -145,6 +149,7 @@ private async handleTemplate(step: WorkflowStep): Promise<void> {
 ```
 
 **Testing:**
+
 - Create test workflow with template step
 - Verify file rendering
 - Test inline template rendering
@@ -157,6 +162,7 @@ private async handleTemplate(step: WorkflowStep): Promise<void> {
 **Goal:** Add real-time LLM responses to reflect steps with streaming support
 
 **Files to Modify:**
+
 - `lib/workflows/executor.ts` - Update `handleReflect()` method
 - `lib/workflows/types.ts` - Add reflection result type
 
@@ -276,6 +282,7 @@ private async getLLMConfig() {
 ```
 
 **Testing:**
+
 - Test with all LLM providers (local, Gemini, Claude, OpenAI)
 - Verify reflection results stored in variables
 - Test error handling
@@ -288,6 +295,7 @@ private async getLLMConfig() {
 **Goal:** Create interactive UI for collecting user input during workflow execution
 
 **New Files:**
+
 - `components/features/workflow/WorkflowInputForm.tsx` - Input form component
 - `app/api/v3/workflows/[id]/input/route.ts` - API for submitting input
 
@@ -387,10 +395,7 @@ const InputSchema = z.object({
   value: z.unknown(),
 });
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = params;
     const body = await request.json();
@@ -401,12 +406,7 @@ export async function POST(
     const fs = await import('fs/promises');
     const path = await import('path');
 
-    const inputFile = path.join(
-      process.cwd(),
-      '.madace',
-      'workflow-inputs',
-      `${id}.json`
-    );
+    const inputFile = path.join(process.cwd(), '.madace', 'workflow-inputs', `${id}.json`);
 
     await fs.mkdir(path.dirname(inputFile), { recursive: true });
 
@@ -474,6 +474,7 @@ private async handleElicit(step: WorkflowStep): Promise<void> {
 ```
 
 **Testing:**
+
 - Test input form rendering
 - Verify input submission
 - Test workflow pause/resume
@@ -486,6 +487,7 @@ private async handleElicit(step: WorkflowStep): Promise<void> {
 **Goal:** Create a live workflow execution view with step-by-step progress
 
 **New Files:**
+
 - `components/features/workflow/WorkflowRunner.tsx` - Main execution component
 - `app/api/v3/workflows/[id]/execute/route.ts` - Execute API
 - `app/api/v3/workflows/[id]/stream/route.ts` - SSE endpoint for live updates
@@ -667,10 +669,7 @@ export function WorkflowRunner({ workflow, workflowId }: WorkflowRunnerProps) {
 // app/api/v3/workflows/[id]/stream/route.ts
 import { NextRequest } from 'next/server';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 
   // Create SSE stream
@@ -679,9 +678,7 @@ export async function GET(
     start(controller) {
       // Send workflow state updates
       const sendEvent = (data: unknown) => {
-        controller.enqueue(
-          encoder.encode(`data: ${JSON.stringify(data)}\n\n`)
-        );
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
       };
 
       // Poll workflow state every second
@@ -691,11 +688,7 @@ export async function GET(
           const fs = await import('fs/promises');
           const path = await import('path');
 
-          const stateFile = path.join(
-            process.cwd(),
-            '.madace',
-            `${id}.state.json`
-          );
+          const stateFile = path.join(process.cwd(), '.madace', `${id}.state.json`);
 
           const state = await fs
             .readFile(stateFile, 'utf-8')
@@ -747,6 +740,7 @@ export async function GET(
 ```
 
 **Testing:**
+
 - Test workflow execution with all action types
 - Verify SSE updates
 - Test input pause/resume
@@ -759,6 +753,7 @@ export async function GET(
 **Goal:** Build visual workflow creator similar to the agent creation wizard
 
 **New Files:**
+
 - `app/workflows/create/page.tsx` - Main page
 - `components/features/workflow/CreateWorkflowWizard.tsx` - Wizard component
 - `components/features/workflow/WorkflowBasicStep.tsx` - Basic info step
@@ -816,37 +811,44 @@ POST   /api/v3/workflows/[id]/reset   Reset workflow state
 ### Week 1: Core Enhancements (Days 1-3)
 
 **Day 1:**
+
 - ✅ Integrate template engine into workflow executor (2-3 hours)
 - ✅ Add LLM integration for reflect steps (3-4 hours)
 - ✅ Testing and bug fixes (1-2 hours)
 
 **Day 2:**
+
 - ✅ Create interactive input forms (4-5 hours)
 - ✅ Build input API endpoint (1-2 hours)
 - ✅ Update workflow executor for input handling (1-2 hours)
 
 **Day 3:**
+
 - ✅ Build visual workflow execution UI (5-6 hours)
 - ✅ Create SSE endpoint for live updates (2-3 hours)
 
 ### Week 1-2: Creation UI (Days 4-7)
 
 **Day 4:**
+
 - ✅ Design workflow creation wizard structure
 - ✅ Build basic information step (2-3 hours)
 - ✅ Build steps editor component (4-5 hours)
 
 **Day 5:**
+
 - ✅ Complete steps editor (continued)
 - ✅ Add drag-and-drop functionality (2-3 hours)
 - ✅ Build variables editor (2-3 hours)
 
 **Day 6:**
+
 - ✅ Build YAML preview component (2-3 hours)
 - ✅ Add validation (2-3 hours)
 - ✅ Implement save functionality (2-3 hours)
 
 **Day 7:**
+
 - ✅ Create API endpoints (2-3 hours)
 - ✅ Integration testing (3-4 hours)
 - ✅ Documentation (2-3 hours)
@@ -856,18 +858,21 @@ POST   /api/v3/workflows/[id]/reset   Reset workflow state
 ## Testing Strategy
 
 ### Unit Tests
+
 - Workflow executor methods
 - Template rendering
 - LLM integration
 - Input validation
 
 ### Integration Tests
+
 - End-to-end workflow execution
 - Input collection flow
 - SSE updates
 - State persistence
 
 ### E2E Tests
+
 - Workflow creation wizard
 - Workflow execution UI
 - Multi-step workflows
@@ -878,31 +883,37 @@ POST   /api/v3/workflows/[id]/reset   Reset workflow state
 ## Success Criteria
 
 ✅ **Template Rendering**
+
 - Templates render correctly with Handlebars
 - Variables substituted properly
 - File and inline templates work
 
 ✅ **LLM Integration**
+
 - Reflect steps get real LLM responses
 - All providers (local, Gemini, Claude, OpenAI) work
 - Responses stored in workflow variables
 
 ✅ **Interactive Input**
+
 - Input forms display correctly
 - User input captured and stored
 - Workflow resumes after input
 
 ✅ **Visual Execution**
+
 - Live progress updates via SSE
 - Logs display in real-time
 - Step-by-step visualization
 
 ✅ **Workflow Creation**
+
 - Wizard creates valid YAML
 - All action types supported
 - YAML can be downloaded or saved
 
 ✅ **API Completeness**
+
 - All CRUD operations work
 - Execution API functional
 - SSE streaming works
@@ -930,4 +941,3 @@ This implementation plan provides a comprehensive roadmap for enhancing MADACE's
 **Estimated Total Effort:** 30-40 hours (1-2 weeks)
 **Priority:** High (essential for v3.0.1 or v3.1)
 **Dependencies:** None (all foundational features already exist)
-

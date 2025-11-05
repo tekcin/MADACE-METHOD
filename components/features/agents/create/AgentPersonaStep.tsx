@@ -43,7 +43,10 @@ export function AgentPersonaStep({ agentData, setAgentData }: AgentPersonaStepPr
 
       {/* Role Field */}
       <div>
-        <label htmlFor="role" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label
+          htmlFor="role"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           Role <span className="text-red-500">*</span>
         </label>
         <input
@@ -57,7 +60,7 @@ export function AgentPersonaStep({ agentData, setAgentData }: AgentPersonaStepPr
             })
           }
           placeholder="e.g., Senior Software Developer"
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white sm:text-sm"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           required
         />
         <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
@@ -82,9 +85,9 @@ export function AgentPersonaStep({ agentData, setAgentData }: AgentPersonaStepPr
               persona: { ...agentData.persona, identity: e.target.value },
             })
           }
-          placeholder="Describe the agent&apos;s identity, expertise, and background..."
+          placeholder="Describe the agent's identity, expertise, and background..."
           rows={4}
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white sm:text-sm"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
         <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
           Detailed description of who the agent is and their expertise
@@ -108,7 +111,7 @@ export function AgentPersonaStep({ agentData, setAgentData }: AgentPersonaStepPr
               persona: { ...agentData.persona, communication_style: e.target.value },
             })
           }
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white sm:text-sm"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         >
           <option value="professional">Professional</option>
           <option value="casual">Casual</option>
@@ -139,7 +142,7 @@ export function AgentPersonaStep({ agentData, setAgentData }: AgentPersonaStepPr
             onChange={(e) => setNewPrinciple(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleAddPrinciple()}
             placeholder="e.g., Always prioritize code quality"
-            className="block flex-1 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white sm:text-sm"
+            className="block flex-1 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           />
           <button
             type="button"
@@ -158,9 +161,7 @@ export function AgentPersonaStep({ agentData, setAgentData }: AgentPersonaStepPr
                 key={index}
                 className="flex items-start justify-between rounded-md border border-gray-200 bg-gray-50 px-3 py-2 dark:border-gray-700 dark:bg-gray-800"
               >
-                <span className="flex-1 text-sm text-gray-700 dark:text-gray-300">
-                  {principle}
-                </span>
+                <span className="flex-1 text-sm text-gray-700 dark:text-gray-300">{principle}</span>
                 <button
                   type="button"
                   onClick={() => handleRemovePrinciple(index)}

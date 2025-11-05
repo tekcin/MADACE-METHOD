@@ -21,6 +21,9 @@ import {
 } from '@/lib/services/chat-service';
 import { prisma } from '@/lib/database/client';
 import type { ChatSession, ChatMessage } from '@prisma/client';
+import { setupPrismaMock, prismaMock } from '@/__tests__/setup/prisma-mock';
+
+setupPrismaMock();
 
 describe('Chat Service - Sessions', () => {
   const mockUser = { id: 'user-1', email: 'test@example.com', name: 'Test User' };
@@ -233,6 +236,8 @@ describe('Chat Service - Messages', () => {
         content: input.content,
         timestamp: new Date(),
         replyToId: null,
+        model: null,
+        provider: null,
       };
 
       prismaMock.chatMessage.create.mockResolvedValue(mockMessage);
@@ -265,6 +270,8 @@ describe('Chat Service - Messages', () => {
         content: input.content,
         timestamp: new Date(),
         replyToId: input.replyToId,
+        model: null,
+        provider: null,
       };
 
       prismaMock.chatMessage.create.mockResolvedValue(mockMessage);
@@ -316,6 +323,8 @@ describe('Chat Service - Messages', () => {
           content: 'Hello',
           timestamp: new Date(),
           replyToId: null,
+          model: null,
+          provider: null,
         },
         {
           id: 'msg-2',
@@ -324,6 +333,8 @@ describe('Chat Service - Messages', () => {
           content: 'Hi there!',
           timestamp: new Date(),
           replyToId: null,
+          model: null,
+          provider: null,
         },
       ];
 

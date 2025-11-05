@@ -11,33 +11,34 @@ export default function KanbanPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const loadWorkflowStatus = useCallback(async (isRefresh = false) => {
-    try {
-      if (isRefresh) {
-        setRefreshing(true);
+  const loadWorkflowStatus = useCallback(
+    async (isRefresh = false) => {
+      try {
+        if (isRefresh) {
+          setRefreshing(true);
+        }
+
+        // Build API URL with projectId if a project is selected
+        const apiUrl = currentProject ? `/api/state?projectId=${currentProject.id}` : '/api/state';
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.success) {
+          setStatus(data.status);
+          setError(null); // Clear any previous errors
+        } else {
+          setError(data.error || 'Failed to load workflow status');
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load workflow status');
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
       }
-
-      // Build API URL with projectId if a project is selected
-      const apiUrl = currentProject
-        ? `/api/state?projectId=${currentProject.id}`
-        : '/api/state';
-
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-
-      if (data.success) {
-        setStatus(data.status);
-        setError(null); // Clear any previous errors
-      } else {
-        setError(data.error || 'Failed to load workflow status');
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load workflow status');
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, [currentProject]);
+    },
+    [currentProject]
+  );
 
   useEffect(() => {
     loadWorkflowStatus();
@@ -130,20 +131,14 @@ export default function KanbanPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="mb-2 text-3xl font-bold text-white">MADACE Workflow Status</h1>
-            <p className="text-gray-400">
-              Visual Kanban board for project progress tracking
-            </p>
+            <p className="text-gray-300">Visual Kanban board for project progress tracking</p>
           </div>
           {currentProject && (
             <div className="rounded-lg border border-blue-600 bg-blue-900/20 px-4 py-2">
               <div className="text-xs text-blue-400">Current Project</div>
-              <div className="text-lg font-semibold text-blue-100">
-                {currentProject.name}
-              </div>
+              <div className="text-lg font-semibold text-blue-100">{currentProject.name}</div>
               {currentProject.description && (
-                <div className="text-xs text-blue-300">
-                  {currentProject.description}
-                </div>
+                <div className="text-xs text-blue-300">{currentProject.description}</div>
               )}
             </div>
           )}
@@ -152,47 +147,43 @@ export default function KanbanPage() {
 
       {/* Statistics Panel */}
       <div className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-5">
-        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
-          <div className="text-gray-400 text-sm">Backlog</div>
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+          <div className="text-sm text-gray-300">Backlog</div>
           <div className="text-2xl font-bold text-white">{backlogCount}</div>
         </div>
-        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
-          <div className="text-gray-400 text-sm">TODO</div>
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+          <div className="text-sm text-gray-300">TODO</div>
           <div className="text-2xl font-bold text-white">
             {todoCount}
             {todoCount > 1 && <span className="text-xs text-red-500"> ⚠️</span>}
           </div>
-          <div className="text-gray-400 text-xs">Limit: 1</div>
+          <div className="text-xs text-gray-300">Limit: 1</div>
         </div>
-        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
-          <div className="text-gray-400 text-sm">In Progress</div>
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+          <div className="text-sm text-gray-300">In Progress</div>
           <div className="text-2xl font-bold text-white">
             {inProgressCount}
             {inProgressCount > 1 && <span className="text-xs text-red-500"> ⚠️</span>}
           </div>
-          <div className="text-gray-400 text-xs">Limit: 1</div>
+          <div className="text-xs text-gray-300">Limit: 1</div>
         </div>
-        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
-          <div className="text-gray-400 text-sm">Done</div>
-          <div className="text-2xl font-bold text-green-400">
-            {totalCompleted}
-          </div>
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+          <div className="text-sm text-gray-300">Done</div>
+          <div className="text-2xl font-bold text-green-400">{totalCompleted}</div>
         </div>
-        <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
-          <div className="text-gray-400 text-sm">Total Points</div>
-          <div className="text-2xl font-bold text-purple-400">
-            {totalPoints}
-          </div>
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+          <div className="text-sm text-gray-300">Total Points</div>
+          <div className="text-2xl font-bold text-purple-400">{totalPoints}</div>
         </div>
       </div>
 
       {/* Kanban Board */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {/* BACKLOG Column */}
-        <div className="bg-gray-800 flex flex-col rounded-lg border border-gray-700">
+        <div className="flex flex-col rounded-lg border border-gray-700 bg-gray-800">
           <div className="border-b border-gray-700 p-4">
             <h2 className="font-semibold text-white">BACKLOG</h2>
-            <div className="text-gray-400 text-sm">
+            <div className="text-sm text-gray-300">
               {backlogCount} stories
               {backlogCount > 0 && (
                 <span className="ml-2">
@@ -209,23 +200,23 @@ export default function KanbanPage() {
           <div className="flex-1 space-y-4 p-4">
             {Object.entries(backlogByMilestone).map(([milestone, stories]) => (
               <div key={milestone} className="space-y-2">
-                <h3 className="text-gray-400 text-sm font-medium">{milestone}</h3>
+                <h3 className="text-sm font-medium text-gray-300">{milestone}</h3>
                 {stories.map((story: Story) => (
                   <StoryCard key={story.id} story={story} state="backlog" />
                 ))}
               </div>
             ))}
             {backlogCount === 0 && (
-              <div className="text-gray-400 text-center text-sm">No stories in backlog</div>
+              <div className="text-center text-sm text-gray-300">No stories in backlog</div>
             )}
           </div>
         </div>
 
         {/* TODO Column */}
-        <div className="bg-gray-800 flex flex-col rounded-lg border border-gray-700">
+        <div className="flex flex-col rounded-lg border border-gray-700 bg-gray-800">
           <div className="border-b border-gray-700 p-4">
             <h2 className="font-semibold text-white">TODO</h2>
-            <div className="text-gray-400 text-sm">
+            <div className="text-sm text-gray-300">
               {todoCount} story • Limit: 1
               {todoCount > 1 && <span className="ml-2 text-red-500">⚠️ Exceeds limit</span>}
             </div>
@@ -235,16 +226,16 @@ export default function KanbanPage() {
               <StoryCard key={story.id} story={story} state="todo" />
             ))}
             {todoCount === 0 && (
-              <div className="text-gray-400 text-center text-sm">No story in TODO</div>
+              <div className="text-center text-sm text-gray-300">No story in TODO</div>
             )}
           </div>
         </div>
 
         {/* IN PROGRESS Column */}
-        <div className="bg-gray-800 flex flex-col rounded-lg border border-gray-700">
+        <div className="flex flex-col rounded-lg border border-gray-700 bg-gray-800">
           <div className="border-b border-gray-700 p-4">
             <h2 className="font-semibold text-white">IN PROGRESS</h2>
-            <div className="text-gray-400 text-sm">
+            <div className="text-sm text-gray-300">
               {inProgressCount} story • Limit: 1
               {inProgressCount > 1 && <span className="ml-2 text-red-500">⚠️ Exceeds limit</span>}
             </div>
@@ -254,16 +245,16 @@ export default function KanbanPage() {
               <StoryCard key={story.id} story={story} state="in_progress" />
             ))}
             {inProgressCount === 0 && (
-              <div className="text-gray-400 text-center text-sm">No story in progress</div>
+              <div className="text-center text-sm text-gray-300">No story in progress</div>
             )}
           </div>
         </div>
 
         {/* DONE Column */}
-        <div className="bg-gray-800 flex flex-col rounded-lg border border-gray-700">
+        <div className="flex flex-col rounded-lg border border-gray-700 bg-gray-800">
           <div className="border-b border-gray-700 p-4">
             <h2 className="font-semibold text-white">DONE</h2>
-            <div className="text-gray-400 text-sm">
+            <div className="text-sm text-gray-300">
               {totalCompleted} stories • {totalPoints} pts
             </div>
           </div>
@@ -272,7 +263,7 @@ export default function KanbanPage() {
               <StoryCard key={story.id} story={story} state="done" />
             ))}
             {totalCompleted === 0 && (
-              <div className="text-gray-400 text-center text-sm">No completed stories</div>
+              <div className="text-center text-sm text-gray-300">No completed stories</div>
             )}
           </div>
         </div>
@@ -283,7 +274,7 @@ export default function KanbanPage() {
         <button
           onClick={() => loadWorkflowStatus(true)}
           disabled={refreshing}
-          className="border-gray-700 bg-gray-800 hover:bg-gray-700 inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm text-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {refreshing ? (
             <>
@@ -330,19 +321,19 @@ function StoryCard({ story, state }: StoryCardProps) {
   };
 
   return (
-    <div className={`bg-gray-800 rounded-lg border-2 p-3 ${stateColors[state]}`}>
+    <div className={`rounded-lg border-2 bg-gray-800 p-3 ${stateColors[state]}`}>
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <h3 className="text-sm font-semibold text-white">{story.id}</h3>
-          <p className="text-gray-400 mt-1 line-clamp-2 text-xs">{story.title}</p>
+          <p className="mt-1 line-clamp-2 text-xs text-gray-300">{story.title}</p>
         </div>
-        <span className="bg-blue-600/20 ml-2 rounded-full px-2 py-1 text-xs font-medium text-blue-400">
+        <span className="ml-2 rounded-full bg-blue-600/20 px-2 py-1 text-xs font-medium text-blue-400">
           {story.points}
         </span>
       </div>
       {story.milestone && (
-        <div className="text-gray-400 mt-2 text-xs">
-          <span className="bg-gray-700 rounded px-1 py-0.5">{story.milestone}</span>
+        <div className="mt-2 text-xs text-gray-300">
+          <span className="rounded bg-gray-700 px-1 py-0.5">{story.milestone}</span>
         </div>
       )}
     </div>

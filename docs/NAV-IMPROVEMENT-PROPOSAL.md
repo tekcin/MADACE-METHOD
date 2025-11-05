@@ -94,6 +94,7 @@ The natural MADACE workflow follows this sequence:
 ```
 
 **Advantages:**
+
 - ✅ Clear workflow progression
 - ✅ Reduces visual clutter (5 top-level groups instead of 11 items)
 - ✅ New users can follow the flow
@@ -132,6 +133,7 @@ The natural MADACE workflow follows this sequence:
 ```
 
 **Advantages:**
+
 - ✅ Clear mental model for users
 - ✅ Contextual actions per tab
 - ✅ Reduces cognitive load
@@ -145,6 +147,7 @@ The natural MADACE workflow follows this sequence:
 **Keep flat navigation but add:**
 
 1. **Quick Actions Panel** (always visible at top):
+
    ```
    ┌─────────────────────────────────────────────────────────────┐
    │ Quick Actions:                                              │
@@ -177,6 +180,7 @@ The natural MADACE workflow follows this sequence:
    ```
 
 **Advantages:**
+
 - ✅ Minimal changes to existing UI
 - ✅ Quick actions reduce clicks
 - ✅ Smart dashboard guides users
@@ -198,6 +202,7 @@ The natural MADACE workflow follows this sequence:
    - Open IDE button
 
 2. **Reorder Navigation** to reflect workflow:
+
    ```
    1. Dashboard
    2. ── PROJECT ──
@@ -259,6 +264,7 @@ The natural MADACE workflow follows this sequence:
 ### Current vs. Proposed (Phase 1)
 
 **CURRENT:**
+
 ```
 ┌─────────────────────┐
 │ MADACE v3.0         │
@@ -278,6 +284,7 @@ The natural MADACE workflow follows this sequence:
 ```
 
 **PROPOSED (Phase 1):**
+
 ```
 ┌─────────────────────┐
 │ MADACE v3.0         │
@@ -421,11 +428,11 @@ After implementation, measure:
 
 ## Risks and Mitigation
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
+| Risk                            | Impact | Mitigation                                              |
+| ------------------------------- | ------ | ------------------------------------------------------- |
 | Users confused by new structure | Medium | Keep old structure for 1 week with banner, allow toggle |
-| Mobile UX degraded | Low | Test on mobile, adjust group spacing |
-| Performance issues | Low | Use CSS for animations, no heavy JS |
+| Mobile UX degraded              | Low    | Test on mobile, adjust group spacing                    |
+| Performance issues              | Low    | Use CSS for animations, no heavy JS                     |
 
 ---
 
@@ -444,6 +451,7 @@ After implementation, measure:
 ### Idea 1: Workflow Progress Indicator
 
 Add a visual progress bar to navigation showing:
+
 ```
 ┌─────────────────────────────────┐
 │ Project: Zodiac App             │
@@ -454,6 +462,7 @@ Add a visual progress bar to navigation showing:
 ### Idea 2: Active Story Panel
 
 Show current IN PROGRESS story at top of navigation:
+
 ```
 ┌─────────────────────────────────┐
 │ 🔵 STORY-015: Add Chat UI       │
@@ -464,6 +473,7 @@ Show current IN PROGRESS story at top of navigation:
 ### Idea 3: Agent Status Indicators
 
 Show agent status next to Agents link:
+
 ```
 │ 🤖 Agents (3 active)            │
 ```
@@ -471,6 +481,7 @@ Show agent status next to Agents link:
 ### Idea 4: Breadcrumb Trail
 
 Add breadcrumbs for deep pages:
+
 ```
 Dashboard > Project > Kanban > STORY-015
 ```
@@ -478,6 +489,7 @@ Dashboard > Project > Kanban > STORY-015
 ### Idea 5: Search Bar
 
 Add global search to navigation:
+
 ```
 ┌─────────────────────────────────┐
 │ 🔍 Search stories, agents...    │

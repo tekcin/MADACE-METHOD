@@ -96,9 +96,9 @@ export const ACTION_TEMPLATES: Record<WorkflowActionType, Partial<WorkflowStepDa
   route: {
     action: 'route',
     routes: {
-      'small': 'small-workflow',
-      'medium': 'medium-workflow',
-      'large': 'large-workflow',
+      small: 'small-workflow',
+      medium: 'medium-workflow',
+      large: 'large-workflow',
     },
   },
 };

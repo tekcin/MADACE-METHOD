@@ -41,7 +41,7 @@ const components: Components = {
       // Inline code
       return (
         <code
-          className="rounded bg-gray-200 px-1.5 py-0.5 font-mono text-sm text-red-600 dark:bg-gray-700 dark:text-red-400"
+          className="rounded bg-gray-700 px-1.5 py-0.5 font-mono text-sm text-red-400"
           {...props}
         >
           {children}
@@ -57,7 +57,7 @@ const components: Components = {
   a: ({ children, href, ...props }) => (
     <a
       href={href}
-      className="text-blue-600 hover:underline dark:text-blue-400"
+      className="text-blue-400 hover:underline"
       target="_blank"
       rel="noopener noreferrer"
       {...props}
@@ -68,17 +68,17 @@ const components: Components = {
 
   // Headers with proper styling
   h1: ({ children, ...props }) => (
-    <h1 className="mt-4 mb-2 text-2xl font-bold text-gray-900 dark:text-gray-100" {...props}>
+    <h1 className="mt-4 mb-2 text-2xl font-bold text-gray-100" {...props}>
       {children}
     </h1>
   ),
   h2: ({ children, ...props }) => (
-    <h2 className="mt-3 mb-2 text-xl font-bold text-gray-900 dark:text-gray-100" {...props}>
+    <h2 className="mt-3 mb-2 text-xl font-bold text-gray-100" {...props}>
       {children}
     </h2>
   ),
   h3: ({ children, ...props }) => (
-    <h3 className="mt-2 mb-1 text-lg font-bold text-gray-900 dark:text-gray-100" {...props}>
+    <h3 className="mt-2 mb-1 text-lg font-bold text-gray-100" {...props}>
       {children}
     </h3>
   ),
@@ -101,14 +101,14 @@ const components: Components = {
 
     if (isTaskList) {
       return (
-        <li className="flex items-start gap-2 text-gray-800 dark:text-gray-200" {...props}>
+        <li className="flex items-start gap-2 text-gray-200" {...props}>
           {children}
         </li>
       );
     }
 
     return (
-      <li className="text-gray-800 dark:text-gray-200" {...props}>
+      <li className="text-gray-200" {...props}>
         {children}
       </li>
     );
@@ -132,7 +132,7 @@ const components: Components = {
   // Blockquotes
   blockquote: ({ children, ...props }) => (
     <blockquote
-      className="my-2 border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-gray-700 italic dark:bg-blue-900/20 dark:text-gray-300"
+      className="my-2 border-l-4 border-blue-500 bg-blue-900/20 py-2 pl-4 text-gray-300 italic"
       {...props}
     >
       {children}
@@ -141,29 +141,29 @@ const components: Components = {
 
   // Paragraphs
   p: ({ children, ...props }) => (
-    <p className="my-2 text-gray-800 dark:text-gray-200" {...props}>
+    <p className="my-2 text-gray-200" {...props}>
       {children}
     </p>
   ),
 
   // Horizontal rules
-  hr: ({ ...props }) => <hr className="my-4 border-gray-300 dark:border-gray-600" {...props} />,
+  hr: ({ ...props }) => <hr className="my-4 border-gray-600" {...props} />,
 
   // Tables with enhanced styling
   table: ({ children, ...props }) => (
-    <div className="my-4 overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
-      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700" {...props}>
+    <div className="my-4 overflow-x-auto rounded-lg border border-gray-700">
+      <table className="min-w-full divide-y divide-gray-700" {...props}>
         {children}
       </table>
     </div>
   ),
   thead: ({ children, ...props }) => (
-    <thead className="bg-gray-50 dark:bg-gray-800" {...props}>
+    <thead className="bg-gray-800" {...props}>
       {children}
     </thead>
   ),
   tbody: ({ children, ...props }) => (
-    <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900" {...props}>
+    <tbody className="divide-y divide-gray-700 bg-gray-900" {...props}>
       {children}
     </tbody>
   ),
@@ -173,9 +173,7 @@ const components: Components = {
     return (
       <tr
         className={
-          isBodyRow
-            ? 'transition-colors hover:bg-gray-50 dark:hover:bg-gray-800/50'
-            : 'border-b border-gray-200 dark:border-gray-700'
+          isBodyRow ? 'transition-colors hover:bg-gray-800/50' : 'border-b border-gray-700'
         }
         {...props}
       >
@@ -185,14 +183,14 @@ const components: Components = {
   },
   th: ({ children, ...props }) => (
     <th
-      className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 dark:text-gray-300"
+      className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-gray-300 uppercase"
       {...props}
     >
       {children}
     </th>
   ),
   td: ({ children, ...props }) => (
-    <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-800 dark:text-gray-200" {...props}>
+    <td className="px-4 py-3 text-sm whitespace-nowrap text-gray-200" {...props}>
       {children}
     </td>
   ),

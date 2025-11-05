@@ -194,10 +194,8 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
     <main className="min-h-screen bg-gray-900 py-12">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white">
-            Import GitHub Repository
-          </h1>
-          <p className="mt-2 text-gray-400">
+          <h1 className="text-4xl font-bold text-white">Import GitHub Repository</h1>
+          <p className="mt-2 text-gray-300">
             Clone and analyze any public GitHub repository to import into MADACE
           </p>
         </div>
@@ -205,14 +203,12 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
         {/* Import Form */}
         <div className="rounded-lg border border-gray-700 bg-gray-800 p-8 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">
-              Import Repository
-            </h2>
+            <h2 className="text-lg font-semibold text-white">Import Repository</h2>
             {(repoUrl || analysis) && (
               <button
                 type="button"
                 onClick={handleReset}
-                className="flex items-center gap-2 rounded-lg border border-red-300 bg-red-50 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-100 dark:border-red-700 dark:bg-red-950 dark:text-red-300 dark:hover:bg-red-900"
+                className="flex items-center gap-2 rounded-lg border border-red-700 bg-red-950 px-3 py-1.5 text-sm font-medium text-red-300 hover:bg-red-900"
                 title="Clear all import data"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,10 +225,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
           </div>
           <div className="space-y-4">
             <div>
-              <label
-                htmlFor="repoUrl"
-                className="block text-sm font-medium text-gray-200"
-              >
+              <label htmlFor="repoUrl" className="block text-sm font-medium text-gray-200">
                 GitHub Repository URL
               </label>
               <div className="mt-1 flex gap-3">
@@ -290,7 +283,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                   )}
                 </button>
               </div>
-              <p className="mt-2 text-sm text-gray-400">
+              <p className="mt-2 text-sm text-gray-300">
                 Supported formats: https://github.com/owner/repo,
                 https://github.com/owner/repo/tree/branch
               </p>
@@ -328,11 +321,9 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
             <div className="rounded-lg border border-gray-700 bg-gray-800 p-8 shadow-sm">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">
-                    {analysis.name}
-                  </h2>
+                  <h2 className="text-2xl font-bold text-white">{analysis.name}</h2>
                   {analysis.description && (
-                    <p className="mt-2 text-gray-400">{analysis.description}</p>
+                    <p className="mt-2 text-gray-300">{analysis.description}</p>
                   )}
                   <a
                     href={analysis.repositoryUrl}
@@ -346,7 +337,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                     View on GitHub
                   </a>
                 </div>
-                <div className="flex gap-4 text-sm text-gray-400">
+                <div className="flex gap-4 text-sm text-gray-300">
                   <div className="flex items-center gap-1">
                     <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -383,7 +374,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
             {analysis.readme && (
               <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
                 <div className="mb-4 flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  <h3 className="text-lg font-semibold text-white">
                     📖 Project Overview ({analysis.readme.filename})
                   </h3>
                   <button
@@ -392,7 +383,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                       navigator.clipboard.writeText(analysis.readme!.content);
                       alert('✅ Full README copied to clipboard!');
                     }}
-                    className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                    className="flex items-center gap-1 rounded-lg border border-gray-600 bg-gray-700 px-3 py-1.5 text-sm font-medium text-gray-300 hover:bg-gray-600"
                     title="Copy full README"
                   >
                     <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -406,12 +397,12 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                     Copy Full README
                   </button>
                 </div>
-                <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-900">
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+                <div className="rounded-lg bg-gray-900 p-4">
+                  <p className="text-sm leading-relaxed whitespace-pre-wrap text-gray-300">
                     {analysis.readme.summary}
                   </p>
                 </div>
-                <div className="mt-3 flex items-start gap-2 text-xs text-gray-500 dark:text-gray-400">
+                <div className="mt-3 flex items-start gap-2 text-xs text-gray-300">
                   <svg
                     className="mt-0.5 h-4 w-4 flex-shrink-0"
                     fill="none"
@@ -436,36 +427,26 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
             {/* Statistics */}
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
-                <div className="text-sm font-medium text-gray-400">
-                  Total Files
-                </div>
+                <div className="text-sm font-medium text-gray-300">Total Files</div>
                 <div className="mt-2 text-3xl font-bold text-white">
                   {analysis.totalFiles.toLocaleString()}
                 </div>
               </div>
 
               <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
-                <div className="text-sm font-medium text-gray-400">
-                  Lines of Code
-                </div>
+                <div className="text-sm font-medium text-gray-300">Lines of Code</div>
                 <div className="mt-2 text-3xl font-bold text-white">
                   {analysis.totalLines.toLocaleString()}
                 </div>
               </div>
 
               <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
-                <div className="text-sm font-medium text-gray-400">
-                  Primary Language
-                </div>
-                <div className="mt-2 text-3xl font-bold text-white">
-                  {analysis.language}
-                </div>
+                <div className="text-sm font-medium text-gray-300">Primary Language</div>
+                <div className="mt-2 text-3xl font-bold text-white">{analysis.language}</div>
               </div>
 
               <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
-                <div className="text-sm font-medium text-gray-400">
-                  Last Updated
-                </div>
+                <div className="text-sm font-medium text-gray-300">Last Updated</div>
                 <div className="mt-2 text-lg font-bold text-white">
                   {new Date(analysis.lastUpdated).toLocaleDateString()}
                 </div>
@@ -473,20 +454,16 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
             </div>
 
             {/* Languages */}
-            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-              <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                Languages
-              </h3>
+            <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+              <h3 className="mb-4 text-lg font-semibold text-white">Languages</h3>
               <div className="space-y-3">
                 {getLanguagePercentages().map(({ language, percentage }) => (
                   <div key={language}>
                     <div className="mb-1 flex justify-between text-sm">
-                      <span className="font-medium text-gray-700 dark:text-gray-300">
-                        {language}
-                      </span>
-                      <span className="text-gray-600 dark:text-gray-400">{percentage}%</span>
+                      <span className="font-medium text-gray-300">{language}</span>
+                      <span className="text-gray-300">{percentage}%</span>
                     </div>
-                    <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
+                    <div className="h-2 w-full rounded-full bg-gray-700">
                       <div
                         className="h-2 rounded-full bg-blue-500"
                         style={{ width: `${percentage}%` }}
@@ -498,10 +475,8 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
             </div>
 
             {/* Technology Stack Report */}
-            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-              <h3 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">
-                📊 Technology Stack Report
-              </h3>
+            <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+              <h3 className="mb-6 text-lg font-semibold text-white">📊 Technology Stack Report</h3>
               <TechStackReport
                 technologies={detectTechnologies(analysis)}
                 totalFiles={analysis.totalFiles}
@@ -510,11 +485,9 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
             </div>
 
             {/* Actions */}
-            <div className="rounded-lg border-2 border-green-300 bg-green-50 p-6 dark:border-green-700 dark:bg-green-950">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                🚀 What would you like to do?
-              </h3>
-              <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            <div className="rounded-lg border-2 border-green-700 bg-green-950 p-6">
+              <h3 className="text-lg font-semibold text-white">🚀 What would you like to do?</h3>
+              <p className="mt-1 text-sm text-gray-300">
                 Import this repository into MADACE for project management
               </p>
 
@@ -538,7 +511,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                 <button
                   type="button"
                   onClick={handleCreatePRD}
-                  className="flex items-center gap-2 rounded-lg border border-green-600 bg-white px-6 py-3 text-sm font-semibold text-green-700 hover:bg-green-50 dark:border-green-500 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
+                  className="flex items-center gap-2 rounded-lg border border-green-500 bg-gray-800 px-6 py-3 text-sm font-semibold text-green-400 hover:bg-gray-700"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -554,7 +527,7 @@ ${analysis.dependencies.length > 0 ? `**Production**: ${analysis.dependencies.sl
                 <button
                   type="button"
                   onClick={() => router.push('/assessment')}
-                  className="flex items-center gap-2 rounded-lg border border-green-600 bg-white px-6 py-3 text-sm font-semibold text-green-700 hover:bg-green-50 dark:border-green-500 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
+                  className="flex items-center gap-2 rounded-lg border border-green-500 bg-gray-800 px-6 py-3 text-sm font-semibold text-green-400 hover:bg-gray-700"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path

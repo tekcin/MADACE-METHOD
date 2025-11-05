@@ -261,7 +261,7 @@ describe('Chat Search', () => {
 
     expect(results.length).toBeGreaterThanOrEqual(1);
     results.forEach((m) => {
-      expect(m.session.userId).toBe(userId);
+      expect((m as any).session.userId).toBe(userId);
     });
   });
 });

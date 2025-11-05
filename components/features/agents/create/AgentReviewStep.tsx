@@ -29,9 +29,7 @@ export function AgentReviewStep({ agentData }: AgentReviewStepProps) {
               <span className="text-sm text-gray-600 dark:text-gray-400">
                 ID: {agentData.name || 'not-set'}
               </span>
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                v{agentData.version}
-              </span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">v{agentData.version}</span>
             </div>
           </div>
         </div>
@@ -53,9 +51,7 @@ export function AgentReviewStep({ agentData }: AgentReviewStepProps) {
           </div>
           <div>
             <dt className="font-medium text-gray-500 dark:text-gray-400">Module</dt>
-            <dd className="mt-1 text-gray-900 dark:text-white">
-              {agentData.module.toUpperCase()}
-            </dd>
+            <dd className="mt-1 text-gray-900 dark:text-white">{agentData.module.toUpperCase()}</dd>
           </div>
           <div>
             <dt className="font-medium text-gray-500 dark:text-gray-400">Version</dt>
@@ -70,9 +66,7 @@ export function AgentReviewStep({ agentData }: AgentReviewStepProps) {
         <dl className="space-y-3 text-sm">
           <div>
             <dt className="font-medium text-gray-500 dark:text-gray-400">Role</dt>
-            <dd className="mt-1 text-gray-900 dark:text-white">
-              {agentData.persona.role || '-'}
-            </dd>
+            <dd className="mt-1 text-gray-900 dark:text-white">{agentData.persona.role || '-'}</dd>
           </div>
           {agentData.persona.identity && (
             <div>
@@ -82,9 +76,7 @@ export function AgentReviewStep({ agentData }: AgentReviewStepProps) {
           )}
           {agentData.persona.communication_style && (
             <div>
-              <dt className="font-medium text-gray-500 dark:text-gray-400">
-                Communication Style
-              </dt>
+              <dt className="font-medium text-gray-500 dark:text-gray-400">Communication Style</dt>
               <dd className="mt-1 text-gray-900 dark:text-white">
                 {agentData.persona.communication_style}
               </dd>
@@ -121,7 +113,7 @@ export function AgentReviewStep({ agentData }: AgentReviewStepProps) {
               >
                 <div className="flex items-center gap-2">
                   <span className="font-medium text-gray-900 dark:text-white">{item.label}</span>
-                  <span className="rounded bg-gray-200 px-2 py-0.5 text-xs font-mono text-gray-700 dark:bg-gray-600 dark:text-gray-300">
+                  <span className="rounded bg-gray-200 px-2 py-0.5 font-mono text-xs text-gray-700 dark:bg-gray-600 dark:text-gray-300">
                     {item.id}
                   </span>
                 </div>
@@ -155,7 +147,7 @@ export function AgentReviewStep({ agentData }: AgentReviewStepProps) {
               >
                 <div className="flex items-center gap-2">
                   <span className="font-medium text-gray-900 dark:text-white">{item.label}</span>
-                  <span className="rounded bg-gray-200 px-2 py-0.5 text-xs font-mono text-gray-700 dark:bg-gray-600 dark:text-gray-300">
+                  <span className="rounded bg-gray-200 px-2 py-0.5 font-mono text-xs text-gray-700 dark:bg-gray-600 dark:text-gray-300">
                     {item.id}
                   </span>
                   {item.type && (
@@ -164,7 +156,7 @@ export function AgentReviewStep({ agentData }: AgentReviewStepProps) {
                     </span>
                   )}
                 </div>
-                <pre className="mt-2 max-h-32 overflow-y-auto whitespace-pre-wrap rounded bg-white p-2 text-xs font-mono text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                <pre className="mt-2 max-h-32 overflow-y-auto rounded bg-white p-2 font-mono text-xs whitespace-pre-wrap text-gray-700 dark:bg-gray-800 dark:text-gray-300">
                   {item.prompt}
                 </pre>
               </div>
@@ -194,7 +186,8 @@ export function AgentReviewStep({ agentData }: AgentReviewStepProps) {
               Ready to Create
             </h4>
             <p className="mt-1 text-sm text-green-700 dark:text-green-400">
-              Your agent configuration looks good! Click &quot;Create Agent&quot; to save it to the database.
+              Your agent configuration looks good! Click &quot;Create Agent&quot; to save it to the
+              database.
             </p>
           </div>
         </div>

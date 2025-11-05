@@ -12,10 +12,7 @@ const InputSchema = z.object({
  * POST /api/v3/workflows/[id]/input
  * Submit user input for elicit workflow steps
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const body = await request.json();
