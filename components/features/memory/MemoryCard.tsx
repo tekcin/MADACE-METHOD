@@ -24,17 +24,17 @@ const categoryColors: Record<string, string> = {
 };
 
 const importanceColors = [
-  'bg-gray-200', // 0 (not used)
-  'bg-red-200', // 1
-  'bg-red-300', // 2
-  'bg-orange-200', // 3
-  'bg-orange-300', // 4
-  'bg-yellow-200', // 5
-  'bg-yellow-300', // 6
-  'bg-green-200', // 7
-  'bg-green-300', // 8
-  'bg-blue-200', // 9
-  'bg-blue-300', // 10
+  'bg-gray-700', // 0 (not used)
+  'bg-red-900/40', // 1 - Low importance (dark red)
+  'bg-red-800/50', // 2
+  'bg-orange-900/40', // 3
+  'bg-orange-800/50', // 4
+  'bg-yellow-900/40', // 5 - Medium importance (dark yellow)
+  'bg-yellow-800/50', // 6
+  'bg-green-900/40', // 7
+  'bg-green-800/50', // 8
+  'bg-blue-900/40', // 9 - High importance (dark blue)
+  'bg-blue-800/50', // 10
 ];
 
 export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
@@ -79,13 +79,13 @@ export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
             <h3 className="font-semibold text-gray-100">{memory.key}</h3>
             <span
               className={`rounded-full px-2 py-0.5 text-xs ${
-                categoryColors[memory.category] || 'bg-gray-100 text-gray-800'
+                categoryColors[memory.category] || 'bg-gray-800 text-gray-200'
               }`}
             >
               {categoryLabels[memory.category] || memory.category}
             </span>
             <span
-              className={`rounded-full px-2 py-0.5 text-xs ${memory.type === 'long-term' ? 'bg-indigo-100 text-indigo-800' : 'bg-gray-100 text-gray-600'}`}
+              className={`rounded-full px-2 py-0.5 text-xs ${memory.type === 'long-term' ? 'bg-indigo-900 text-indigo-200' : 'bg-gray-800 text-gray-300'}`}
             >
               {memory.type}
             </span>
@@ -124,7 +124,7 @@ export function MemoryCard({ memory, onDelete, onUpdate }: MemoryCardProps) {
               </button>
               <button
                 onClick={handleCancel}
-                className="rounded bg-gray-300 px-2 py-1 text-xs text-gray-700 hover:bg-gray-400"
+                className="rounded bg-gray-700 px-2 py-1 text-xs text-gray-200 hover:bg-gray-600"
               >
                 Cancel
               </button>

@@ -91,12 +91,12 @@ export function UsageStats({ sessionId }: UsageStatsProps) {
 
   const getProviderColor = (provider: string): string => {
     const colors: Record<string, string> = {
-      gemini: 'text-blue-600 bg-blue-50 border-blue-200',
-      claude: 'text-purple-600 bg-purple-50 border-purple-200',
-      openai: 'text-green-600 bg-green-50 border-green-200',
-      local: 'text-gray-600 bg-gray-50 border-gray-200',
+      gemini: 'text-blue-300 bg-blue-900/20 border-blue-700',
+      claude: 'text-purple-300 bg-purple-900/20 border-purple-700',
+      openai: 'text-green-300 bg-green-900/20 border-green-700',
+      local: 'text-gray-300 bg-gray-800/50 border-gray-600',
     };
-    return colors[provider] || 'text-gray-600 bg-gray-50 border-gray-200';
+    return colors[provider] || 'text-gray-300 bg-gray-800/50 border-gray-600';
   };
 
   if (loading) {
@@ -219,7 +219,7 @@ export function UsageStats({ sessionId }: UsageStatsProps) {
                 {usage.byProvider.map((provider) => (
                   <div
                     key={provider.provider}
-                    className={`rounded-lg border p-3 ${getProviderColor(provider.provider)} dark:bg-opacity-10`}
+                    className={`rounded-lg border p-3 ${getProviderColor(provider.provider)}`}
                   >
                     <div className="flex items-center justify-between">
                       <div>
