@@ -61,115 +61,20 @@ export default function IDEPage() {
   const [lineNumbers, setLineNumbers] = useState<'on' | 'off' | 'relative'>('on');
   const [fontSize, setFontSize] = useState(14);
 
-  // Sample files for demonstration
-  const sampleFiles: Record<string, { content: string; language: string }> = {
-    'example.ts': { content: SAMPLE_TYPESCRIPT, language: 'typescript' },
-    'example.py': { content: SAMPLE_PYTHON, language: 'python' },
-    'example.rs': { content: SAMPLE_RUST, language: 'rust' },
-    'example.go': { content: SAMPLE_GO, language: 'go' },
-    'README.md': { content: SAMPLE_MARKDOWN, language: 'markdown' },
-    'styles.css': { content: SAMPLE_CSS, language: 'css' },
-    'config.json': { content: SAMPLE_JSON, language: 'json' },
-    'config.yaml': { content: SAMPLE_YAML, language: 'yaml' },
-  };
-
   // Git status state
   const [gitStatus, setGitStatus] = useState<GitStatus>({});
 
-  // File tree structure
-  const [fileTree] = useState<FileTreeItem>({
-    id: 'root',
-    name: 'project',
-    type: 'folder',
-    path: '/project',
-    children: [
-      {
-        id: 'src',
-        name: 'src',
-        type: 'folder',
-        path: '/project/src',
-        children: [
-          {
-            id: 'example-ts',
-            name: 'example.ts',
-            type: 'file',
-            path: '/project/src/example.ts',
-            extension: 'ts',
-          },
-          {
-            id: 'example-py',
-            name: 'example.py',
-            type: 'file',
-            path: '/project/src/example.py',
-            extension: 'py',
-          },
-          {
-            id: 'example-rs',
-            name: 'example.rs',
-            type: 'file',
-            path: '/project/src/example.rs',
-            extension: 'rs',
-          },
-          {
-            id: 'example-go',
-            name: 'example.go',
-            type: 'file',
-            path: '/project/src/example.go',
-            extension: 'go',
-          },
-        ],
-      },
-      {
-        id: 'styles',
-        name: 'styles',
-        type: 'folder',
-        path: '/project/styles',
-        children: [
-          {
-            id: 'styles-css',
-            name: 'styles.css',
-            type: 'file',
-            path: '/project/styles/styles.css',
-            extension: 'css',
-          },
-        ],
-      },
-      {
-        id: 'config',
-        name: 'config',
-        type: 'folder',
-        path: '/project/config',
-        children: [
-          {
-            id: 'config-json',
-            name: 'config.json',
-            type: 'file',
-            path: '/project/config/config.json',
-            extension: 'json',
-          },
-          {
-            id: 'config-yaml',
-            name: 'config.yaml',
-            type: 'file',
-            path: '/project/config/config.yaml',
-            extension: 'yaml',
-          },
-        ],
-      },
-      {
-        id: 'readme',
-        name: 'README.md',
-        type: 'file',
-        path: '/project/README.md',
-        extension: 'md',
-      },
-    ],
-  });
+  // File tree state (loaded from API)
+  const [fileTree, setFileTree] = useState<FileTreeItem | null>(null);
+  const [isLoadingTree, setIsLoadingTree] = useState(true);
+  const [treeError, setTreeError] = useState<string | null>(null);
 
   /**
    * Flatten file tree into a list of all files (for search)
    */
-  const flattenFileTree = (tree: FileTreeItem): FileTreeItem[] => {
+  const flattenFileTree = (tree: FileTreeItem | null): FileTreeItem[] => {
+    if (!tree) return [];
+
     const files: FileTreeItem[] = [];
 
     const traverse = (item: FileTreeItem) => {
@@ -218,23 +123,63 @@ export default function IDEPage() {
   }, []);
 
   /**
-   * Initialize with first file
+   * Load file tree from API on component mount
    */
   useEffect(() => {
-    const firstFileName = 'example.ts';
-    const firstFile = sampleFiles[firstFileName];
-    if (firstFile) {
-      const initialTab: FileTab = {
-        id: 'tab-0',
-        fileName: firstFileName,
-        content: firstFile.content,
-        language: firstFile.language,
-      };
-      setTabs([initialTab]);
-      setActiveTabId(initialTab.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const loadFileTree = async () => {
+      try {
+        setIsLoadingTree(true);
+        setTreeError(null);
+
+        const response = await fetch('/api/v3/files/tree');
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          setFileTree(data.data);
+        } else {
+          setTreeError(data.error || 'Failed to load file tree');
+        }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        setTreeError(errorMessage);
+      } finally {
+        setIsLoadingTree(false);
+      }
+    };
+
+    loadFileTree();
   }, []);
+
+  /**
+   * Initialize with first file (README.md if exists)
+   */
+  useEffect(() => {
+    if (!fileTree || isLoadingTree) return;
+
+    // Try to open README.md as the first file
+    const loadInitialFile = async () => {
+      try {
+        const response = await fetch('/api/v3/files?path=README.md');
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          const initialTab: FileTab = {
+            id: 'tab-0',
+            fileName: 'README.md',
+            content: data.data.content,
+            language: data.data.language,
+          };
+          setTabs([initialTab]);
+          setActiveTabId(initialTab.id);
+        }
+      } catch (error) {
+        // Silently fail - user can open files manually
+        console.error('Failed to load initial file:', error);
+      }
+    };
+
+    loadInitialFile();
+  }, [fileTree, isLoadingTree]);
 
   /**
    * Get active tab
@@ -269,7 +214,7 @@ export default function IDEPage() {
   /**
    * Open a new file from file tree
    */
-  const handleFileTreeClick = (item: FileTreeItem) => {
+  const handleFileTreeClick = async (item: FileTreeItem) => {
     if (item.type !== 'file') return;
 
     // Check if file is already open
@@ -279,24 +224,34 @@ export default function IDEPage() {
       return;
     }
 
-    // Open new tab
-    const file = sampleFiles[item.name];
-    if (file) {
-      const newTab: FileTab = {
-        id: `tab-${Date.now()}`,
-        fileName: item.name,
-        content: file.content,
-        language: file.language,
-      };
-      setTabs([...tabs, newTab]);
-      setActiveTabId(newTab.id);
+    // Fetch file content from API
+    try {
+      // Remove leading slash from path
+      const filePath = item.path.startsWith('/') ? item.path.slice(1) : item.path;
+      const response = await fetch(`/api/v3/files?path=${encodeURIComponent(filePath)}`);
+      const data = await response.json();
+
+      if (data.success && data.data) {
+        const newTab: FileTab = {
+          id: `tab-${Date.now()}`,
+          fileName: item.name,
+          content: data.data.content,
+          language: data.data.language,
+        };
+        setTabs([...tabs, newTab]);
+        setActiveTabId(newTab.id);
+      } else {
+        console.error('Failed to load file:', data.error);
+      }
+    } catch (error) {
+      console.error('Error loading file:', error);
     }
   };
 
   /**
    * Open a new file by name (for dropdown)
    */
-  const handleOpenFile = (fileName: string) => {
+  const handleOpenFile = async (fileName: string) => {
     // Check if file is already open
     const existingTab = tabs.find((t) => t.fileName === fileName);
     if (existingTab) {
@@ -304,17 +259,23 @@ export default function IDEPage() {
       return;
     }
 
-    // Open new tab
-    const file = sampleFiles[fileName];
-    if (file) {
-      const newTab: FileTab = {
-        id: `tab-${Date.now()}`,
-        fileName,
-        content: file.content,
-        language: file.language,
-      };
-      setTabs([...tabs, newTab]);
-      setActiveTabId(newTab.id);
+    // Find the file in the file tree to get its path
+    const findFileInTree = (tree: FileTreeItem | null, name: string): FileTreeItem | null => {
+      if (!tree) return null;
+      if (tree.type === 'file' && tree.name === name) return tree;
+      if (tree.children) {
+        for (const child of tree.children) {
+          const found = findFileInTree(child, name);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+
+    const fileItem = findFileInTree(fileTree, fileName);
+    if (fileItem) {
+      // Use handleFileTreeClick to fetch and open the file
+      await handleFileTreeClick(fileItem);
     }
   };
 
@@ -325,7 +286,11 @@ export default function IDEPage() {
     if (activeTab) {
       const newTabs = tabs.map((tab) =>
         tab.id === activeTabId
-          ? { ...tab, content: value || '', isDirty: value !== sampleFiles[tab.fileName]?.content }
+          ? {
+              ...tab,
+              content: value || '',
+              isDirty: true // Mark as dirty when content changes
+            }
           : tab
       );
       setTabs(newTabs);
@@ -443,13 +408,16 @@ export default function IDEPage() {
                 }
               }}
               className="rounded border border-gray-600 bg-gray-700 px-3 py-1.5 text-sm text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              disabled={isLoadingTree || !fileTree}
             >
-              <option value="">Select a file...</option>
-              {Object.keys(sampleFiles)
-                .filter((fileName) => !tabs.find((t) => t.fileName === fileName))
+              <option value="">
+                {isLoadingTree ? 'Loading files...' : 'Select a file...'}
+              </option>
+              {allFiles
+                .filter((file) => !tabs.find((t) => t.fileName === file.name))
                 .map((file) => (
-                  <option key={file} value={file}>
-                    {file}
+                  <option key={file.id} value={file.name}>
+                    {file.path.startsWith('/') ? file.path.slice(1) : file.path}
                   </option>
                 ))}
             </select>
@@ -462,12 +430,32 @@ export default function IDEPage() {
         {/* File Explorer Sidebar */}
         {showSidebar && (
           <div className="w-64 overflow-y-auto border-r border-gray-700">
-            <FileExplorer
-              root={fileTree}
-              selectedPath={activeTab ? `/project/${activeTab.fileName}` : undefined}
-              onFileClick={handleFileTreeClick}
-              gitStatus={gitStatus}
-            />
+            {isLoadingTree ? (
+              <div className="flex h-full items-center justify-center p-4">
+                <div className="text-center">
+                  <div className="mx-auto mb-2 h-8 w-8 animate-spin rounded-full border-b-2 border-blue-500"></div>
+                  <p className="text-sm text-gray-400">Loading file tree...</p>
+                </div>
+              </div>
+            ) : treeError ? (
+              <div className="flex h-full items-center justify-center p-4">
+                <div className="text-center">
+                  <p className="mb-2 text-sm text-red-400">Failed to load file tree</p>
+                  <p className="text-xs text-gray-500">{treeError}</p>
+                </div>
+              </div>
+            ) : fileTree ? (
+              <FileExplorer
+                root={fileTree}
+                selectedPath={activeTab ? `${fileTree.path}/${activeTab.fileName}` : undefined}
+                onFileClick={handleFileTreeClick}
+                gitStatus={gitStatus}
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center p-4">
+                <p className="text-sm text-gray-400">No files available</p>
+              </div>
+            )}
           </div>
         )}
 
