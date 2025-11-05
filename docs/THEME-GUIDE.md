@@ -159,17 +159,23 @@ Pre-styled component classes for common UI elements:
 </table>
 ```
 
-### 3. Automatic Tailwind Overrides
+### 3. Tailwind Dark Mode Integration
 
-The theme automatically overrides common Tailwind classes to ensure dark mode:
+The theme uses **class-based dark mode** with Tailwind's `dark:` variants. The `<html>` element has `class="dark"` set globally, enabling all dark mode styles:
 
 ```jsx
-{/* These automatically use dark mode colors: */}
-<div className="bg-white">         {/* → bg-gray-800 */}
-<div className="bg-gray-50">       {/* → bg-gray-900 */}
-<p className="text-gray-600">      {/* → text-gray-300 */}
-<div className="border-gray-200">  {/* → border-gray-700 */}
+{/* Use Tailwind's dark: variants for proper dark mode */}
+<div className="bg-white dark:bg-gray-800">
+<h2 className="text-gray-900 dark:text-white">Title</h2>
+<p className="text-gray-600 dark:text-gray-300">Body text</p>
+<div className="border-gray-200 dark:border-gray-700">Content</div>
 ```
+
+**How it works:**
+- `app/layout.tsx` sets `<html className="dark">`
+- `app/globals.css` configures Tailwind v4: `@variant dark (html.dark &);`
+- All `dark:` utility classes automatically apply
+- No need for manual theme toggling - dark mode is always active
 
 ## Best Practices
 
@@ -248,27 +254,23 @@ Use consistent border styling:
 
 ### Converting Existing Components
 
-Replace conditional dark mode classes with always-dark classes:
+**IMPORTANT:** KEEP `dark:` variant classes! The theme uses Tailwind's class-based dark mode.
 
-#### Before:
+#### Recommended Approach (Use dark: variants):
 
 ```jsx
 <div className="bg-white dark:bg-gray-800">
   <h2 className="text-gray-900 dark:text-white">Title</h2>
-  <p className="text-gray-600 dark:text-gray-400">Text</p>
+  <p className="text-gray-600 dark:text-gray-300">Text</p>
 </div>
 ```
 
-#### After:
+This works because:
+- `<html class="dark">` is set globally in `app/layout.tsx`
+- All `dark:` variants automatically apply
+- Future-proof if light mode is ever added
 
-```jsx
-<div className="bg-gray-800">
-  <h2 className="text-white">Title</h2>
-  <p className="text-gray-300">Text</p>
-</div>
-```
-
-Or use utility classes:
+#### Alternative (Use madace-* utility classes):
 
 ```jsx
 <div className="madace-bg-primary">
@@ -276,6 +278,8 @@ Or use utility classes:
   <p className="madace-text-secondary">Text</p>
 </div>
 ```
+
+**Best Practice:** Use `dark:` variants for standard components. Use `madace-*` classes for custom components that need precise theme colors.
 
 ## Customization
 
