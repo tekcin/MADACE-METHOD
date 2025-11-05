@@ -260,6 +260,7 @@ export class ConfigurationManager {
       user_name: process.env.MADACE_USER_NAME || this.config.user_name,
       communication_language:
         process.env.MADACE_COMMUNICATION_LANGUAGE || this.config.communication_language,
+      project_root_path: process.env.MADACE_PROJECT_ROOT || this.config.project_root_path,
       modules: {
         mam: {
           enabled:
@@ -460,6 +461,7 @@ export class ConfigurationManager {
       output_folder: 'docs',
       user_name: 'User',
       communication_language: 'English',
+      project_root_path: process.cwd(),
       madace_version: '3.0.0-alpha',
       installed_at: new Date().toISOString(),
       modules: {

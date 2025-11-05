@@ -11,6 +11,7 @@ const ConfigSchema = z.object({
   output_folder: z.string().min(1, 'Output folder is required'),
   user_name: z.string().min(1, 'User name is required'),
   communication_language: z.string().min(1, 'Communication language is required'),
+  project_root_path: z.string().min(1, 'Project root path is required'),
   llm: z.object({
     provider: z.enum(['gemini', 'claude', 'openai', 'local'], {
       message: 'Invalid LLM provider',
@@ -78,6 +79,7 @@ export async function POST(request: NextRequest) {
       output_folder: config.output_folder,
       user_name: config.user_name,
       communication_language: config.communication_language,
+      project_root_path: config.project_root_path,
       madace_version: '3.0.0-alpha',
       installed_at: new Date().toISOString(),
       modules: {

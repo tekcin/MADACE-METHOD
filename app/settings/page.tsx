@@ -11,6 +11,7 @@ interface SettingsFormData {
   output_folder: string;
   user_name: string;
   communication_language: string;
+  project_root_path: string;
   llm_provider: LLMProvider;
   llm_api_key: string;
   llm_model: string;
@@ -39,6 +40,7 @@ export default function SettingsPage() {
     output_folder: '',
     user_name: '',
     communication_language: '',
+    project_root_path: '',
     llm_provider: 'gemini',
     llm_api_key: '',
     llm_model: '',
@@ -50,10 +52,12 @@ export default function SettingsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isTesting, setIsTesting] = useState(false);
+  const [isTestingPath, setIsTestingPath] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<FieldError[]>([]);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [pathTestResult, setPathTestResult] = useState<{ success: boolean; message: string } | null>(null);
 
   // Load configuration on mount
   useEffect(() => {
@@ -86,6 +90,7 @@ export default function SettingsPage() {
         output_folder: config.output_folder,
         user_name: config.user_name,
         communication_language: config.communication_language,
+        project_root_path: config.project_root_path || process.cwd(),
         llm_provider: 'gemini', // Default, will be read from .env in future
         llm_api_key: '',
         llm_model: 'gemini-2.0-flash-exp',
@@ -172,6 +177,50 @@ export default function SettingsPage() {
     }
   };
 
+  const handleTestPath = async () => {
+    setIsTestingPath(true);
+    setPathTestResult(null);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/v3/settings/validate-path', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          path: formData.project_root_path,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success && result.data) {
+        if (result.data.valid) {
+          setPathTestResult({
+            success: true,
+            message: result.data.message,
+          });
+        } else {
+          setPathTestResult({
+            success: false,
+            message: result.data.message,
+          });
+        }
+      } else {
+        setPathTestResult({
+          success: false,
+          message: result.error || 'Path validation failed',
+        });
+      }
+    } catch (err) {
+      setPathTestResult({
+        success: false,
+        message: err instanceof Error ? err.message : 'Path validation failed',
+      });
+    } finally {
+      setIsTestingPath(false);
+    }
+  };
+
   const getFieldError = (fieldName: string): string | undefined => {
     return validationErrors.find((e) => e.field === fieldName)?.message;
   };
@@ -181,6 +230,7 @@ export default function SettingsPage() {
     setError(null);
     setSuccessMessage(null);
     setTestResult(null);
+    setPathTestResult(null);
 
     // Validate form
     if (!validateForm()) {
@@ -197,6 +247,7 @@ export default function SettingsPage() {
         output_folder: formData.output_folder,
         user_name: formData.user_name,
         communication_language: formData.communication_language,
+        project_root_path: formData.project_root_path,
         llm: {
           provider: formData.llm_provider,
           apiKey: formData.llm_api_key,
@@ -240,6 +291,7 @@ export default function SettingsPage() {
       setError(null);
       setValidationErrors([]);
       setTestResult(null);
+      setPathTestResult(null);
     }
   };
 
@@ -431,6 +483,101 @@ export default function SettingsPage() {
                 placeholder="en"
               />
               <p className="mt-1 text-sm text-gray-400">Language code (e.g., en, es, fr, de)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Project Storage Section */}
+        <div className="rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-white">Project Storage</h2>
+          <p className="mt-1 text-sm text-gray-400">
+            Configure where project files are stored on your file system
+          </p>
+
+          <div className="mt-6 space-y-4">
+            <div>
+              <label htmlFor="project_root_path" className="block text-sm font-medium text-gray-200">
+                Project Root Path <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="project_root_path"
+                value={formData.project_root_path}
+                onChange={(e) => setFormData({ ...formData, project_root_path: e.target.value })}
+                className={`mt-1 block w-full rounded-md border ${
+                  getFieldError('project_root_path')
+                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+                    : 'border-gray-600 focus:border-blue-500 focus:ring-blue-500'
+                } bg-gray-700 px-3 py-2 font-mono text-sm text-gray-200 placeholder-gray-400 shadow-sm focus:ring-2 focus:outline-none`}
+                placeholder="/absolute/path/to/your/project"
+              />
+              {getFieldError('project_root_path') && (
+                <p className="mt-1 text-sm text-red-400">{getFieldError('project_root_path')}</p>
+              )}
+              <p className="mt-1 text-sm text-gray-400">
+                Absolute path to your project directory. IDE file operations will use this as the root.
+              </p>
+              <p className="mt-1 text-xs text-gray-500">
+                Current working directory: <span className="font-mono">{process.cwd()}</span>
+              </p>
+            </div>
+
+            <div>
+              <button
+                type="button"
+                onClick={handleTestPath}
+                disabled={isTestingPath || !formData.project_root_path}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-sm font-medium text-gray-300 shadow-sm hover:bg-gray-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isTestingPath ? (
+                  <>
+                    <svg
+                      className="h-4 w-4 animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Testing Path...
+                  </>
+                ) : (
+                  <>
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                    Test Path
+                  </>
+                )}
+              </button>
+              {pathTestResult && (
+                <div
+                  className={`mt-2 rounded-md p-3 ${
+                    pathTestResult.success
+                      ? 'bg-green-900/20 text-green-200'
+                      : 'bg-red-900/20 text-red-200'
+                  }`}
+                >
+                  <p className="text-sm whitespace-pre-wrap">{pathTestResult.message}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

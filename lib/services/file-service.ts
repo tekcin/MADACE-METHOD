@@ -7,11 +7,24 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { existsSync } from 'fs';
+import { getConfigManager } from '@/lib/config';
 
 /**
  * Get the project root directory
+ *
+ * Reads from configuration (with MADACE_PROJECT_ROOT env override)
+ * Falls back to process.cwd() if config not available
  */
 export function getProjectRoot(): string {
+  try {
+    const manager = getConfigManager();
+    const config = manager.mergeEnv();
+    if (config?.project_root_path) {
+      return config.project_root_path;
+    }
+  } catch {
+    // Config not loaded or error, use fallback
+  }
   return process.cwd();
 }
 

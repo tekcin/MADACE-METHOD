@@ -17,6 +17,7 @@ export const ConfigSchema = z.object({
   output_folder: z.string().min(1, 'Output folder is required'),
   user_name: z.string().min(1, 'User name is required'),
   communication_language: z.string().min(1, 'Communication language is required'),
+  project_root_path: z.string().min(1, 'Project root path is required').default(process.cwd()),
   madace_version: z.string().optional(),
   installed_at: z.string().optional(),
   modules: z.object({
