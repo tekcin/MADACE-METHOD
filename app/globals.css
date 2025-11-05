@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Configure class-based dark mode */
+@variant dark (html.dark &);
+
 /* Import MADACE Dark Theme - Based on Sidebar Design */
 @import './madace-theme.css';
 
