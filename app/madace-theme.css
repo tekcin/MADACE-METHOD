@@ -349,55 +349,16 @@ textarea::placeholder {
 }
 
 /* ===================================================================
-   OVERRIDE EXISTING TAILWIND CLASSES
+   OVERRIDE EXISTING TAILWIND CLASSES (REMOVED - Use Tailwind's dark: variants instead)
    =================================================================== */
 
-/* Force dark backgrounds on common Tailwind classes */
-.bg-white {
-  background-color: var(--madace-bg-primary) !important;
-}
-
-.bg-gray-50 {
-  background-color: var(--madace-bg-secondary) !important;
-}
-
-.bg-gray-100 {
-  background-color: var(--madace-bg-primary) !important;
-}
-
-/* Force readable text colors */
-.text-gray-400 {
-  color: var(--madace-text-tertiary) !important;
-}
-
-.text-gray-500 {
-  color: var(--madace-text-tertiary) !important;
-}
-
-.text-gray-600 {
-  color: var(--madace-text-secondary) !important;
-}
-
-.text-gray-700 {
-  color: var(--madace-text-secondary) !important;
-}
-
-.text-gray-800 {
-  color: var(--madace-text-primary) !important;
-}
-
-.text-gray-900 {
-  color: var(--madace-text-primary) !important;
-}
-
-/* Force dark borders */
-.border-gray-200 {
-  border-color: var(--madace-border-primary) !important;
-}
-
-.border-gray-300 {
-  border-color: var(--madace-border-primary) !important;
-}
+/*
+ * IMPORTANT: These overrides have been removed to prevent conflicts with Tailwind's dark: variants.
+ * Components now use proper dark: utility classes (e.g., dark:text-white, dark:bg-gray-800).
+ *
+ * If you need to force dark mode styling on legacy components without dark: variants,
+ * add the madace-* utility classes instead (e.g., madace-text-primary, madace-bg-primary).
+ */
 
 /* ===================================================================
    RESPONSIVE ADJUSTMENTS
