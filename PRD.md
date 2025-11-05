@@ -1123,6 +1123,110 @@ workflow:
   - Complete deployment documentation
   - Supports both cloud and on-premise Kubernetes
 
+#### 5.4.7 Podman Deployment Support
+
+- **Description**: Comprehensive Podman deployment support as Docker alternative with enhanced security
+- **Status**: ✅ Complete - Production-ready rootless container deployment
+- **Added**: 2025-11-05
+- **Commit**: `eb79006`
+- **Components**:
+  - Comprehensive Podman deployment guide (docs/PODMAN-DEPLOYMENT.md)
+  - README.md integration with quick start guide
+  - ARCHITECTURE.md Section 19 (full technical architecture)
+  - Multiple deployment scenarios (production, rootless, systemd, pods)
+- **Features Delivered:**
+  - **Deployment Options** (5 scenarios):
+    - Standard Production: Production deployment with SELinux
+    - Rootless: Enhanced security without root privileges (recommended)
+    - Systemd Service: Auto-start with native systemd integration
+    - Pod: Kubernetes-like multi-container with MADACE + Ollama
+    - Compose: Docker Compose compatibility via podman-compose
+  - **Security Features**:
+    - SELinux Integration: Native volume labeling (`:z`, `:Z` flags)
+    - User Namespaces: Rootless isolation with `--userns=keep-id`
+    - Capabilities: Drop/add specific capabilities for minimal privileges
+    - No New Privileges: Prevent privilege escalation
+    - Read-only root filesystem support
+  - **Production Best Practices**:
+    - Resource limits (memory, CPU, PIDs)
+    - Health checks (interval, timeout, retries)
+    - Logging configuration (journald integration)
+    - Automatic updates (podman-auto-update)
+    - Backup/restore procedures
+  - **Documentation**:
+    - Complete deployment guide (docs/PODMAN-DEPLOYMENT.md, 600+ lines)
+    - Quick start in README.md (144 lines)
+    - Technical architecture (ARCHITECTURE.md Section 19, 747 lines)
+- **Key Advantages:**
+  - **Daemonless Architecture**: No background daemon (`dockerd`) required
+  - **Rootless by Default**: Run containers without root privileges
+  - **Systemd Integration**: Native service generation with `podman generate systemd`
+  - **Pod Support**: Kubernetes-like pods for multi-container deployments
+  - **Drop-in Replacement**: Uses same Dockerfile, compatible commands
+  - **No Licensing Concerns**: Apache 2.0 license, free for all use cases
+  - **SELinux Native**: Built-in support for enhanced Linux security
+- **Platform Support:**
+  - Linux (native): RHEL, Fedora, CentOS, Ubuntu, Debian, Arch
+  - macOS: Via lightweight VM (podman machine)
+  - Windows: Via WSL2 integration
+- **Migration from Docker:**
+  - Command mapping table (docker → podman)
+  - Optional alias setup (`alias docker=podman`)
+  - No Dockerfile modifications required
+  - Uses existing docker-compose.yml with podman-compose
+- **Production Features:**
+  - **Monitoring**: `podman stats`, `podman logs`, `podman events`
+  - **Networking**: Bridge, host, none, custom networks
+  - **Port Publishing**: Single, range, specific interface binding
+  - **Backup/Restore**: Container export/import, volume backup
+  - **Auto-updates**: Systemd timer integration
+- **Value:**
+  - **Enhanced Security**: Rootless containers reduce attack surface
+  - **Enterprise Ready**: Battle-tested in RHEL/Fedora ecosystems
+  - **Kubernetes Migration**: Generate K8s YAML from pods (`podman generate kube`)
+  - **Cost Savings**: No Docker Desktop licensing for enterprises
+  - **Flexibility**: Multiple deployment scenarios for different use cases
+  - **Docker Compatible**: Zero breaking changes, same Dockerfile
+- **Documentation**:
+  - ARCHITECTURE.md Section 19 (747 lines, complete technical guide)
+  - docs/PODMAN-DEPLOYMENT.md (600+ lines, deployment scenarios)
+  - README.md (144 lines, quick start)
+- **Key Files:**
+  - `docs/PODMAN-DEPLOYMENT.md` (600+ lines NEW, comprehensive guide)
+  - `README.md` (144 lines added, Podman deployment section)
+  - `ARCHITECTURE.md` (747 lines added, Section 19)
+- **Total Implementation:** ~1,491 lines of comprehensive documentation
+- **Use Cases:**
+  - ✅ Security-focused deployments (rootless containers)
+  - ✅ Linux server deployments (native support)
+  - ✅ Enterprise environments (RHEL, CentOS, Fedora)
+  - ✅ Kubernetes migration planning (pod compatibility)
+  - ✅ Multi-tenant environments (user namespaces)
+  - ✅ Systemd-managed services (native integration)
+  - ✅ Docker licensing concerns (free alternative)
+- **Quick Start:**
+  ```bash
+  # 1. Build image (same Dockerfile as Docker)
+  podman build -t madace-web:latest .
+
+  # 2. Run container
+  podman run -d \
+    --name madace \
+    -p 3000:3000 \
+    -v ./madace-data:/app/data:Z \
+    madace-web:latest
+
+  # 3. Access at http://localhost:3000
+  ```
+- **Impact:**
+  - Provides Docker alternative with enhanced security
+  - Enables rootless container deployments
+  - Maintains full compatibility with existing Docker setup
+  - Adds systemd service management option
+  - Supports Kubernetes-like pod deployments
+  - Zero breaking changes to application code
+  - Production-ready with comprehensive documentation
+
 ---
 
 ## 6. Success Criteria

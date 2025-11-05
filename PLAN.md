@@ -588,7 +588,8 @@ The project was divided into four phases, all now complete:
 | **Configurable Project Storage**     | ~3      | ~298       | ✅ Complete | Section 16     |
 | **Folder Browser for Storage**       | ~2      | ~378       | ✅ Complete | Section 17     |
 | **Kubernetes Deployment Support**    | ~5      | ~1,095     | ✅ Complete | Section 18     |
-| **Total**                            | **~67** | **~5,780** | **100%**    | **10 sections** |
+| **Podman Deployment Support**        | ~3      | ~1,491     | ✅ Complete | Section 19     |
+| **Total**                            | **~70** | **~7,271** | **100%**    | **11 sections** |
 
 ---
 
