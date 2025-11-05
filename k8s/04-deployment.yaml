@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: madace
+  namespace: madace
+  labels:
+    app: madace
+    version: v3.0.0-alpha
+spec:
+  replicas: 1  # Scale horizontally if needed
+  selector:
+    matchLabels:
+      app: madace
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: madace
+        version: v3.0.0-alpha
+    spec:
+      # Security context
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+
+      # Init container to ensure data directory exists
+      initContainers:
+        - name: init-data-dir
+          image: busybox:latest
+          command: ['sh', '-c', 'mkdir -p /app/data/website /app/data/database /app/data/config && chmod -R 777 /app/data']
+          volumeMounts:
+            - name: madace-data
+              mountPath: /app/data
+
+      containers:
+        - name: madace
+          # Replace with your image repository
+          # image: ghcr.io/your-org/madace:v3.0.0-alpha
+          image: madace-web:latest  # Use local image for now
+          imagePullPolicy: IfNotPresent  # Change to Always for production
+
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+
+          # Environment variables from ConfigMap
+          envFrom:
+            - configMapRef:
+                name: madace-config
+            - secretRef:
+                name: madace-secrets
+
+          # Volume mounts
+          volumeMounts:
+            - name: madace-data
+              mountPath: /app/data
+
+          # Resource limits and requests
+          resources:
+            limits:
+              cpu: "2000m"
+              memory: "2Gi"
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+
+          # Liveness probe - checks if container is alive
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+
+          # Readiness probe - checks if container is ready to serve traffic
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+
+          # Startup probe - gives container time to start before liveness/readiness kicks in
+          startupProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 30  # 30 * 10 = 300 seconds (5 minutes) to start
+
+      volumes:
+        - name: madace-data
+          persistentVolumeClaim:
+            claimName: madace-data-pvc
+
+      # Restart policy
+      restartPolicy: Always

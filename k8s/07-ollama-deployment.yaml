@@ -1,0 +1,95 @@
+# Ollama - Local LLM Server (Optional)
+# Deploy this if you want to use local models (Gemma3, Llama, etc.)
+# IMPORTANT: Requires nodes with sufficient CPU/Memory resources
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ollama
+  namespace: madace
+  labels:
+    app: ollama
+spec:
+  replicas: 1  # Do not scale horizontally (stateful LLM server)
+  selector:
+    matchLabels:
+      app: ollama
+  strategy:
+    type: Recreate  # Recreate strategy for stateful apps
+  template:
+    metadata:
+      labels:
+        app: ollama
+    spec:
+      containers:
+        - name: ollama
+          image: ollama/ollama:latest
+          imagePullPolicy: Always
+
+          ports:
+            - name: http
+              containerPort: 11434
+              protocol: TCP
+
+          # Volume mount for model storage
+          volumeMounts:
+            - name: ollama-data
+              mountPath: /root/.ollama
+
+          # Resource limits (adjust based on your cluster)
+          # LLM models require significant resources
+          resources:
+            limits:
+              cpu: "4000m"       # 4 cores
+              memory: "8Gi"      # 8GB RAM
+            requests:
+              cpu: "2000m"       # 2 cores minimum
+              memory: "4Gi"      # 4GB RAM minimum
+
+          # Liveness probe
+          livenessProbe:
+            httpGet:
+              path: /api/tags
+              port: 11434
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+
+          # Readiness probe
+          readinessProbe:
+            httpGet:
+              path: /api/tags
+              port: 11434
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          # Startup probe (LLM models take time to load)
+          startupProbe:
+            httpGet:
+              path: /api/tags
+              port: 11434
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 60  # 60 * 10 = 600 seconds (10 minutes) to start
+
+      volumes:
+        - name: ollama-data
+          persistentVolumeClaim:
+            claimName: ollama-data-pvc
+
+      restartPolicy: Always
+
+      # Node selector (optional - select nodes with GPU if available)
+      # nodeSelector:
+      #   gpu: "true"
+
+      # Tolerations (optional - allow scheduling on tainted nodes)
+      # tolerations:
+      #   - key: "gpu"
+      #     operator: "Equal"
+      #     value: "true"
+      #     effect: "NoSchedule"

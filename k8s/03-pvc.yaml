@@ -1,0 +1,34 @@
+# MADACE Persistent Volume Claims
+# Stores user data, database, configuration, and generated files
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: madace-data-pvc
+  namespace: madace
+  labels:
+    app: madace
+spec:
+  accessModes:
+    - ReadWriteOnce  # Single node read-write
+  resources:
+    requests:
+      storage: 10Gi  # Adjust based on your needs
+  # storageClassName: standard  # Uncomment and specify your storage class
+
+---
+# Ollama Model Storage (for local LLM)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ollama-data-pvc
+  namespace: madace
+  labels:
+    app: ollama
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi  # LLM models are large (Gemma3 4B ~4GB)
+  # storageClassName: standard  # Uncomment and specify your storage class

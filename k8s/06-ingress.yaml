@@ -1,0 +1,52 @@
+# MADACE Ingress - External access with HTTPS
+# Requires an Ingress Controller (e.g., nginx-ingress, traefik)
+# Configure cert-manager for automatic TLS certificate management
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: madace-ingress
+  namespace: madace
+  labels:
+    app: madace
+  annotations:
+    # Nginx Ingress Controller annotations
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"  # Max upload size
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"  # 10 minutes for long-running operations
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+
+    # WebSocket support
+    nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
+    nginx.ingress.kubernetes.io/proxy-set-headers: "Connection keep-alive"
+    nginx.ingress.kubernetes.io/websocket-services: "madace-service"
+
+    # SSL/TLS configuration
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+
+    # cert-manager annotations for automatic TLS (uncomment and configure)
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # cert-manager.io/acme-challenge-type: "http01"
+
+    # Rate limiting (optional)
+    # nginx.ingress.kubernetes.io/limit-rps: "100"
+spec:
+  ingressClassName: nginx  # Change to your ingress class (nginx, traefik, etc.)
+
+  # TLS configuration
+  tls:
+    - hosts:
+        - madace.yourdomain.com  # Replace with your domain
+      secretName: madace-tls-secret  # cert-manager will create this
+
+  rules:
+    - host: madace.yourdomain.com  # Replace with your domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: madace-service
+                port:
+                  number: 80
