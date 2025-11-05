@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFile, listFiles, detectLanguage } from '@/lib/services/file-service';
+import { readFile, detectLanguage } from '@/lib/services/file-service';
 
 /**
  * GET /api/v3/files?path=

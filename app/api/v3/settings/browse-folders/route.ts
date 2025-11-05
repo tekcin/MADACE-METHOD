@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     let stats;
     try {
       stats = await fs.stat(absolutePath);
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         {
           success: false,
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
     let entries;
     try {
       entries = await fs.readdir(absolutePath, { withFileTypes: true });
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         {
           success: false,
