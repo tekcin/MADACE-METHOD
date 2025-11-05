@@ -20,6 +20,7 @@ import {
   ChevronRightIcon,
   CommandLineIcon,
   CodeBracketIcon,
+  FolderIcon,
 } from '@heroicons/react/24/outline';
 import { ProjectSelector } from './ProjectSelector';
 import { ProjectModal } from './ProjectModal';
@@ -38,6 +39,7 @@ const navigation = [
   { name: 'Dashboard', href: '/', icon: HomeIcon, section: 'main' },
 
   // Project section
+  { name: 'Projects', href: '/projects', icon: FolderIcon, section: 'project' },
   { name: 'Kanban', href: '/kanban', icon: ViewColumnsIcon, section: 'project' },
   { name: 'Workflows', href: '/workflows', icon: RectangleStackIcon, section: 'project' },
   { name: 'Assessment', href: '/assessment', icon: ChartBarIcon, section: 'project' },
