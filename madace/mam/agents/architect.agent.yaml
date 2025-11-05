@@ -1,6 +1,6 @@
 agent:
   metadata:
-    id: madace/mam/agents/architect.md
+    id: architect
     name: Architect
     title: Solution Architect - Technical Design Expert
     icon: 🏛️

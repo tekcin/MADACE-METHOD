@@ -1,6 +1,6 @@
 agent:
   metadata:
-    id: madace/mam/agents/pm.md
+    id: pm
     name: PM
     title: Product Manager - Scale-Adaptive Planning Expert
     icon: 📋

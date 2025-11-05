@@ -1,6 +1,6 @@
 agent:
   metadata:
-    id: madace/mam/agents/analyst.md
+    id: analyst
     name: Analyst
     title: Business Analyst - Requirements Discovery Expert
     icon: 🔍

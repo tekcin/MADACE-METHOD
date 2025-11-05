@@ -1,6 +1,6 @@
 agent:
   metadata:
-    id: madace/mam/agents/sm.md
+    id: sm
     name: SM
     title: Scrum Master - Story Lifecycle Facilitator
     icon: 📊

@@ -1,6 +1,6 @@
 agent:
   metadata:
-    id: madace/mam/agents/dev.md
+    id: dev
     name: DEV
     title: Developer - Implementation Specialist
     icon: 💻
